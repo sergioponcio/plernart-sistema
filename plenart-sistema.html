@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plenart Sistema</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+    --azul: #1a2d6b;
+    --azul-med: #2a4490;
+    --azul-claro: #e8ecf5;
+    --laranja: #f47920;
+    --laranja-med: #e35900;
+    --laranja-claro: #fff1e6;
+    --verde: #2e7d32;
+    --vermelho: #c62828;
+    --cinza: #607d8b;
+    --bg: #f5f7fa;
+    --texto: #1a2a3a;
+    --texto-suave: #455a64;
+    --borda: #d0dde8;
+    --sombra: 0 2px 12px rgba(26,45,107,0.10);
+    --sombra-lg: 0 8px 24px rgba(26,45,107,0.15);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Source Sans 3', sans-serif; background: var(--bg); color: var(--texto); min-height: 100vh; }
+
+/* ================ LOGIN ================ */
+.tela-login { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--azul-claro) 0%, #f0f4fc 100%); padding: 20px; }
+.login-card { background: #fff; border-radius: 18px; box-shadow: 0 16px 40px rgba(26,45,107,0.15); padding: 40px 36px; width: 100%; max-width: 400px; }
+.login-logo { text-align: center; margin-bottom: 28px; }
+.login-logo .icone { width: 72px; height: 72px; background: linear-gradient(135deg, var(--azul) 0%, var(--azul-med) 100%); border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; font-size: 32px; color: #fff; margin-bottom: 14px; box-shadow: 0 6px 16px rgba(26,45,107,0.25); }
+.login-logo h1 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.5rem; color: var(--azul); line-height: 1.1; }
+.login-logo h1 .destaque { color: var(--laranja); }
+.login-logo p { color: var(--cinza); font-size: 0.83rem; margin-top: 4px; font-style: italic; }
+.login-titulo { text-align: center; margin-bottom: 22px; }
+.login-titulo h2 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--texto); margin-bottom: 4px; }
+.login-titulo p { font-size: 0.84rem; color: var(--cinza); }
+.input-group { margin-bottom: 14px; }
+.input-group label { display: block; font-size: 0.74rem; font-weight: 700; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+.input-wrap { position: relative; }
+.input-wrap i { position: absolute; top: 50%; left: 14px; transform: translateY(-50%); color: var(--cinza); font-size: 0.95rem; }
+.input-wrap input { width: 100%; padding: 12px 14px 12px 42px; border: 1.5px solid var(--borda); border-radius: 10px; font-family: 'Source Sans 3', sans-serif; font-size: 0.96rem; background: #fafcff; transition: all .2s; }
+.input-wrap input:focus { outline: none; border-color: var(--azul-med); background: #fff; box-shadow: 0 0 0 4px rgba(26,45,107,0.08); }
+.btn-login { width: 100%; padding: 13px; background: linear-gradient(135deg, var(--azul) 0%, var(--azul-med) 100%); color: #fff; border: none; border-radius: 10px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.94rem; text-transform: uppercase; letter-spacing: 0.8px; cursor: pointer; transition: all .25s; box-shadow: 0 4px 14px rgba(26,45,107,0.2); margin-top: 10px; }
+.btn-login:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(26,45,107,0.3); }
+.login-erro { background: #ffebee; color: #c62828; padding: 10px 14px; border-radius: 8px; font-size: 0.84rem; margin-bottom: 14px; display: none; align-items: center; gap: 8px; }
+.login-erro.visivel { display: flex; }
+.login-footer { text-align: center; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--borda); font-size: 0.78rem; color: var(--cinza); }
+
+/* ================ APP ================ */
+.app { display: none; min-height: 100vh; }
+.app.ativo { display: block; }
+.topbar { background: linear-gradient(135deg, var(--azul) 0%, var(--azul-med) 100%); color: #fff; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 10px rgba(0,0,0,0.1); height: 60px; }
+.topbar-logo { display: flex; align-items: center; gap: 12px; }
+.topbar-logo .icone-mini { width: 38px; height: 38px; background: rgba(244,121,32,0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; color: var(--laranja); }
+.topbar-logo h1 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.05rem; color: #fff; line-height: 1; }
+.topbar-logo h1 .laranja { color: var(--laranja); }
+.topbar-logo p { font-size: 0.7rem; opacity: 0.75; margin-top: 2px; font-style: italic; }
+.topbar-dir { display: flex; align-items: center; gap: 10px; }
+.topbar-user { display: flex; align-items: center; gap: 10px; padding: 6px 14px 6px 6px; background: rgba(255,255,255,0.10); border-radius: 22px; }
+.topbar-user-avatar { width: 32px; height: 32px; background: var(--laranja); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85rem; color: #fff; }
+.topbar-user-info { line-height: 1.2; }
+.topbar-user-info .nome { font-weight: 700; font-size: 0.88rem; }
+.topbar-user-info .role { font-size: 0.68rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.3px; }
+.btn-top { background: rgba(255,255,255,0.10); border: none; color: #fff; padding: 8px 14px; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 7px; transition: background .2s; }
+.btn-top:hover { background: rgba(255,255,255,0.22); }
+.btn-top.escondido { display: none; }
+
+.conteudo { max-width: 1240px; margin: 0 auto; padding: 34px 28px 50px; }
+.saudacao { margin-bottom: 26px; }
+.saudacao h1 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.7rem; color: var(--azul); margin-bottom: 6px; }
+.saudacao p { font-size: 1rem; color: var(--texto-suave); }
+
+.secao-titulo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.88rem; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.secao-titulo i { color: var(--laranja); }
+.secao-titulo .linha { flex: 1; height: 1px; background: var(--borda); }
+
+.cards-atas { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; margin-bottom: 36px; max-width: 620px; }
+.card-ata { background: #fff; border-radius: 14px; padding: 20px 18px; box-shadow: var(--sombra); border: 1.5px solid var(--borda); cursor: pointer; transition: all .25s; position: relative; overflow: hidden; text-align: center; }
+.card-ata:hover { transform: translateY(-4px); box-shadow: var(--sombra-lg); border-color: var(--cor-ata); }
+.card-ata::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--cor-ata); }
+.card-ata .icone { width: 52px; height: 52px; background: var(--cor-ata-claro); color: var(--cor-ata); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 6px auto 12px; }
+.card-ata h3 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.98rem; color: var(--texto); margin-bottom: 4px; }
+.card-ata p { color: var(--cinza); font-size: 0.78rem; line-height: 1.35; }
+.card-ata.plenart { --cor-ata: var(--laranja); --cor-ata-claro: var(--laranja-claro); }
+.card-ata.sesc    { --cor-ata: #e65100; --cor-ata-claro: #fff3e0; }
+
+/* ================ LISTA ================ */
+.secao-lista { background: #fff; border-radius: 14px; box-shadow: var(--sombra); border: 1.5px solid var(--borda); overflow: hidden; }
+.lista-header { padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; gap: 14px; border-bottom: 1.5px solid var(--borda); background: linear-gradient(90deg, #f0f4fc 0%, #fff 100%); flex-wrap: wrap; }
+.lista-header h2 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.92rem; color: var(--texto); text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; }
+.lista-header h2 i { color: var(--laranja); }
+.lista-header .contador { background: var(--azul-claro); color: var(--azul); font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.72rem; padding: 3px 10px; border-radius: 10px; }
+.filtros { padding: 12px 20px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; border-bottom: 1.5px solid var(--borda); background: #fafcff; }
+.filtro-grupo { display: flex; align-items: center; gap: 7px; }
+.filtro-grupo > .lbl { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.7rem; color: var(--cinza); text-transform: uppercase; letter-spacing: .4px; }
+.seg { display: inline-flex; border: 1.5px solid var(--borda); border-radius: 8px; overflow: hidden; background: #fff; }
+.seg button { border: none; background: #fff; padding: 7px 13px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.76rem; color: var(--cinza); cursor: pointer; transition: all .15s; }
+.seg button + button { border-left: 1.5px solid var(--borda); }
+.seg button.ativo { background: var(--azul); color: #fff; }
+.seg button.ativo.plenart { background: var(--laranja); }
+.seg button.ativo.sesc { background: #e65100; }
+.filtros select, .filtros input[type="search"] { padding: 7px 10px; border: 1.5px solid var(--borda); border-radius: 8px; font-family: 'Source Sans 3', sans-serif; font-size: 0.86rem; background: #fff; color: var(--texto); }
+.filtros select:focus, .filtros input:focus { outline: none; border-color: var(--azul-med); box-shadow: 0 0 0 3px rgba(42,68,144,.12); }
+.filtros .busca { flex: 1; min-width: 190px; position: relative; display: flex; }
+.filtros .busca input { width: 100%; padding-left: 32px; }
+.filtros .busca i { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--cinza); font-size: 0.82rem; }
+.btn-limpar-filtro { background: none; border: none; color: var(--cinza); font-size: 0.78rem; cursor: pointer; text-decoration: underline; font-family: inherit; }
+
+.tabela-lista { width: 100%; border-collapse: collapse; }
+.tabela-lista thead th { text-align: left; padding: 9px 16px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.68rem; color: var(--cinza); text-transform: uppercase; letter-spacing: .4px; background: #fafcff; border-bottom: 1.5px solid var(--borda); white-space: nowrap; }
+.tabela-lista tbody tr { border-bottom: 1px solid var(--borda); transition: background .15s; cursor: pointer; }
+.tabela-lista tbody tr:last-child { border-bottom: none; }
+.tabela-lista tbody tr:hover { background: #fafcff; }
+.tabela-lista td { padding: 11px 16px; font-size: 0.88rem; vertical-align: middle; }
+.tag-ata { display: inline-block; padding: 3px 9px; border-radius: 6px; font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: #fff; font-family: 'Montserrat', sans-serif; }
+.tag-ata.plenart { background: var(--laranja); }
+.tag-ata.sesc { background: #e65100; }
+.col-num { color: var(--texto); font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85rem; white-space: nowrap; }
+.col-cliente { font-weight: 600; color: var(--texto); }
+.col-cliente .evento { display: block; font-size: 0.78rem; color: var(--cinza); font-weight: 400; margin-top: 1px; }
+.col-por { color: var(--texto-suave); font-size: 0.82rem; white-space: nowrap; }
+.col-data { color: var(--cinza); font-size: 0.8rem; white-space: nowrap; }
+.col-valor { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--azul); text-align: right; white-space: nowrap; }
+.col-acoes { text-align: right; white-space: nowrap; }
+.status { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 10px; font-size: 0.7rem; font-weight: 700; font-family: 'Montserrat', sans-serif; white-space: nowrap; }
+.status.rascunho { background: #eceff1; color: #546e7a; }
+.status.enviado { background: #e3f2fd; color: #1565c0; }
+.status.aprovado { background: #e8f5e9; color: var(--verde); }
+.status.perdido { background: #ffebee; color: var(--vermelho); }
+.btn-acao { background: #fff; border: 1.5px solid var(--borda); color: var(--cinza); border-radius: 7px; width: 30px; height: 28px; cursor: pointer; font-size: 0.78rem; margin-left: 4px; transition: all .15s; }
+.btn-acao:hover { border-color: var(--azul-med); color: var(--azul); background: var(--azul-claro); }
+.btn-acao.del:hover { border-color: var(--vermelho); color: var(--vermelho); background: #ffebee; }
+.vazio-lista { padding: 44px 20px; text-align: center; color: var(--cinza); }
+.vazio-lista i { font-size: 30px; opacity: 0.35; margin-bottom: 10px; display: block; }
+.vazio-lista p { font-size: 0.95rem; font-style: italic; }
+
+/* ================ MODAL ================ */
+.modal-fundo { position: fixed; inset: 0; background: rgba(26,45,107,0.45); display: none; align-items: flex-start; justify-content: center; padding: 40px 16px; z-index: 50; overflow-y: auto; }
+.modal-fundo.aberto { display: flex; }
+.modal { background: #fff; border-radius: 14px; width: 100%; max-width: 720px; box-shadow: 0 20px 50px rgba(0,0,0,.25); overflow: hidden; }
+.modal-header { padding: 15px 22px; background: linear-gradient(90deg, var(--azul-claro) 0%, #fff 100%); border-bottom: 2px solid var(--azul); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.modal-header h2 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1rem; color: var(--azul); display: flex; align-items: center; gap: 9px; }
+.modal-fechar { background: none; border: none; font-size: 1.2rem; color: var(--cinza); cursor: pointer; line-height: 1; padding: 4px 8px; border-radius: 6px; }
+.modal-fechar:hover { background: #eceff1; color: var(--vermelho); }
+.modal-body { padding: 20px 22px; }
+.aviso-local { background: #fffde7; border-left: 4px solid #f9a825; border-radius: 6px; padding: 10px 14px; font-size: 0.83rem; color: #6d4c00; margin-bottom: 16px; line-height: 1.5; }
+.tabela-users { width: 100%; border-collapse: collapse; margin-bottom: 18px; }
+.tabela-users th { text-align: left; padding: 7px 10px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.68rem; color: var(--cinza); text-transform: uppercase; letter-spacing: .4px; border-bottom: 1.5px solid var(--borda); }
+.tabela-users td { padding: 8px 10px; font-size: 0.88rem; border-bottom: 1px solid var(--borda); vertical-align: middle; }
+.tabela-users tr:last-child td { border-bottom: none; }
+.tabela-users .u-nome { font-weight: 600; }
+.tabela-users .u-login { font-family: monospace; color: var(--cinza); font-size: 0.84rem; }
+.perfil { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.68rem; font-weight: 700; font-family: 'Montserrat', sans-serif; }
+.perfil.admin { background: var(--laranja-claro); color: var(--laranja-med); }
+.perfil.usuario { background: var(--azul-claro); color: var(--azul-med); }
+.form-user { background: #fafcff; border: 1.5px dashed var(--borda); border-radius: 10px; padding: 16px; }
+.form-user h3 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.82rem; color: var(--azul); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 12px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.form-grid .fg { display: flex; flex-direction: column; gap: 4px; }
+.form-grid label { font-size: 0.72rem; font-weight: 700; color: var(--cinza); text-transform: uppercase; letter-spacing: .4px; }
+.form-grid input, .form-grid select { padding: 9px 11px; border: 1.5px solid var(--borda); border-radius: 7px; font-family: 'Source Sans 3', sans-serif; font-size: 0.9rem; background: #fff; }
+.form-grid input:focus, .form-grid select:focus { outline: none; border-color: var(--azul-med); box-shadow: 0 0 0 3px rgba(42,68,144,.12); }
+.form-user .msg { font-size: 0.83rem; margin-bottom: 10px; display: none; padding: 8px 12px; border-radius: 6px; }
+.form-user .msg.erro { display: block; background: #ffebee; color: var(--vermelho); }
+.form-user .msg.ok { display: block; background: #e8f5e9; color: var(--verde); }
+.btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px; border: none; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.84rem; cursor: pointer; transition: all .2s; }
+.btn-primary { background: var(--azul); color: #fff; }
+.btn-primary:hover { background: var(--azul-med); }
+.btn-outline { background: #fff; border: 1.5px solid var(--borda); color: var(--cinza); }
+.btn-outline:hover { border-color: var(--cinza); }
+
+@media (max-width: 860px) {
+    .topbar { padding: 0 16px; }
+    .topbar-logo p, .topbar-user-info { display: none; }
+    .conteudo { padding: 24px 14px 40px; }
+    .saudacao h1 { font-size: 1.4rem; }
+    .col-data, .col-por { display: none; }
+    .tabela-lista td, .tabela-lista thead th { padding: 9px 10px; }
+    .form-grid { grid-template-columns: 1fr; }
+}
+</style>
+<script src="plenart-db.js"></script>
+</head>
+<body>
+
+<!-- ================== LOGIN ================== -->
+<div class="tela-login" id="telaLogin">
+    <div class="login-card">
+        <div class="login-logo">
+            <div class="icone"><i class="fas fa-tent"></i></div>
+            <h1>Grupo <span class="destaque">Tendas</span> Plenart</h1>
+            <p>"Sua visão, nosso compromisso."</p>
+        </div>
+        <div class="login-titulo">
+            <h2>Acesso ao Sistema</h2>
+            <p>Entre com seu e-mail e senha</p>
+        </div>
+        <div class="login-erro" id="loginErro"><i class="fas fa-exclamation-circle"></i><span id="loginErroTxt">E-mail ou senha não conferem.</span></div>
+        <form id="loginForm" onsubmit="fazerLogin(event)">
+            <div class="input-group">
+                <label>E-mail</label>
+                <div class="input-wrap"><i class="fas fa-envelope"></i><input type="email" id="loginEmail" placeholder="voce@grupotendasplenart.com.br" required autocomplete="username"></div>
+            </div>
+            <div class="input-group">
+                <label>Senha</label>
+                <div class="input-wrap"><i class="fas fa-lock"></i><input type="password" id="loginSenha" placeholder="••••••••" required autocomplete="current-password"></div>
+            </div>
+            <button type="submit" class="btn-login" id="btnEntrar"><i class="fas fa-arrow-right-to-bracket"></i> <span id="btnEntrarTxt">Entrar</span></button>
+        </form>
+        <div class="login-footer">Plenart Sistema © 2026</div>
+    </div>
+</div>
+
+<!-- ================== APP ================== -->
+<div class="app" id="appPrincipal">
+    <div class="topbar">
+        <div class="topbar-logo">
+            <div class="icone-mini"><i class="fas fa-tent"></i></div>
+            <div>
+                <h1>Grupo <span class="laranja">Tendas</span> Plenart</h1>
+                <p>Sistema de Orçamentos</p>
+            </div>
+        </div>
+        <div class="topbar-dir">
+            <button class="btn-top escondido" id="btnUsuarios" onclick="abrirUsuarios()"><i class="fas fa-users-gear"></i> Usuários</button>
+            <div class="topbar-user">
+                <div class="topbar-user-avatar" id="userAvatar">S</div>
+                <div class="topbar-user-info">
+                    <div class="nome" id="userNome">Sergio</div>
+                    <div class="role" id="userRole">Admin</div>
+                </div>
+            </div>
+            <button class="btn-top" onclick="fazerLogout()"><i class="fas fa-right-from-bracket"></i> Sair</button>
+        </div>
+    </div>
+
+    <div class="conteudo">
+        <div class="saudacao">
+            <h1>Olá, <span id="hudUserNome">Sergio</span>! 👋</h1>
+            <p>Crie um novo orçamento ou abra um da lista abaixo.</p>
+        </div>
+
+        <div class="secao-titulo"><i class="fas fa-file-contract"></i><span>Criar Novo Orçamento</span><div class="linha"></div></div>
+        <div class="cards-atas">
+            <div class="card-ata plenart" onclick="novoOrcamento('plenart')">
+                <div class="icone"><i class="fas fa-handshake"></i></div>
+                <h3>Comercial Padrão</h3>
+                <p>Orçamento Plenart</p>
+            </div>
+            <div class="card-ata sesc" onclick="novoOrcamento('sesc')">
+                <div class="icone"><i class="fas fa-building"></i></div>
+                <h3>CONTRATOS SESC</h3>
+                <p>Múltiplas regiões</p>
+            </div>
+        </div>
+
+        <div class="secao-lista">
+            <div class="lista-header">
+                <h2><i class="fas fa-folder-open"></i> Orçamentos <span class="contador" id="contadorOrc">0</span></h2>
+                <div style="display:flex;align-items:center;gap:12px">
+                    <div style="font-size:0.78rem;color:var(--cinza);font-style:italic" id="avisoLocal"></div>
+                    <button class="btn-limpar-filtro" type="button" onclick="recarregarLista(true)" title="Buscar de novo no banco"><i class="fas fa-rotate"></i> atualizar</button>
+                </div>
+            </div>
+            <div class="filtros">
+                <div class="filtro-grupo">
+                    <div class="seg" id="segTipo">
+                        <button type="button" data-tipo="" class="ativo" onclick="setFiltroTipo('')">Todos</button>
+                        <button type="button" data-tipo="plenart" onclick="setFiltroTipo('plenart')">Comercial</button>
+                        <button type="button" data-tipo="sesc" onclick="setFiltroTipo('sesc')">SESC</button>
+                    </div>
+                </div>
+                <div class="filtro-grupo">
+                    <span class="lbl">Criado por</span>
+                    <select id="filtroPor" onchange="renderLista()"><option value="">Todos</option></select>
+                </div>
+                <div class="filtro-grupo">
+                    <span class="lbl">Situação</span>
+                    <select id="filtroStatus" onchange="renderLista()">
+                        <option value="">Todas</option>
+                        <option value="Rascunho">Rascunho</option>
+                        <option value="Enviado">Enviado</option>
+                        <option value="Aprovado">Aprovado</option>
+                        <option value="Perdido">Perdido</option>
+                    </select>
+                </div>
+                <div class="busca"><i class="fas fa-magnifying-glass"></i><input type="search" id="filtroBusca" placeholder="Buscar por nº, cliente, unidade ou evento..." oninput="renderLista()"></div>
+                <button class="btn-limpar-filtro" type="button" onclick="limparFiltros()">limpar filtros</button>
+            </div>
+            <table class="tabela-lista" id="tabLista"><tbody></tbody></table>
+        </div>
+    </div>
+</div>
+
+<!-- ================== MODAL USUÁRIOS ================== -->
+<div class="modal-fundo" id="modalUsuarios" onclick="if(event.target===this) fecharUsuarios()">
+    <div class="modal">
+        <div class="modal-header">
+            <h2><i class="fas fa-users-gear"></i> Usuários do sistema</h2>
+            <button class="modal-fechar" type="button" onclick="fecharUsuarios()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="aviso-local">
+                <i class="fas fa-circle-info"></i> <strong>As pessoas e as senhas ficam no banco, não neste computador.</strong>
+                Aqui você define quem é admin e quem está ativo. Para <strong>criar</strong> uma pessoa nova ou <strong>trocar uma senha</strong>, use o painel do Supabase — o passo a passo está no fim desta janela.
+            </div>
+            <table class="tabela-users">
+                <thead><tr><th>Nome</th><th>E-mail</th><th>Perfil</th><th>Situação</th><th></th></tr></thead>
+                <tbody id="corpoUsuarios"></tbody>
+            </table>
+            <div class="form-user">
+                <h3 id="formUserTitulo"><i class="fas fa-user-pen"></i> Editar pessoa</h3>
+                <div class="msg" id="formUserMsg"></div>
+                <div class="form-grid">
+                    <div class="fg"><label>Nome</label><input type="text" id="uNome" placeholder="Selecione alguém na lista acima" disabled></div>
+                    <div class="fg"><label>E-mail</label><input type="text" id="uEmail" disabled></div>
+                    <div class="fg"><label>Perfil</label>
+                        <select id="uRole" disabled>
+                            <option value="usuario">Usuário (cria e edita os próprios orçamentos)</option>
+                            <option value="admin">Admin (edita todos e administra as pessoas)</option>
+                        </select>
+                    </div>
+                    <div class="fg"><label>Situação</label>
+                        <select id="uAtivo" disabled>
+                            <option value="sim">Ativo (pode entrar)</option>
+                            <option value="nao">Desativado (não entra mais)</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap">
+                    <button class="btn btn-primary" type="button" id="btnSalvarUser" onclick="salvarUsuarioForm()" disabled><i class="fas fa-check"></i> <span id="btnSalvarUserTxt">Salvar alterações</span></button>
+                    <button class="btn btn-outline" type="button" id="btnCancelarEdicao" style="display:none" onclick="cancelarEdicaoUser()">Cancelar</button>
+                </div>
+            </div>
+            <div class="aviso-local" style="margin-top:16px">
+                <i class="fas fa-user-plus"></i> <strong>Para cadastrar uma pessoa nova:</strong>
+                entre no painel do Supabase → <em>Authentication → Users → Add user → Create new user</em>,
+                preencha o e-mail e uma senha provisória, marque <em>Auto Confirm User</em> e confirme.
+                Peça para a pessoa entrar aqui com esse e-mail e senha — ela aparece nesta lista na hora.
+                Para <strong>trocar a senha de alguém</strong>, é na mesma tela, nos três pontinhos ao lado da pessoa.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+/* =====================================================================
+   PLENART SISTEMA – HUB (v5 — banco de dados)
+   As pessoas e os orçamentos ficam no Supabase. Toda a conversa com o
+   banco passa por PlenartDB (arquivo plenart-db.js), nunca daqui direto.
+   ===================================================================== */
+const TIPOS = { plenart: { nome: 'Comercial', arquivo: 'orcamento-plenart.html' }, sesc: { nome: 'SESC', arquivo: 'orcamento-sesc.html' } };
+const $ = id => document.getElementById(id);
+
+let usuarioLogado = null;      // { id, nome, email, admin }
+let filtroTipo = '';
+let listaOrc = [];             // o que veio do banco na última busca
+let pessoas = [];              // perfis
+let carregando = false;
+let avisoEstado = '';          // mensagem de erro/conexão que deve continuar na tela
+
+function brl(v){ return (Number(v)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
+function esc(t){ return String(t == null ? '' : t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
+function semAcento(t){ return String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+function inicial(nome){ return (String(nome || '?').trim()[0] || '?').toUpperCase(); }
+function fmtData(iso){
+    if(!iso) return '—';
+    try { return new Date(iso).toLocaleString('pt-BR', {day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'}); } catch(e) { return '—'; }
+}
+
+// =====================================================================
+// LOGIN
+// =====================================================================
+function mostrarErroLogin(txt){
+    $('loginErroTxt').textContent = txt;
+    const erro = $('loginErro');
+    erro.classList.add('visivel');
+    setTimeout(() => erro.classList.remove('visivel'), 6000);
+}
+async function fazerLogin(e){
+    e.preventDefault();
+    const btn = $('btnEntrar'), txt = $('btnEntrarTxt');
+    btn.disabled = true; txt.textContent = 'Entrando...';
+    let r;
+    try {
+        if(typeof PlenartDB === 'undefined') throw new Error('o arquivo plenart-db.js não foi carregado — ele precisa estar na mesma pasta deste arquivo');
+        r = await PlenartDB.entrar($('loginEmail').value, $('loginSenha').value);
+    } catch(err) {
+        console.error('Falha no login:', err);
+        r = { ok: false, msg: 'Erro inesperado: ' + ((err && err.message) || err) };
+    } finally {
+        btn.disabled = false; txt.textContent = 'Entrar';     // o botão nunca fica preso
+    }
+    if(!r.ok){ mostrarErroLogin(r.msg); return; }
+    $('loginSenha').value = '';
+    entrarNoApp(r.perfil);
+}
+function entrarNoApp(perfil){
+    usuarioLogado = perfil;
+    // veio de um orçamento que pediu login? volta para lá
+    const voltar = new URLSearchParams(location.search).get('voltar');
+    if(voltar && /^[\w.\-]+\.html(\?|$)/.test(voltar.replace(/^.*\//, ''))){ location.href = voltar; return; }
+    $('telaLogin').style.display = 'none';
+    $('appPrincipal').classList.add('ativo');
+    $('userAvatar').textContent = inicial(perfil.nome);
+    $('userNome').textContent = String(perfil.nome).split(' ')[0];
+    $('userRole').textContent = perfil.admin ? 'Admin' : 'Usuário';
+    $('hudUserNome').textContent = String(perfil.nome).split(' ')[0];
+    $('btnUsuarios').classList.toggle('escondido', !perfil.admin);
+    recarregarLista();
+    carregarPessoas();
+    PlenartDB.sincronizarPendentes();
+}
+function fazerLogout(){
+    if(!confirm('Tem certeza que deseja sair?')) return;
+    const pend = PlenartDB.naoSincronizados().length;
+    if(pend && !confirm(pend + ' orçamento(s) ainda não subiram para o banco. Sair mesmo assim?')) return;
+    usuarioLogado = null;
+    PlenartDB.sair();
+    $('telaLogin').style.display = 'flex';
+    $('appPrincipal').classList.remove('ativo');
+    $('loginEmail').value = ''; $('loginSenha').value = '';
+}
+(async function retomarSessao(){
+    const p = await PlenartDB.retomar();
+    if(p) entrarNoApp(p);
+})();
+
+// =====================================================================
+// LISTA DE ORÇAMENTOS
+// =====================================================================
+async function recarregarLista(avisar){
+    if(carregando) return;
+    carregando = true; avisoEstado = '';
+    $('avisoLocal').textContent = 'buscando no banco...';
+    const r = await PlenartDB.listar({});
+    carregando = false;
+    if(!r.ok){
+        listaOrc = [];
+        avisoEstado = r.semRede ? 'sem conexão com o banco' : ('erro: ' + (r.msg || ''));
+        renderLista();
+        if(avisar && r.semRede) alert('Não consegui falar com o banco. Verifique a internet e tente de novo.');
+        return;
+    }
+    listaOrc = r.lista;
+    montarFiltroPor();
+    renderLista();
+}
+function setFiltroTipo(t){
+    filtroTipo = t;
+    document.querySelectorAll('#segTipo button').forEach(b => {
+        const on = b.dataset.tipo === t;
+        b.className = on ? 'ativo ' + (t || '') : '';
+    });
+    renderLista();
+}
+function montarFiltroPor(){
+    const sel = $('filtroPor'); const atual = sel.value;
+    const nomes = new Set();
+    listaOrc.forEach(r => { const n = nomeDe(r.criado_por, r.criado_por_nome); if(n && n !== '—') nomes.add(n); });
+    pessoas.forEach(p => nomes.add(p.nome));
+    const ordenados = Array.from(nomes).sort((a,b) => a.localeCompare(b,'pt-BR'));
+    sel.innerHTML = '<option value="">Todos</option>' + ordenados.map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join('');
+    if(ordenados.includes(atual)) sel.value = atual;
+}
+/* o nome vem sempre do cadastro atual da pessoa; o nome gravado na linha é só reserva */
+function nomeDe(id, nomeGravado){
+    const p = id && pessoas.find(x => x.id === id);
+    return (p && p.nome) || nomeGravado || '—';
+}
+function limparFiltros(){
+    $('filtroPor').value = ''; $('filtroStatus').value = ''; $('filtroBusca').value = '';
+    setFiltroTipo('');
+}
+function renderLista(){
+    const tab = $('tabLista');
+    const por = $('filtroPor').value, status = $('filtroStatus').value;
+    const busca = semAcento($('filtroBusca').value.trim());
+    const total = listaOrc.length;
+    const lista = listaOrc.filter(r => {
+        if(filtroTipo && r.tipo !== filtroTipo) return false;
+        if(por && nomeDe(r.criado_por, r.criado_por_nome) !== por) return false;
+        if(status && (r.status || 'Rascunho') !== status) return false;
+        if(busca){
+            const alvo = semAcento([r.numero, r.cliente, r.evento, r.criado_por_nome].join(' '));
+            if(alvo.indexOf(busca) < 0) return false;
+        }
+        return true;
+    });
+    $('contadorOrc').textContent = lista.length === total ? String(total) : `${lista.length} de ${total}`;
+    if(!carregando){
+        const pend = PlenartDB.naoSincronizados().length;
+        $('avisoLocal').innerHTML = avisoEstado
+            ? `<span style="color:var(--laranja);font-style:normal"><i class="fas fa-plug-circle-xmark"></i> ${esc(avisoEstado)}</span>`
+            : (pend
+                ? `<span style="color:var(--laranja);font-style:normal"><i class="fas fa-triangle-exclamation"></i> ${pend} não sincronizado(s)</span>`
+                : (total ? 'no banco de dados' : ''));
+    }
+
+    if(!lista.length){
+        tab.innerHTML = `<tbody><tr><td colspan="8"><div class="vazio-lista"><i class="fas fa-inbox"></i><p>${total ? 'Nenhum orçamento com esses filtros.' : 'Nenhum orçamento ainda. Crie o primeiro nos cartões acima.'}</p>${total ? '' : botaoImportar()}</div></td></tr></tbody>`;
+        return;
+    }
+    const cabecalho = `<thead><tr>
+        <th></th><th>Nº</th><th>Cliente / Unidade · Evento</th><th>Situação</th><th>Criado por</th><th>Última alteração</th><th style="text-align:right">Valor</th><th></th>
+    </tr></thead>`;
+    const linhas = lista.map(r => {
+        const st = r.status || 'Rascunho';
+        const criador = nomeDe(r.criado_por, r.criado_por_nome);
+        const souEu = usuarioLogado && r.criado_por === usuarioLogado.id;
+        const podeMexer = souEu || (usuarioLogado && usuarioLogado.admin);
+        return `<tr onclick="abrirOrcamento('${r.id}')" title="Abrir este orçamento">
+            <td style="width:92px"><span class="tag-ata ${esc(r.tipo)}">${esc((TIPOS[r.tipo]||{}).nome || r.tipo)}</span></td>
+            <td class="col-num">${esc(r.numero || '—')}</td>
+            <td class="col-cliente">${esc(r.cliente || 'Sem nome')}${r.evento ? `<span class="evento">${esc(r.evento)}</span>` : ''}</td>
+            <td><span class="status ${semAcento(st)}">${esc(st)}</span></td>
+            <td class="col-por">${esc(criador)}${souEu ? ' <span style="color:var(--cinza);font-size:0.72rem">(você)</span>' : ''}</td>
+            <td class="col-data">${fmtData(r.atualizado_em)}${r.atualizado_por && r.atualizado_por !== r.criado_por ? `<span class="evento" style="display:block">por ${esc(nomeDe(r.atualizado_por, r.atualizado_por_nome))}</span>` : ''}</td>
+            <td class="col-valor">${brl(r.total)}</td>
+            <td class="col-acoes">
+                <button class="btn-acao" type="button" title="Duplicar" onclick="duplicarOrcamento('${r.id}', event)"><i class="fas fa-copy"></i></button>
+                ${podeMexer ? `<button class="btn-acao del" type="button" title="Excluir" onclick="excluirOrcamento('${r.id}', event)"><i class="fas fa-trash"></i></button>` : ''}
+            </td>
+        </tr>`;
+    }).join('');
+    tab.innerHTML = cabecalho + '<tbody>' + linhas + '</tbody>';
+}
+
+// =====================================================================
+// NOVO / ABRIR / DUPLICAR / EXCLUIR
+// =====================================================================
+function novoOrcamento(tipo){ window.location.href = TIPOS[tipo].arquivo + '?novo=' + uid(); }
+function abrirOrcamento(id){
+    const r = listaOrc.find(o => o.id === id); if(!r) return;
+    window.location.href = (TIPOS[r.tipo] || TIPOS.plenart).arquivo + '?id=' + encodeURIComponent(id);
+}
+async function duplicarOrcamento(id, ev){
+    if(ev) ev.stopPropagation();
+    if(!confirm('Criar uma cópia deste orçamento?')) return;
+    const r = await PlenartDB.carregar(id);
+    if(!r.ok){ alert('Não consegui abrir este orçamento: ' + (r.msg || 'erro')); return; }
+    const copia = JSON.parse(JSON.stringify(r.state));
+    copia.id = uid();
+    copia.evento = copia.evento || {};
+    copia.evento.numOrc = (copia.evento.numOrc || '') ? copia.evento.numOrc + ' (cópia)' : '';
+    copia.meta = copia.meta || {};
+    copia.meta.status = 'Rascunho';
+    copia.meta.criadoPor = usuarioLogado.nome;
+    copia.meta.criadoEm = new Date().toISOString();
+    copia.meta.atualizadoEm = copia.meta.criadoEm;
+    copia.meta.atualizadoPor = usuarioLogado.nome;
+    const g = await PlenartDB.salvar(copia, null);
+    if(!g.ok){ alert('Não consegui salvar a cópia: ' + (g.msg || 'erro')); return; }
+    recarregarLista();
+}
+async function excluirOrcamento(id, ev){
+    if(ev) ev.stopPropagation();
+    const r = listaOrc.find(o => o.id === id); if(!r) return;
+    if(!confirm(`Excluir o orçamento ${r.numero ? 'nº ' + r.numero : ''} "${r.cliente || 'sem nome'}"?\n\nNão dá para desfazer.`)) return;
+    const res = await PlenartDB.excluir(id);
+    if(!res.ok){ alert(res.msg || 'Não consegui excluir.'); return; }
+    recarregarLista();
+}
+
+// =====================================================================
+// IMPORTAR O QUE JÁ ESTAVA NESTE NAVEGADOR
+// =====================================================================
+function botaoImportar(){
+    const n = PlenartDB.lerAntigos().length;
+    if(!n) return '';
+    return `<button class="btn btn-primary" type="button" style="margin-top:14px" onclick="importarAntigos()">
+        <i class="fas fa-cloud-arrow-up"></i> Enviar para o banco os ${n} orçamento(s) salvos neste computador</button>`;
+}
+async function importarAntigos(){
+    const n = PlenartDB.lerAntigos().length;
+    if(!n){ alert('Não há orçamentos antigos neste navegador.'); return; }
+    if(!confirm(`Enviar ${n} orçamento(s) deste computador para o banco?\n\nOs que já estiverem lá são ignorados — nada é duplicado.`)) return;
+    const aviso = $('avisoLocal');
+    const r = await PlenartDB.importarAntigos((i, t) => { aviso.textContent = `enviando ${i} de ${t}...`; });
+    let msg = `Enviados: ${r.subiram}\nJá estavam no banco: ${r.jaExistiam}`;
+    if(r.falharam) msg += `\nFalharam: ${r.falharam}\n\n` + r.erros.slice(0, 5).join('\n');
+    alert(msg);
+    recarregarLista();
+}
+
+// =====================================================================
+// PESSOAS
+// =====================================================================
+let editandoUser = null;
+async function carregarPessoas(){
+    pessoas = await PlenartDB.perfis();
+    montarFiltroPor();
+    if(listaOrc.length) renderLista();   // os nomes da lista vêm do cadastro
+}
+async function abrirUsuarios(){
+    if(!usuarioLogado || !usuarioLogado.admin){ alert('Só um admin pode administrar as pessoas.'); return; }
+    cancelarEdicaoUser();
+    $('modalUsuarios').classList.add('aberto');
+    $('corpoUsuarios').innerHTML = '<tr><td colspan="5" style="color:var(--cinza)">buscando...</td></tr>';
+    await carregarPessoas();
+    renderUsuarios();
+}
+function fecharUsuarios(){ $('modalUsuarios').classList.remove('aberto'); cancelarEdicaoUser(); renderLista(); }
+function renderUsuarios(){
+    const corpo = $('corpoUsuarios');
+    if(!pessoas.length){ corpo.innerHTML = '<tr><td colspan="5" style="color:var(--cinza)">ninguém cadastrado ainda</td></tr>'; return; }
+    corpo.innerHTML = pessoas.map(p => {
+        const euMesmo = usuarioLogado && usuarioLogado.id === p.id;
+        return `<tr${p.ativo === false ? ' style="opacity:.55"' : ''}>
+            <td class="u-nome">${esc(p.nome)}${euMesmo ? ' <span style="color:var(--cinza);font-size:0.74rem">(você)</span>' : ''}</td>
+            <td class="u-login">${esc(p.email)}</td>
+            <td><span class="perfil ${p.admin ? 'admin' : 'usuario'}">${p.admin ? 'Admin' : 'Usuário'}</span></td>
+            <td style="font-size:0.8rem;color:${p.ativo === false ? 'var(--vermelho, #c62828)' : 'var(--cinza)'}">${p.ativo === false ? 'Desativado' : 'Ativo'}</td>
+            <td style="text-align:right;white-space:nowrap">
+                <button class="btn-acao" type="button" title="Editar" onclick="editarUser('${esc(p.id)}')"><i class="fas fa-pen"></i></button>
+            </td>
+        </tr>`;
+    }).join('');
+}
+function msgUser(txt, tipo){
+    const el = $('formUserMsg');
+    el.textContent = txt || '';
+    el.className = 'msg' + (txt ? ' ' + tipo : '');
+    if(txt && tipo === 'ok') setTimeout(() => { if(el.textContent === txt){ el.textContent=''; el.className='msg'; } }, 3500);
+}
+function editarUser(id){
+    const p = pessoas.find(x => x.id === id); if(!p) return;
+    editandoUser = id;
+    $('uNome').value = p.nome; $('uEmail').value = p.email;
+    $('uRole').value = p.admin ? 'admin' : 'usuario';
+    $('uAtivo').value = p.ativo === false ? 'nao' : 'sim';
+    ['uNome','uRole','uAtivo'].forEach(x => $(x).disabled = false);
+    $('btnSalvarUser').disabled = false;
+    $('formUserTitulo').innerHTML = '<i class="fas fa-user-pen"></i> Editando "' + esc(p.nome) + '"';
+    $('btnCancelarEdicao').style.display = '';
+    msgUser('', '');
+    $('uNome').focus();
+}
+function cancelarEdicaoUser(){
+    editandoUser = null;
+    $('uNome').value = ''; $('uEmail').value = '';
+    $('uRole').value = 'usuario'; $('uAtivo').value = 'sim';
+    ['uNome','uRole','uAtivo'].forEach(x => $(x).disabled = true);
+    $('btnSalvarUser').disabled = true;
+    $('formUserTitulo').innerHTML = '<i class="fas fa-user-pen"></i> Editar pessoa';
+    $('btnCancelarEdicao').style.display = 'none';
+    msgUser('', '');
+}
+async function salvarUsuarioForm(){
+    if(!editandoUser) return;
+    const p = pessoas.find(x => x.id === editandoUser); if(!p) return;
+    const nome = $('uNome').value.trim();
+    const admin = $('uRole').value === 'admin';
+    const ativo = $('uAtivo').value === 'sim';
+    if(nome.length < 2){ msgUser('Informe o nome.', 'erro'); $('uNome').focus(); return; }
+    if(p.admin && !admin && pessoas.filter(x => x.admin && x.ativo !== false).length <= 1){
+        msgUser('Este é o único admin — deixe pelo menos um.', 'erro'); return;
+    }
+    if(usuarioLogado.id === editandoUser && !admin && !confirm('Você está tirando o seu próprio acesso de admin. Continuar?')) return;
+    if(usuarioLogado.id === editandoUser && !ativo){ msgUser('Você não pode desativar o seu próprio acesso.', 'erro'); return; }
+    const r = await PlenartDB.atualizarPerfil(editandoUser, { nome, admin, ativo });
+    if(!r.ok){ msgUser(r.msg || 'Não consegui salvar.', 'erro'); return; }
+    await carregarPessoas();
+    cancelarEdicaoUser();
+    renderUsuarios();
+    msgUser('Alterações salvas.', 'ok');
+}
+
+// volta do descanso: confere se alguém mexeu em algo
+window.addEventListener('focus', () => { if(usuarioLogado) recarregarLista(); });
+
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && $('modalUsuarios').classList.contains('aberto')) fecharUsuarios(); });
+</script>
+</body>
+</html>

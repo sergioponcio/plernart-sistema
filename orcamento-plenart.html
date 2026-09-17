@@ -1,0 +1,2285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orçamento – Grupo Tendas Plenart</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+    --azul: #1a2d6b;
+    --azul-med: #2a4490;
+    --azul-claro: #e8ecf5;
+    --laranja: #f47920;
+    --laranja-med: #e35900;
+    --laranja-claro: #fff1e6;
+    --verde: #2e7d32;
+    --vermelho: #c62828;
+    --cinza: #607d8b;
+    --bg: #f0f4f8;
+    --branco: #ffffff;
+    --texto: #1a2a3a;
+    --borda: #d0dde8;
+    --sombra: 0 2px 12px rgba(26,45,107,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Source Sans 3', sans-serif; background: var(--bg); color: var(--texto); min-height: 100vh; }
+.print-only { display: none; }
+
+/* ===== TOPO (tela) ===== */
+.topo { background: linear-gradient(135deg, var(--azul) 0%, var(--azul-med) 100%); padding: 18px 40px; display: flex; align-items: center; gap: 18px; box-shadow: 0 4px 20px rgba(26,45,107,0.25); position: relative; overflow: hidden; flex-wrap: wrap; }
+.topo::before { content: ''; position: absolute; top: -50%; right: -10%; width: 400px; height: 200%; background: var(--laranja); opacity: 0.08; transform: rotate(15deg); pointer-events: none; }
+.topo > * { position: relative; z-index: 1; }
+.logo-icon { width: 56px; height: 56px; background: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 26px; color: var(--azul); flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.topo-texto h1 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.4rem; color: #fff; letter-spacing: 0.5px; }
+.topo-texto h1 .destaque { color: var(--laranja); }
+.topo-texto p { color: rgba(255,255,255,0.85); font-size: 0.85rem; margin-top: 3px; font-style: italic; }
+.topo-dir { margin-left: auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.topo-fone { background: var(--laranja); color: #fff; padding: 8px 16px; border-radius: 20px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; }
+.topo-user { background: rgba(255,255,255,0.14); color: #fff; padding: 7px 14px; border-radius: 20px; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.8rem; display: none; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.25); }
+.topo-user.visivel { display: flex; }
+.btn-hub { background: rgba(255,255,255,0.15); color: #fff; padding: 8px 14px; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.82rem; text-decoration: none; display: flex; align-items: center; gap: 7px; transition: all .2s; border: 1.5px solid rgba(255,255,255,0.25); }
+.btn-hub:hover { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.5); transform: translateX(-2px); }
+
+/* ===== CABEÇALHO DE IMPRESSÃO ===== */
+.print-cabecalho { display: none; }
+
+/* ===== LAYOUT ===== */
+.container { max-width: 1180px; margin: 26px auto; padding: 0 18px 40px; display: flex; flex-direction: column; gap: 18px; }
+.card { background: var(--branco); border-radius: 12px; box-shadow: var(--sombra); border: 1px solid var(--borda); overflow: hidden; }
+.card-header { background: linear-gradient(90deg, var(--azul-claro) 0%, #fff 100%); border-bottom: 2px solid var(--azul); padding: 12px 22px; display: flex; align-items: center; gap: 9px; }
+.card-header i { color: var(--azul); font-size: 0.95rem; }
+.card-header h2, .card-header h3 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--azul); }
+.card-header .dica { margin-left: auto; font-size: 0.78rem; color: var(--cinza); font-weight: 400; font-family: 'Source Sans 3', sans-serif; }
+.card-body { padding: 20px 22px; }
+
+/* ===== FORMULÁRIOS ===== */
+.grid-evento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.grid-evento .full { grid-column: 1 / -1; }
+.form-group { display: flex; flex-direction: column; gap: 4px; }
+.form-group label { font-size: 0.72rem; font-weight: 700; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.5px; }
+.form-group input, .form-group select, .form-group textarea { padding: 9px 11px; border: 1.5px solid var(--borda); border-radius: 7px; font-family: 'Source Sans 3', sans-serif; font-size: 0.93rem; color: var(--texto); background: #fafcff; transition: border-color .2s, box-shadow .2s; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--azul-med); box-shadow: 0 0 0 3px rgba(42,68,144,.12); background: #fff; }
+textarea { resize: vertical; min-height: 80px; width: 100%; }
+
+/* inputs numéricos da tabela e dos totais */
+.inp { padding: 6px 7px; border: 1.5px solid var(--borda); border-radius: 6px; font-family: 'Source Sans 3', sans-serif; font-size: 0.9rem; background: #fafcff; color: var(--texto); }
+.inp:focus { outline: none; border-color: var(--laranja); box-shadow: 0 0 0 3px rgba(244,121,32,.18); background: #fff; }
+.inp-qtd, .inp-dia { width: 62px; text-align: center; background: #eef3ff; border-color: #b9c7e6; font-weight: 700; color: var(--azul); }
+.money { display: inline-flex; align-items: center; border: 1.5px solid #f3c9a3; border-radius: 6px; background: #fff7ef; padding-left: 7px; }
+.money > span { font-size: 0.7rem; color: #b35c12; font-weight: 700; margin-right: 3px; }
+.money .inp-money { border: none; background: transparent; text-align: right; padding: 6px 7px 6px 0; width: 92px; box-shadow: none; }
+.money:focus-within { border-color: var(--laranja); box-shadow: 0 0 0 3px rgba(244,121,32,.18); background: #fff; }
+.pct-wrap { display: inline-flex; align-items: center; border: 1.5px solid var(--borda); border-radius: 6px; background: #fafcff; padding-right: 8px; }
+.pct-wrap .inp { border: none; background: transparent; text-align: right; width: 80px; box-shadow: none; }
+.pct-wrap > span { font-size: 0.8rem; color: var(--cinza); font-weight: 700; }
+.pct-wrap:focus-within { border-color: var(--azul-med); box-shadow: 0 0 0 3px rgba(42,68,144,.12); }
+
+/* ===== SALAS ===== */
+.sala-controls { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; padding: 10px 14px; background: linear-gradient(90deg, #e8f5e9 0%, #fff 100%); border-left: 3px solid var(--verde); border-radius: 6px; flex-wrap: wrap; }
+.sala-controls .lbl { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; color: var(--verde); text-transform: uppercase; letter-spacing: 0.4px; }
+.sala-controls input[type="text"] { flex: 1; min-width: 180px; padding: 8px 10px; border: 1.5px solid var(--borda); border-radius: 6px; font-size: 0.9rem; background: #fff; font-family: inherit; }
+.sala-controls input[type="text"]:focus { outline: none; border-color: var(--verde); }
+.btn-sala { background: var(--verde); color: #fff; padding: 8px 14px; font-size: 0.82rem; }
+.btn-sala:hover { background: #1b5e20; }
+.add-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+.add-row .form-group.prod { flex: 1; min-width: 280px; }
+.add-row select { width: 100%; }
+
+/* ===== TABELA DE ITENS ===== */
+.tabela-wrap { overflow-x: auto; margin-top: 16px; border-radius: 8px; border: 1px solid var(--borda); }
+#tabelaOrc { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+#tabelaOrc thead tr { background: linear-gradient(90deg, var(--azul) 0%, #1976d2 100%); color: #fff; }
+#tabelaOrc thead th { padding: 7px 8px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.72rem; letter-spacing: .3px; text-align: left; white-space: nowrap; vertical-align: middle; }
+#tabelaOrc thead tr.grupos th { text-align: center; font-size: 0.66rem; letter-spacing: .6px; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,.35); }
+#tabelaOrc thead th.grp-hq { background: rgba(255,255,255,.12); }
+#tabelaOrc thead th.grp-hv { background: rgba(244,121,32,.55); }
+#tabelaOrc thead th.grp-ht { background: rgba(0,0,0,.18); }
+#tabelaOrc thead tr.grupos th[rowspan] { text-align: left; font-size: 0.72rem; text-transform: none; letter-spacing: .3px; }
+#tabelaOrc thead tr.grupos th.col-sub { text-align: right; }
+#tabelaOrc thead tr.sub th { font-weight: 600; font-size: 0.7rem; text-align: center; }
+#tabelaOrc thead tr.sub th.grp-v { background: rgba(244,121,32,.35); }
+#tabelaOrc thead tr.sub th.grp-q { background: rgba(255,255,255,.07); }
+#tabelaOrc thead tr.sub th.grp-t { background: rgba(0,0,0,.12); }
+#tabelaOrc tbody tr { border-bottom: 1px solid var(--borda); transition: background .15s; }
+#tabelaOrc tbody tr.item:hover { background: #f7f9fd; }
+#tabelaOrc tbody tr.item:focus-within { background: #fffbe6 !important; box-shadow: inset 4px 0 0 var(--laranja); }
+#tabelaOrc tbody td { padding: 7px 8px; vertical-align: middle; }
+#tabelaOrc td.grp-q { text-align: center; }
+#tabelaOrc td.grp-v { text-align: right; white-space: nowrap; }
+#tabelaOrc td.tot { color: #78909c; font-size: 0.8rem; white-space: nowrap; text-align: right; }
+#tabelaOrc td.col-sub { font-weight: 700; color: var(--verde); font-size: 0.93rem; white-space: nowrap; text-align: right; }
+#tabelaOrc th.col-sub { text-align: right; }
+#tabelaOrc td.col-num { width: 56px; white-space: nowrap; color: var(--cinza); font-size: 0.8rem; }
+#tabelaOrc td.col-prod { font-weight: 600; min-width: 190px; }
+#tabelaOrc td.col-acoes { white-space: nowrap; text-align: right; }
+.alca { cursor: grab; margin-right: 6px; width: 16px; height: 22px; border-radius: 4px; display: inline-block; vertical-align: middle; background-image: radial-gradient(#b0bec5 1.3px, transparent 1.4px); background-size: 6px 6px; background-position: 2px 2px; background-repeat: repeat; }
+.alca i { display: none; }
+.alca:hover { background-color: var(--laranja-claro); background-image: radial-gradient(var(--laranja) 1.3px, transparent 1.4px); }
+.alca:active { cursor: grabbing; }
+.sala-header-row .alca { background-image: radial-gradient(rgba(255,255,255,.75) 1.3px, transparent 1.4px); }
+.sala-header-row .alca:hover { background-color: rgba(255,255,255,.15); background-image: radial-gradient(#fff 1.3px, transparent 1.4px); }
+tr.item.dragging { opacity: .35; }
+tr.drop-antes td { box-shadow: inset 0 3px 0 var(--laranja); }
+tr.drop-depois td { box-shadow: inset 0 -3px 0 var(--laranja); }
+tr.drop-dentro td { background: var(--laranja-claro) !important; }
+body.arrastando, body.arrastando * { cursor: grabbing !important; user-select: none; }
+.alca { touch-action: none; }
+.drag-ghost { position: fixed; z-index: 1000; pointer-events: none; background: var(--azul); color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.8rem; padding: 6px 12px; border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,.25); max-width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tag-extra { display: inline-block; background: var(--laranja); color: #fff; font-size: 0.62rem; font-weight: 700; padding: 1px 6px; border-radius: 4px; vertical-align: middle; margin-right: 2px; letter-spacing: .4px; }
+.col-oculta { color: #c5d0db !important; font-weight: 400 !important; font-style: italic; background: repeating-linear-gradient(45deg, #f5f7fa, #f5f7fa 4px, #fafbfc 4px, #fafbfc 8px); }
+.col-oculta .money { opacity: .35; }
+.mover { padding: 5px 6px; border: 1.5px solid var(--borda); border-radius: 6px; font-family: inherit; font-size: 0.78rem; color: var(--cinza); background: #fff; max-width: 120px; margin-right: 6px; cursor: pointer; }
+.btn-del { background: #ffebee; color: var(--vermelho); border: none; border-radius: 6px; width: 32px; height: 30px; cursor: pointer; font-size: 0.95rem; font-weight: 700; line-height: 1; }
+.btn-del:hover { background: var(--vermelho); color: #fff; }
+.vazio td { text-align: center; padding: 30px; color: var(--cinza); font-style: italic; }
+
+.sala-header-row { background: linear-gradient(90deg, #455a64 0%, #607d8b 100%) !important; color: #fff; }
+.sala-header-row td { padding: 8px 12px !important; border: none !important; }
+.sala-header-row .sala-linha { display: flex; align-items: center; gap: 10px; }
+.sala-header-row .sala-titulo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.6px; display: flex; align-items: center; gap: 9px; flex: 1; }
+.sala-header-row .btn-mini { background: rgba(255,255,255,.14); color: #fff; border: 1px solid rgba(255,255,255,.3); border-radius: 5px; padding: 4px 10px; font-size: 0.72rem; font-family: 'Montserrat', sans-serif; font-weight: 700; cursor: pointer; }
+.sala-header-row .btn-mini:hover { background: rgba(255,255,255,.28); }
+.sala-header-row .btn-mini.del { background: var(--vermelho); border-color: var(--vermelho); }
+.sala-header-row .btn-mini.del:hover { background: #b71c1c; }
+.sala-footer-row { background: #f0f4f8 !important; border-top: 2px solid #b0bec5 !important; }
+.sala-footer-row td { padding: 8px 12px !important; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; color: #455a64; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; }
+.sala-footer-row td.lbl-total { overflow: hidden; text-overflow: ellipsis; max-width: 0; }
+.sala-footer-row td.sala-total { color: var(--verde); font-size: 0.95rem; text-align: right; white-space: nowrap; }
+.sala-vazia td { text-align: center; padding: 12px !important; color: var(--cinza); font-style: italic; font-size: 0.84rem; background: #fafafa; }
+.sem-sala-divisor td { background: #fafafa !important; padding: 6px 14px !important; font-size: 0.72rem !important; color: var(--cinza) !important; font-style: italic; border-top: 1px dashed var(--borda) !important; border-bottom: 1px dashed var(--borda) !important; }
+.sem-sala-divisor.oculto td { padding: 3px 14px !important; font-size: 0.68rem !important; color: #90a4ae !important; }
+
+.th-sub { display: block; font-weight: 600; font-size: 0.62rem; opacity: .85; text-transform: none; letter-spacing: 0; margin-top: 1px; }
+
+/* ===== BUSCA DE PRODUTO ===== */
+.combo { position: relative; }
+.combo > input { width: 100%; padding: 9px 32px 9px 11px; border: 1.5px solid var(--borda); border-radius: 7px; font-family: 'Source Sans 3', sans-serif; font-size: 0.93rem; color: var(--texto); background: #fafcff; cursor: pointer; text-overflow: ellipsis; }
+.combo > input:focus { outline: none; border-color: var(--azul-med); box-shadow: 0 0 0 3px rgba(42,68,144,.12); background: #fff; cursor: text; }
+.combo .combo-seta { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--cinza); font-size: 0.78rem; pointer-events: none; transition: transform .2s; }
+.combo.aberto .combo-seta { transform: translateY(-50%) rotate(180deg); }
+.combo-lista { position: absolute; z-index: 40; left: 0; right: 0; top: calc(100% + 4px); background: #fff; border: 1.5px solid var(--azul-med); border-radius: 8px; box-shadow: 0 12px 30px rgba(26,45,107,.20); max-height: 340px; overflow-y: auto; display: none; }
+.combo.aberto .combo-lista { display: block; }
+.combo-grupo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.64rem; text-transform: uppercase; letter-spacing: .5px; color: var(--cinza); background: #eef3fb; padding: 5px 12px; position: sticky; top: 0; }
+.combo-op { padding: 8px 12px; font-size: 0.88rem; cursor: pointer; border-bottom: 1px solid #f0f4f8; }
+.combo-op:last-child { border-bottom: none; }
+.combo-op mark { background: #ffe9a8; color: inherit; padding: 0 1px; border-radius: 2px; }
+.combo-op.ativo, .combo-op:hover { background: var(--azul-claro); }
+.combo-op .preco { float: right; color: var(--cinza); font-size: 0.74rem; font-family: 'Montserrat', sans-serif; font-weight: 700; margin-left: 12px; }
+.combo-vazio { padding: 16px 12px; font-size: 0.86rem; color: var(--cinza); font-style: italic; text-align: center; }
+
+/* ===== VALORES NO ORÇAMENTO (material / serviço / frete) ===== */
+.valores-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 16px; margin-bottom: 2px; padding: 10px 14px; background: linear-gradient(90deg, var(--laranja-claro) 0%, #fff 100%); border-left: 3px solid var(--laranja); border-radius: 6px; }
+.valores-bar > .lbl { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.75rem; color: var(--laranja-med); text-transform: uppercase; letter-spacing: .4px; display: flex; align-items: center; gap: 7px; }
+.comp-chip { display: inline-flex; align-items: center; gap: 7px; padding: 6px 13px; border-radius: 20px; border: 2px solid var(--laranja); background: var(--laranja); color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.76rem; cursor: pointer; transition: all .15s; }
+.comp-chip .est { font-weight: 600; font-size: 0.65rem; opacity: .9; text-transform: none; letter-spacing: 0; }
+.comp-chip.off { background: #fff; color: var(--cinza); border-color: var(--borda); }
+.comp-chip.fora { background: #eceff1; color: #90a4ae; border-color: #cfd8dc; text-decoration: line-through; text-decoration-thickness: 1.5px; }
+.comp-chip.fora .est { text-decoration: none; display: inline-block; }
+.comp-chip:hover { transform: translateY(-1px); box-shadow: 0 3px 9px rgba(0,0,0,.12); }
+.valores-bar .opt { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--texto-suave); cursor: pointer; white-space: nowrap; }
+.valores-bar .opt input { accent-color: var(--laranja); }
+.valores-bar .opt.desligada { opacity: .4; cursor: not-allowed; }
+.dica-valores { flex-basis: 100%; font-size: 0.79rem; color: var(--texto-suave); font-style: italic; padding-top: 2px; }
+.dica-valores strong { color: var(--azul); font-style: normal; }
+
+/* ===== SOMADO NO TOTAL ===== */
+.extras-total { margin-top: 12px; border: 1.5px solid var(--borda); border-radius: 8px; overflow: hidden; display: none; }
+.extras-total.visivel { display: block; }
+.extras-total .et-titulo { background: #eceff1; padding: 6px 14px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.71rem; color: #546e7a; text-transform: uppercase; letter-spacing: .4px; }
+.et-linha { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 7px 14px; font-size: 0.88rem; border-top: 1px solid var(--borda); }
+.et-linha .et-nome { font-weight: 600; }
+.et-linha .et-val { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--azul); white-space: nowrap; }
+
+/* ===== EXTRAS / ATERRAMENTO ===== */
+.bloco-extras { margin-top: 18px; }
+.bloco-titulo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--laranja); margin-bottom: 8px; }
+.extras-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 10px; align-items: end; padding: 14px; background: #fafcff; border: 1.5px dashed var(--borda); border-radius: 8px; }
+.extras-grid .form-group label { color: var(--laranja); }
+.bloco-ater { margin-top: 16px; padding: 14px; background: #fffde7; border: 1.5px solid #f9a825; border-radius: 8px; }
+.bloco-ater .bloco-titulo { color: #f57f17; }
+.bloco-ater .desc { font-size: 0.82rem; color: var(--cinza); margin-bottom: 10px; }
+
+/* ===== SIMULAÇÃO / MANUTENÇÃO ===== */
+.sim-toggle, .man-toggle { width: 100%; padding: 14px 22px; border: none; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: background .2s; }
+.sim-toggle { background: linear-gradient(90deg, #fff3e0 0%, #fff 100%); border-bottom: 2px solid var(--laranja); color: var(--laranja); }
+.sim-toggle:hover { background: linear-gradient(90deg, #ffe0b2 0%, #fff 100%); }
+.man-toggle { background: linear-gradient(90deg, #e8f5e9 0%, #fff 100%); border-bottom: 2px solid var(--verde); color: var(--verde); }
+.man-toggle:hover { background: linear-gradient(90deg, #c8e6c9 0%, #fff 100%); }
+.sim-toggle .left, .man-toggle .left { display: flex; align-items: center; gap: 9px; }
+.sim-toggle .chevron, .man-toggle .chevron { transition: transform .3s; }
+.sim-toggle.open .chevron, .man-toggle.open .chevron { transform: rotate(180deg); }
+.badge-on { background: var(--verde); color: #fff; font-size: 0.7rem; padding: 2px 9px; border-radius: 10px; margin-left: 8px; display: none; }
+.sim-toggle .badge-on { background: var(--laranja); }
+.tem-valor .badge-on { display: inline-block; }
+.sim-body, .man-body { display: none; padding: 22px; }
+.sim-body.open, .man-body.open { display: block; }
+.sim-intro { background: var(--laranja-claro); border-left: 4px solid var(--laranja); padding: 12px 16px; border-radius: 6px; font-size: 0.85rem; margin-bottom: 18px; line-height: 1.5; }
+.man-intro { background: #e8f5e9; border-left: 4px solid var(--verde); padding: 12px 16px; border-radius: 6px; font-size: 0.85rem; margin-bottom: 18px; line-height: 1.5; }
+.sim-section-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--azul); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.sim-table-wrap { overflow-x: auto; border: 1px solid var(--borda); border-radius: 8px; margin-bottom: 20px; }
+.sim-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.sim-table thead tr { background: #fafcff; border-bottom: 2px solid var(--borda); }
+.sim-table th { padding: 9px 10px; text-align: left; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.72rem; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.3px; white-space: nowrap; }
+.sim-table tbody tr { border-bottom: 1px solid var(--borda); }
+.sim-table tbody tr:last-child { border-bottom: none; }
+.sim-table td { padding: 8px 10px; vertical-align: middle; }
+.sim-table td.b { font-weight: 600; }
+.sim-table td.cinza, .sim-table td.trav { color: var(--cinza); }
+.sim-table td.trav { text-align: center; }
+.sim-table td input[type="number"] { width: 80px; padding: 5px 7px; border: 1.5px solid var(--borda); border-radius: 6px; font-size: 0.86rem; text-align: center; background: #fff; font-family: inherit; }
+.sim-table td input[type="number"]:focus { outline: none; border-color: var(--laranja); }
+.sim-table tfoot td { background: #fafcff; border-top: 2px solid var(--borda); padding: 8px 10px; }
+.sim-table tfoot td.lbl { text-align: right; font-weight: 700; color: var(--cinza); text-transform: uppercase; font-size: 0.76rem; }
+.sim-total-val { font-weight: 700; color: var(--azul); white-space: nowrap; }
+.aux-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+.aux-head .sim-section-title { margin-bottom: 0; }
+.aux-add { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.aux-add .lbl { font-size: 0.74rem; color: var(--cinza); font-weight: 700; text-transform: uppercase; letter-spacing: .4px; }
+.btn-add { background: #fff; border: 1.5px solid var(--borda); color: var(--azul); border-radius: 16px; padding: 5px 12px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.74rem; cursor: pointer; transition: all .15s; }
+.btn-add:hover { border-color: var(--laranja); color: var(--laranja-med); background: var(--laranja-claro); }
+.aux-table td { vertical-align: middle; }
+.aux-table input.aux-desc { width: 100%; min-width: 150px; padding: 5px 8px; border: 1.5px solid var(--borda); border-radius: 6px; font-family: inherit; font-size: 0.86rem; background: #fff; }
+.aux-table select.aux-tipo { padding: 5px 6px; border: 1.5px solid var(--borda); border-radius: 6px; font-family: inherit; font-size: 0.78rem; background: #fff; color: var(--texto-suave); cursor: pointer; }
+.aux-table .money { border-color: var(--borda); background: #fff; }
+.aux-table .money .inp-money { width: 78px; font-size: 0.86rem; }
+.aux-table .trav { color: #b0bec5; text-align: center; }
+.aux-table .aux-total { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--azul); white-space: nowrap; text-align: right; }
+.aux-table .col-x { width: 34px; text-align: right; }
+.aux-vazia td { text-align: center; color: var(--cinza); font-style: italic; font-size: 0.85rem; padding: 14px !important; }
+.opt-mostrar { display: flex; align-items: center; gap: 8px; margin: 10px 0 18px; font-size: 0.85rem; color: var(--texto-suave); cursor: pointer; flex-wrap: wrap; }
+.opt-mostrar input { accent-color: var(--laranja); width: 15px; height: 15px; }
+.opt-mostrar .aviso { font-size: 0.78rem; color: var(--laranja-med); font-style: italic; }
+.card-memoria { display: none; }
+.memoria-bloco { margin-bottom: 10px; }
+.memoria-bloco:last-child { margin-bottom: 0; }
+.memoria-titulo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; color: var(--azul); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 4px; }
+.memoria-tab { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.memoria-tab th { text-align: left; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.62rem; color: var(--cinza); text-transform: uppercase; letter-spacing: .3px; padding: 3px 8px; border-bottom: 1px solid var(--borda); }
+.memoria-tab td { padding: 3px 8px; border-bottom: 1px solid #eef2f6; }
+.memoria-tab td.n { text-align: center; }
+.memoria-tab td.v, .memoria-tab th.v { text-align: right; white-space: nowrap; }
+.memoria-tab tfoot td { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--azul); border-bottom: none; border-top: 1.5px solid var(--borda); }
+.man-total-val { font-weight: 700; color: var(--verde); white-space: nowrap; }
+.comparacao { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 4px; }
+.comp-card { background: #fff; border: 2px solid var(--borda); border-radius: 10px; padding: 16px 18px; position: relative; }
+.comp-card.escolhido { border-color: var(--verde); background: #f1f8f4; }
+.comp-card.escolhido::after { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; top: 12px; right: 14px; color: var(--verde); font-size: 1.1rem; }
+.comp-titulo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+.comp-subtitle { font-size: 0.78rem; color: var(--cinza); margin-bottom: 10px; }
+.comp-final { margin-top: 8px; padding-top: 10px; border-top: 2px solid var(--borda); display: flex; justify-content: space-between; align-items: baseline; }
+.comp-final .lbl { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85rem; }
+.comp-final .val { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.15rem; color: var(--azul); }
+.comp-card.escolhido .comp-final .val { color: var(--verde); }
+.comp-diff { margin-top: 10px; padding: 6px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; text-align: center; }
+.comp-diff.economia { background: #e8f5e9; color: var(--verde); }
+.comp-diff.acima { background: #ffebee; color: var(--vermelho); }
+.comp-diff.igual { background: #eceff1; color: var(--cinza); }
+.sim-switches { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0 24px; }
+.sim-switch-card { background: #fafcff; border: 2px solid var(--borda); border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 14px; transition: all .2s; }
+.sim-switch-card.ativo { border-color: var(--laranja); background: var(--laranja-claro); }
+.sim-switch-card .label { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.88rem; }
+.sim-switch-card .desc { font-size: 0.78rem; color: var(--cinza); margin-top: 2px; }
+.toggle-switch { position: relative; width: 52px; height: 28px; background: #ccc; border-radius: 14px; cursor: pointer; transition: background .2s; flex-shrink: 0; }
+.toggle-switch.on { background: var(--laranja); }
+.toggle-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; background: #fff; border-radius: 50%; transition: transform .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+.toggle-switch.on::after { transform: translateX(24px); }
+
+/* ===== RESUMO FINANCEIRO ===== */
+.resumo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+.resumo-card { background: #fafcff; border: 1.5px solid var(--borda); border-radius: 10px; padding: 12px 16px; position: relative; }
+.resumo-card .icone { position: absolute; top: 12px; right: 14px; font-size: 1rem; color: var(--azul); opacity: 0.4; }
+.resumo-card .label { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--cinza); margin-bottom: 4px; }
+.resumo-card .valor { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--azul); }
+.resumo-card .valor.nc { color: var(--cinza); font-style: italic; font-size: 0.9rem; font-weight: 600; }
+.resumo-card .tag { display: inline-block; margin-top: 4px; padding: 2px 8px; border-radius: 10px; font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+.resumo-card .tag.tabela { background: #e3f2fd; color: var(--azul-med); }
+.resumo-card .tag.simulado { background: var(--laranja-claro); color: var(--laranja); }
+.resumo-subtotal { margin-top: 12px; padding: 10px 18px; background: linear-gradient(90deg, var(--azul-claro) 0%, #fff 100%); border-left: 4px solid var(--azul); border-radius: 8px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.resumo-subtotal .lbl { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.82rem; color: var(--azul); text-transform: uppercase; letter-spacing: 0.5px; }
+.resumo-subtotal .val { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.3rem; color: var(--azul); }
+.resumo-frete-info { margin-top: 10px; padding: 8px 14px; background: #fff; border: 1px dashed var(--borda); border-radius: 6px; font-size: 0.82rem; color: var(--cinza); }
+.resumo-frete-info span { font-weight: 700; color: var(--azul-med); }
+.trib-desc-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 18px; margin: 18px 0 14px; padding-top: 16px; border-top: 1px dashed var(--borda); }
+.trib-tabs { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 4px; }
+.trib-btn { padding: 8px 14px; border: 2px solid var(--borda); border-radius: 20px; background: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; cursor: pointer; transition: all .2s; color: var(--cinza); }
+.trib-btn.ativo { border-color: var(--azul); background: var(--azul); color: #fff; }
+.trib-outro { display: inline-flex; align-items: center; gap: 6px; }
+.desconto-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+.desconto-row .ou { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--cinza); font-size: 0.9rem; }
+.desconto-row small { flex-basis: 100%; color: var(--cinza); font-style: italic; font-size: 0.78rem; }
+.totais-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.total-card { border-radius: 10px; padding: 12px 16px; text-align: center; border: 1.5px solid var(--borda); background: #fafcff; }
+.total-card .lbl { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--cinza); margin-bottom: 4px; }
+.total-card .val { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--texto); }
+.total-card .sub { font-size: 0.72rem; color: var(--cinza); margin-top: 3px; }
+.total-card.destaque { background: linear-gradient(135deg, var(--azul) 0%, #1976d2 100%); border-color: var(--azul); box-shadow: 0 4px 16px rgba(13,71,161,.20); }
+.total-card.destaque .lbl { color: rgba(255,255,255,.8); }
+.total-card.destaque .val { color: #fff; font-size: 1.35rem; }
+
+/* ===== PAGAMENTO ===== */
+.pag-config { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; margin-bottom: 16px; }
+.pag-parcelas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.pag-parcela-card { background: #fafcff; border: 1.5px solid var(--borda); border-radius: 8px; padding: 12px 14px; }
+.pag-parcela-card .num { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.82rem; color: var(--azul); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.4px; }
+.pag-parcela-card .campos { display: grid; grid-template-columns: 1fr 1.3fr; gap: 8px; margin-bottom: 8px; }
+.pag-parcela-card label { font-size: 0.68rem; color: var(--cinza); font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; display: block; margin-bottom: 3px; }
+.pag-parcela-card input { padding: 7px 10px; border: 1.5px solid var(--borda); border-radius: 6px; font-size: 0.88rem; width: 100%; font-family: inherit; }
+.pag-parcela-card input:focus { outline: none; border-color: var(--azul-med); }
+.pag-parcela-card .calc { background: var(--azul-claro); padding: 6px 10px; border-radius: 5px; font-size: 0.82rem; text-align: center; font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--azul); }
+.pag-aviso { margin-top: 12px; padding: 10px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; display: none; }
+.pag-aviso.erro { background: #ffebee; color: var(--vermelho); border-left: 4px solid var(--vermelho); display: block; }
+.pag-aviso.ok { background: #e8f5e9; color: var(--verde); border-left: 4px solid var(--verde); display: block; }
+.pag-resumo-formatado { margin-top: 16px; padding: 14px 18px; background: linear-gradient(90deg, var(--azul-claro) 0%, #fff 100%); border-left: 4px solid var(--azul); border-radius: 8px; font-size: 0.92rem; line-height: 1.7; display: none; }
+.pag-resumo-formatado.visivel { display: block; }
+.pag-resumo-formatado .titulo { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--azul); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.pag-resumo-formatado .metodo { font-weight: 700; margin-bottom: 6px; }
+.pag-resumo-formatado .parcela-linha { font-family: 'Montserrat', sans-serif; font-size: 0.88rem; padding: 2px 0; }
+.pag-resumo-formatado .parcela-linha strong { color: var(--azul); }
+
+/* ===== OBSERVAÇÕES ===== */
+.obs-toggle { width: 100%; padding: 12px 16px; background: linear-gradient(90deg, var(--azul-claro) 0%, #fff 100%); border: 1.5px solid var(--borda); border-radius: 8px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.88rem; color: var(--azul); cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: background .2s; margin-bottom: 14px; }
+.obs-toggle:hover { background: linear-gradient(90deg, #c5dafc 0%, #fff 100%); }
+.obs-toggle .left { display: flex; align-items: center; gap: 9px; }
+.obs-toggle .chevron { transition: transform .3s; }
+.obs-toggle.open .chevron { transform: rotate(180deg); }
+.obs-toggle .contador { background: var(--azul); color: #fff; font-size: 0.7rem; padding: 2px 9px; border-radius: 10px; margin-left: 8px; display: none; }
+.obs-toggle.tem-marcadas .contador { display: inline-block; }
+.obs-collapse { display: none; }
+.obs-collapse.open { display: block; }
+.obs-padrao-box { margin-bottom: 14px; padding: 14px 16px; background: #fafcff; border: 1.5px solid var(--borda); border-radius: 8px; }
+.obs-padrao-titulo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.obs-padrao-titulo i { color: var(--azul); }
+.obs-padrao-lista { display: flex; flex-direction: column; gap: 8px; }
+.obs-padrao-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: #fff; border: 1.5px solid var(--borda); border-radius: 6px; cursor: pointer; transition: all .2s; }
+.obs-padrao-item:hover { border-color: var(--azul-med); background: var(--azul-claro); }
+.obs-padrao-item input[type="checkbox"] { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--azul); cursor: pointer; flex-shrink: 0; }
+.obs-padrao-item label { font-size: 0.86rem; cursor: pointer; line-height: 1.45; flex: 1; }
+.obs-padrao-item label strong { color: var(--azul); font-family: 'Montserrat', sans-serif; font-weight: 700; margin-right: 4px; }
+.obs-padrao-item.marcado { border-color: var(--azul); background: var(--azul-claro); }
+.obs-add-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: 10px; padding: 10px 14px; background: #f5f5f5; border: 1.5px dashed #c0c0c0; border-radius: 6px; color: #999; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.82rem; cursor: not-allowed; font-style: italic; }
+.obs-add-btn .em-breve { background: #999; color: #fff; font-size: 0.68rem; padding: 2px 7px; border-radius: 8px; font-style: normal; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+.obs-marcadas-resumo { font-size: 0.8rem; color: var(--cinza); margin-bottom: 10px; line-height: 1.5; }
+.obs-marcadas-resumo strong { color: var(--azul); }
+.obs-print { display: none; }
+
+/* ===== BOTÕES / AÇÕES ===== */
+.btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; border: none; border-radius: 7px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.86rem; cursor: pointer; transition: all .2s; white-space: nowrap; }
+.btn-primary { background: var(--laranja); color: #fff; }
+.btn-primary:hover { background: #ef6c00; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(245,124,0,.35); }
+.btn-outline { background: transparent; border: 2px solid var(--borda); color: var(--cinza); }
+.btn-outline:hover { border-color: var(--cinza); background: var(--bg); }
+.btn-pdf { background: linear-gradient(135deg, var(--azul) 0%, #1976d2 100%); color: #fff; }
+.btn-pdf:hover { box-shadow: 0 4px 14px rgba(13,71,161,.35); transform: translateY(-1px); }
+.acoes { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.acoes-bar { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; background: #fff; border: 1px solid var(--borda); border-radius: 12px; padding: 14px 18px; box-shadow: var(--sombra); position: sticky; bottom: 12px; z-index: 5; }
+.rascunho { font-size: 0.8rem; color: var(--cinza); display: flex; align-items: center; gap: 8px; }
+.rascunho i { color: var(--verde); }
+.rascunho[data-estado="espera"], .rascunho[data-estado="espera"] i { color: var(--laranja-med); }
+.rascunho[data-estado="alerta"], .rascunho[data-estado="alerta"] i { color: var(--vermelho); font-weight: 700; }
+.rascunho[data-estado="ok"] i { color: var(--verde); }
+.aviso-num-rep { display: block; margin-top: 4px; font-size: 0.74rem; color: var(--vermelho); font-weight: 600; }
+.rascunho .situacao { display: inline-flex; align-items: center; gap: 6px; margin-left: 6px; }
+.rascunho .situacao select { padding: 5px 8px; border: 1.5px solid var(--borda); border-radius: 7px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.76rem; color: var(--azul); background: #fff; cursor: pointer; }
+.seg { display: inline-flex; border: 2px solid var(--borda); border-radius: 8px; overflow: hidden; }
+.seg button { border: none; background: #fff; padding: 8px 12px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; color: var(--cinza); cursor: pointer; }
+.seg button.ativo { background: var(--azul); color: #fff; }
+.seg button + button { border-left: 2px solid var(--borda); }
+footer { text-align: center; padding: 18px; color: var(--cinza); font-size: 0.83rem; border-top: 1px solid var(--borda); margin-top: 8px; }
+footer strong { color: var(--azul); }
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 900px) {
+    .grid-evento { grid-template-columns: 1fr 1fr; }
+    .totais-grid { grid-template-columns: 1fr 1fr; }
+    .trib-desc-grid { grid-template-columns: 1fr; }
+    .extras-grid { grid-template-columns: 1fr 1fr; }
+    .comparacao, .sim-switches { grid-template-columns: 1fr; }
+    .pag-config { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+    .grid-evento { grid-template-columns: 1fr; }
+    .topo { padding: 16px 18px; }
+    .totais-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== IMPRESSÃO ===== */
+@media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    html, body { background: #fff !important; font-size: 9.5pt; margin: 0; padding: 0; }
+    .no-print, .screen-only, .topo, .acoes-bar { display: none !important; }
+    /* a coluna de ações some sem deixar coluna vazia no fim da tabela */
+    #tabelaOrc td.no-print, #tabelaOrc th.no-print { display: table-cell !important; width: 0 !important; max-width: 0 !important; padding: 0 !important; border: none !important; font-size: 0 !important; line-height: 0 !important; overflow: hidden; }
+    #tabelaOrc td.no-print > *, #tabelaOrc th.no-print > * { display: none !important; }
+    .print-only { display: inline; }
+    div.print-only { display: block; }
+    .obs-print { display: block; }
+
+    .print-cabecalho { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 0 8px; margin-bottom: 8px; border-bottom: 3px solid var(--laranja); page-break-after: avoid; }
+    .pc-esq { display: flex; align-items: center; gap: 12px; }
+    .pc-logo { width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; }
+    .pc-logo svg, .pc-logo img { width: 46px; height: 46px; object-fit: contain; }
+    .pc-nome { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.15rem; color: var(--azul); line-height: 1.05; }
+    .pc-nome span { color: var(--laranja); }
+    .pc-slogan { font-size: 0.72rem; color: var(--cinza); font-style: italic; margin-top: 2px; }
+    .pc-dir { text-align: right; }
+    .pc-titulo { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.05rem; color: var(--azul); letter-spacing: .5px; }
+    .pc-titulo span { color: var(--laranja); }
+    .pc-meta { font-size: 0.74rem; color: var(--cinza); margin-top: 2px; }
+    .pc-fone { display: inline-block; margin-top: 4px; background: var(--azul); color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.72rem; padding: 3px 10px; border-radius: 10px; }
+
+    .container { display: block !important; margin: 0 !important; padding: 0 !important; max-width: 100% !important; }
+    .card { margin-bottom: 6px !important; }
+    /* pagamento e observações lado a lado só na paisagem com observação curta */
+    body.print-paisagem.obs-curtas:not(.print-cliente) #cardPag, body.print-paisagem.obs-curtas:not(.print-cliente) #cardObs { float: left; width: 49.5%; }
+    body.print-paisagem.obs-curtas:not(.print-cliente) #cardPag { margin-right: 1%; }
+    /* observação longa (ou retrato): usa a folha inteira e pode continuar na página seguinte */
+    body:not(.obs-curtas) #cardObs { break-inside: auto !important; page-break-inside: auto !important; }
+    footer { clear: both; }
+    .th-orc { font-weight: 600 !important; opacity: .9; margin-left: 5px; font-size: 0.55rem !important; }
+    .card-memoria { display: block !important; }
+    .card-memoria.print-vazio { display: none !important; }
+    .memoria-tab { font-size: 0.68rem !important; }
+    .memoria-tab th { font-size: 0.55rem !important; padding: 2px 6px !important; }
+    .memoria-tab td { padding: 2px 6px !important; }
+    .memoria-titulo { font-size: 0.68rem !important; margin-bottom: 2px !important; }
+    .memoria-bloco { margin-bottom: 6px !important; }
+    .extras-total { margin-top: 5px !important; border-radius: 3px !important; display: block !important; }
+    .extras-total:not(.visivel) { display: none !important; }
+    .extras-total .et-titulo { padding: 3px 9px !important; font-size: 0.6rem !important; }
+    .et-linha { padding: 3px 9px !important; font-size: 0.72rem !important; }
+    .card { box-shadow: none !important; border: 1px solid #b0bec5 !important; border-radius: 4px !important; break-inside: avoid; page-break-inside: avoid; }
+    .card.itens { break-inside: auto; page-break-inside: auto; }
+    .card-header { background: var(--azul-claro) !important; padding: 4px 10px !important; border-bottom: 1px solid var(--azul) !important; page-break-after: avoid; }
+    .card-header h2, .card-header h3 { font-size: 0.8rem !important; }
+    .card-body { padding: 7px 10px !important; }
+    .card.print-vazio { display: none !important; }
+
+    .print-only.pe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 16px; }
+    .pe-campo.full { grid-column: 1 / -1; }
+    .pe-lbl { font-size: 0.6rem; font-weight: 700; color: var(--cinza); text-transform: uppercase; letter-spacing: .4px; }
+    .pe-val { font-size: 0.82rem; font-weight: 600; border-bottom: 1px solid #cfd8dc; padding-bottom: 1px; }
+
+    .tabela-wrap { overflow: visible !important; border: 1px solid #b0bec5 !important; margin-top: 4px !important; border-radius: 3px !important; }
+    #tabelaOrc { font-size: 0.7rem !important; }
+    #tabelaOrc thead { display: table-header-group; }
+    #tabelaOrc thead tr { background: var(--azul) !important; color: #fff !important; }
+    #tabelaOrc thead th { padding: 3px 5px !important; font-size: 0.58rem !important; }
+    #tabelaOrc thead th.grp-hv { background: var(--laranja-med) !important; }
+    #tabelaOrc thead tr.sub th.grp-v { background: #ef6c00 !important; }
+    #tabelaOrc thead th.grp-ht, #tabelaOrc thead tr.sub th.grp-t { background: #37474f !important; }
+    #tabelaOrc tbody td { padding: 3px 5px !important; font-size: 0.7rem !important; }
+    #tabelaOrc td.col-prod { min-width: 0 !important; }
+    #tabelaOrc td.col-num { width: auto !important; }
+    #tabelaOrc tr { page-break-inside: avoid; break-inside: avoid; }
+    #tabelaOrc tr.sala-header-row { break-after: avoid; page-break-after: avoid; }
+    #tabelaOrc tr.sala-footer-row { break-before: avoid; page-break-before: avoid; }
+    .sala-header-row { background: #546e7a !important; }
+    .sala-header-row td { padding: 4px 8px !important; }
+    .sala-header-row .sala-titulo { font-size: 0.74rem !important; }
+    .sala-footer-row td { padding: 3px 8px !important; font-size: 0.68rem !important; }
+    .sala-footer-row td.sala-total { font-size: 0.78rem !important; }
+    .sem-sala-divisor td { padding: 2px 8px !important; font-size: 0.62rem !important; }
+    .sem-sala-divisor.oculto { display: none !important; }
+    .sala-vazia td { padding: 4px !important; font-size: 0.7rem !important; }
+    .vazio td { padding: 10px !important; }
+    #tabelaOrc td.col-sub { font-size: 0.74rem !important; }
+    .tag-extra { font-size: 0.55rem; }
+    .col-oculta { background: none !important; }
+
+    .resumo-grid { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)) !important; gap: 6px !important; }
+    body.print-retrato .resumo-grid { grid-template-columns: repeat(auto-fit, minmax(92px, 1fr)) !important; }
+    body.print-retrato .total-card .val { font-size: 0.8rem !important; }
+    body.print-retrato .total-card.destaque .val { font-size: 0.92rem !important; }
+    body.print-retrato .resumo-subtotal .val { font-size: 0.88rem !important; }
+    .resumo-card { padding: 5px 8px !important; border-radius: 4px !important; }
+    .resumo-card .icone { display: none; }
+    .resumo-card .label { font-size: 0.58rem !important; margin-bottom: 1px !important; }
+    .resumo-card .valor { font-size: 0.82rem !important; }
+    .resumo-card .valor.nc { font-size: 0.72rem !important; }
+    .resumo-card .tag { font-size: 0.55rem !important; padding: 1px 6px !important; margin-top: 2px !important; }
+    .resumo-subtotal { margin-top: 6px !important; padding: 4px 10px !important; }
+    .resumo-subtotal .lbl { font-size: 0.68rem !important; }
+    .resumo-subtotal .val { font-size: 0.95rem !important; }
+    .resumo-frete-info { margin-top: 5px !important; padding: 3px 8px !important; font-size: 0.66rem !important; }
+    .trib-desc-grid { display: none !important; }
+    .totais-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 6px !important; margin-top: 7px !important; }
+    .total-card { padding: 5px 8px !important; border-radius: 4px !important; }
+    .total-card .lbl { font-size: 0.58rem !important; margin-bottom: 1px !important; }
+    .total-card .val { font-size: 0.85rem !important; }
+    .total-card .sub { font-size: 0.6rem !important; margin-top: 1px !important; }
+    .total-card.destaque { background: var(--azul) !important; }
+    .total-card.destaque .val { font-size: 1rem !important; }
+
+    .pag-resumo-formatado.visivel { margin-top: 0 !important; padding: 5px 10px !important; font-size: 0.78rem !important; line-height: 1.5 !important; }
+    .pag-resumo-formatado .titulo { font-size: 0.7rem !important; margin-bottom: 2px !important; }
+    .pag-resumo-formatado .metodo { font-size: 0.78rem !important; margin-bottom: 2px !important; }
+    .pag-resumo-formatado .parcela-linha { font-size: 0.74rem !important; }
+
+    .obs-print p { font-size: 0.74rem; line-height: 1.4; margin: 0 0 5px; text-align: justify; }
+    .obs-print p strong { color: var(--azul); }
+    .obs-print p.obs-livre { white-space: pre-wrap; font-weight: 600; margin-top: 6px; padding-top: 5px; border-top: 1px dashed #cfd8dc; }
+
+    footer { margin-top: 6px !important; padding: 5px !important; font-size: 0.66rem !important; page-break-inside: avoid; }
+
+    /* ---- modo CLIENTE (resumido) ---- */
+    body.print-cliente .so-completo { display: none !important; }
+    /* as colunas de valor somem sem deixar coluna fantasma no lugar */
+    body.print-cliente #tabelaOrc .grp-v, body.print-cliente #tabelaOrc .grp-t { display: table-cell !important; width: 0 !important; max-width: 0 !important; padding: 0 !important; border: none !important; font-size: 0 !important; line-height: 0 !important; overflow: hidden; }
+    body.print-cliente #tabelaOrc .grp-v > *, body.print-cliente #tabelaOrc .grp-t > * { display: none !important; }
+    body.print-cliente #tabelaOrc thead th.grp-hq { background: var(--azul-med) !important; }
+    body.print-cliente #tabelaOrc tbody td { font-size: 0.78rem !important; padding: 4px 6px !important; }
+    body.print-cliente .obs-print p { font-size: 0.78rem; }
+}
+</style>
+<style id="printPageStyle">@page { size: A4 landscape; margin: 9mm; }</style>
+<script src="plenart-db.js"></script>
+</head>
+<body>
+
+<!-- TOPO (tela) -->
+<div class="topo">
+    <a href="plenart-sistema.html" class="btn-hub no-print" title="Voltar para o Hub"><i class="fas fa-arrow-left"></i> Hub</a>
+    <div class="logo-icon"><i class="fas fa-tent"></i></div>
+    <div class="topo-texto">
+        <h1>Grupo <span class="destaque">Tendas</span> Plenart</h1>
+        <p>"Sua visão, nosso compromisso. Seu evento merece o melhor."</p>
+    </div>
+    <div class="topo-dir">
+        <div class="topo-user" id="userChip"><i class="fas fa-user"></i> <span id="userChipNome"></span></div>
+        <div class="topo-fone"><i class="fas fa-phone"></i> (21) 3637-4455</div>
+    </div>
+</div>
+
+<!-- CABEÇALHO (impressão) -->
+<div class="print-cabecalho">
+    <div class="pc-esq">
+        <div class="pc-logo" id="pcLogo">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6 L3 54 H61 Z" fill="#1a2d6b"/><path d="M32 6 V54" stroke="#f47920" stroke-width="3"/><path d="M21 54 L32 32 L43 54 Z" fill="#f47920"/></svg>
+        </div>
+        <div>
+            <div class="pc-nome">Grupo <span>Tendas</span> Plenart</div>
+            <div class="pc-slogan">"Sua visão, nosso compromisso."</div>
+        </div>
+    </div>
+    <div class="pc-dir">
+        <div class="pc-titulo">ORÇAMENTO <span id="pcNum"></span></div>
+        <div class="pc-meta">Emitido em <span id="pcData"></span><span id="pcPor"></span></div>
+        <div class="pc-fone"><i class="fas fa-phone"></i> (21) 3637-4455</div>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- DADOS DO EVENTO -->
+    <div class="card">
+        <div class="card-header"><i class="fas fa-calendar-star"></i><h2>Dados do Evento</h2></div>
+        <div class="card-body">
+            <div class="grid-evento screen-only">
+                <div class="form-group"><label>Cliente / Empresa</label><input type="text" id="evCliente" data-ev="cliente" placeholder="Ex: Prefeitura de Rio Bonito / Empresa XYZ"></div>
+                <div class="form-group"><label>Nome do Evento</label><input type="text" id="evNome" data-ev="nome" placeholder="Ex: Feira do Produtor 2026"></div>
+                <div class="form-group"><label>Nº do Orçamento</label><input type="text" id="evNumOrc" data-ev="numOrc" placeholder="PLE-2026-0001"><span class="aviso-num-rep" id="avisoNumRepetido"></span></div>
+                <div class="form-group"><label>Data de Início</label><input type="date" id="evDataInicio" data-ev="dataInicio"></div>
+                <div class="form-group"><label>Data de Término</label><input type="date" id="evDataTermino" data-ev="dataTermino"></div>
+                <div class="form-group"><label>Nome do Responsável</label><input type="text" id="evResp" data-ev="responsavel" placeholder="Ex: João da Silva"></div>
+                <div class="form-group"><label>Contato do Responsável</label><input type="text" id="evContato" data-ev="contato" placeholder="(21) 99999-9999 / email@exemplo.com"></div>
+                <div class="form-group" style="grid-column: span 2"><label>Local do Evento</label><input type="text" id="evLocal" data-ev="local" placeholder="Rua, número, bairro, cidade – Estado"></div>
+            </div>
+            <div class="print-only pe-grid" id="eventoPrint"></div>
+        </div>
+    </div>
+
+    <!-- ITENS -->
+    <div class="card itens">
+        <div class="card-header"><i class="fas fa-boxes-stacked"></i><h2>Itens do Orçamento</h2><span class="dica no-print"><i class="fas fa-grip-vertical"></i> arraste pela alça para mudar a ordem ou a sala</span></div>
+        <div class="card-body">
+
+            <div class="sala-controls no-print">
+                <span class="lbl"><i class="fas fa-building"></i> Salas / Ambientes:</span>
+                <input type="text" id="novaSalaNome" placeholder="Ex: Camarote VIP, Backstage, Palco Principal..." onkeydown="if(event.key==='Enter'){criarSala();event.preventDefault();}">
+                <button class="btn btn-sala" type="button" onclick="criarSala()"><i class="fas fa-plus"></i> Criar Sala</button>
+            </div>
+
+            <div class="add-row no-print">
+                <div class="form-group prod">
+                    <label>Produto <span style="text-transform:none;font-weight:400;color:var(--cinza)">— clique e digite para buscar</span></label>
+                    <div class="combo" id="comboProduto">
+                        <input type="text" id="comboBusca" placeholder="Digite para buscar: tenda 10, piso, treliça, palco..." autocomplete="off" spellcheck="false">
+                        <i class="fas fa-chevron-down combo-seta"></i>
+                        <div class="combo-lista" id="comboLista"></div>
+                    </div>
+                </div>
+                <div class="form-group" style="min-width:200px">
+                    <label>Adicionar em (Sala)</label>
+                    <select id="salaDestino"><option value="">— Sem sala (item solto) —</option></select>
+                </div>
+                <div class="acoes">
+                    <button class="btn btn-primary" type="button" onclick="adicionarItem()"><i class="fas fa-plus"></i> Incluir Produto</button>
+                </div>
+            </div>
+
+            <div class="valores-bar no-print">
+                <span class="lbl"><i class="fas fa-sliders"></i> Valores no orçamento:</span>
+                <button type="button" class="comp-chip" data-comp="mat" onclick="toggleComp('mat')"></button>
+                <button type="button" class="comp-chip" data-comp="serv" onclick="toggleComp('serv')"></button>
+                <button type="button" class="comp-chip" data-comp="frete" onclick="toggleComp('frete')"></button>
+                <label class="opt" id="optSomar" title="Mostra um único valor por linha, somando o que está marcado"><input type="checkbox" id="chkSomar" onchange="setSomar(this.checked)"> Somar em um valor só</label>
+                <label class="opt" id="optAbertura" title="Acrescenta as colunas de total por linha"><input type="checkbox" id="chkAbertura" onchange="toggleAbertura(this.checked)"> Mostrar os totais de cada coluna</label>
+                <div class="dica-valores" id="dicaValores"></div>
+            </div>
+
+            <div class="tabela-wrap">
+                <table id="tabelaOrc">
+                    <thead id="cabecalhoTabela"></thead>
+                    <tbody id="corpoTabela"></tbody>
+                </table>
+            </div>
+
+            <div class="bloco-extras no-print">
+                <div class="bloco-titulo"><i class="fas fa-plus-circle"></i> EXTRAS / OUTROS (itens terceirizados ou não cadastrados)</div>
+                <div class="extras-grid">
+                    <div class="form-group"><label>Descrição do Item</label><input type="text" id="extraDesc" placeholder="Ex: Sistema de Som e Iluminação" onkeydown="if(event.key==='Enter'){adicionarExtra();event.preventDefault();}"></div>
+                    <div class="form-group"><label>Material (R$)</label><input type="text" id="extraMat" placeholder="0,00" inputmode="decimal"></div>
+                    <div class="form-group"><label>Serviço (R$)</label><input type="text" id="extraServ" placeholder="0,00" inputmode="decimal"></div>
+                    <div class="form-group"><label>Frete (R$)</label><input type="text" id="extraFrete" placeholder="0,00" inputmode="decimal"></div>
+                </div>
+                <div style="margin-top:10px;display:flex;gap:10px;align-items:end;flex-wrap:wrap">
+                    <div class="form-group" style="min-width:200px">
+                        <label>Adicionar em (Sala)</label>
+                        <select id="salaDestinoExtra"><option value="">— Sem sala (item solto) —</option></select>
+                    </div>
+                    <button class="btn btn-primary" type="button" onclick="adicionarExtra()"><i class="fas fa-plus"></i> Adicionar Extra</button>
+                </div>
+            </div>
+
+            <div class="bloco-ater no-print">
+                <div class="bloco-titulo"><i class="fas fa-bolt"></i> ATERRAMENTO DE ESTRUTURAS</div>
+                <div class="desc">Digitar o valor de mão de obra cobrado pelo nosso fornecedor para calcular nosso valor final (o sistema dobra o valor).</div>
+                <div class="form-group" style="max-width:240px">
+                    <label>Valor do Aterramento (R$)</label>
+                    <input type="text" id="aterramento" placeholder="0,00" inputmode="decimal">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIMULAÇÃO -->
+    <div class="card no-print">
+        <button class="sim-toggle" id="simToggle" type="button" onclick="toggleSim()">
+            <div class="left"><i class="fas fa-flask"></i><span>Simulação de Serviço / Frete Especial</span><span class="badge-on">EM USO</span></div>
+            <i class="fas fa-chevron-down chevron"></i>
+        </button>
+        <div class="sim-body" id="simBody">
+            <div class="sim-intro"><i class="fas fa-info-circle"></i> Monte aqui a conta real de <strong>serviço</strong> (equipe) e <strong>frete</strong> (veículos): inclua quantas linhas quiser, mude a descrição e os valores. Compare com o valor da tabela e ligue o switch para usar o simulado no orçamento. Marcando <strong>"mostrar no orçamento impresso"</strong>, essa conta sai no PDF para o cliente ver como chegamos no valor.</div>
+
+            <div class="aux-head">
+                <div class="sim-section-title"><i class="fas fa-users"></i> Serviço — equipe</div>
+                <div class="aux-add"><span class="lbl">Incluir:</span><span id="addServ"></span></div>
+            </div>
+            <div class="sim-table-wrap">
+                <table class="sim-table aux-table">
+                    <thead><tr><th>Descrição</th><th>Tipo de cálculo</th><th>Qtd.</th><th>KM</th><th>Diárias</th><th>Valor unit.</th><th style="text-align:right">Total</th><th></th></tr></thead>
+                    <tbody id="auxServ"></tbody>
+                    <tfoot><tr><td colspan="6" class="lbl">Total Serviço simulado:</td><td class="sim-total-val" id="simServTotal" style="text-align:right">R$ 0,00</td><td></td></tr></tfoot>
+                </table>
+            </div>
+            <label class="opt-mostrar"><input type="checkbox" id="chkMostrarServ" onchange="setMostrar('serv', this.checked)"> Mostrar esta conta no orçamento impresso <span class="aviso" id="avisoMostrarServ"></span></label>
+
+            <div class="aux-head">
+                <div class="sim-section-title"><i class="fas fa-truck"></i> Frete — veículos</div>
+                <div class="aux-add"><span class="lbl">Incluir:</span><span id="addFrete"></span></div>
+            </div>
+            <div class="sim-table-wrap">
+                <table class="sim-table aux-table">
+                    <thead><tr><th>Veículo</th><th>Tipo de cálculo</th><th>Qtd.</th><th>KM</th><th>Diárias</th><th>R$ / KM</th><th style="text-align:right">Total</th><th></th></tr></thead>
+                    <tbody id="auxFrete"></tbody>
+                    <tfoot><tr><td colspan="6" class="lbl">Total Frete simulado:</td><td class="sim-total-val" id="simFreteTotal" style="text-align:right">R$ 0,00</td><td></td></tr></tfoot>
+                </table>
+            </div>
+            <label class="opt-mostrar"><input type="checkbox" id="chkMostrarFrete" onchange="setMostrar('frete', this.checked)"> Mostrar esta conta no orçamento impresso <span class="aviso" id="avisoMostrarFrete"></span></label>
+
+            <div class="sim-section-title"><i class="fas fa-balance-scale"></i> Comparação de Serviço</div>
+            <div class="comparacao">
+                <div class="comp-card" id="compServTabela"><div class="comp-titulo">Tabela Padrão</div><div class="comp-subtitle">Valor de serviço da tabela de produtos</div><div class="comp-final"><div class="lbl">Total Serviço</div><div class="val" id="compServTabelaVal">R$ 0,00</div></div></div>
+                <div class="comp-card" id="compServSim"><div class="comp-titulo">Simulado</div><div class="comp-subtitle">Cálculo por diárias de profissionais</div><div class="comp-final"><div class="lbl">Total Serviço</div><div class="val" id="compServSimVal">R$ 0,00</div></div><div class="comp-diff" id="compServDiff">—</div></div>
+            </div>
+            <div class="sim-switches">
+                <div class="sim-switch-card" id="cardSwServ"><div class="info"><div class="label">Usar Serviço Simulado no Orçamento?</div><div class="desc">Quando ativado, o serviço da tabela é substituído pelo simulado.</div></div><div class="toggle-switch" id="swServ" onclick="toggleSwitch('serv')"></div></div>
+                <div></div>
+            </div>
+            <div class="sim-section-title"><i class="fas fa-balance-scale"></i> Comparação de Frete</div>
+            <div class="comparacao">
+                <div class="comp-card" id="compFreteTabela"><div class="comp-titulo">Tabela Padrão</div><div class="comp-subtitle">Valor de frete da tabela de produtos</div><div class="comp-final"><div class="lbl">Total Frete</div><div class="val" id="compFreteTabelaVal">R$ 0,00</div></div></div>
+                <div class="comp-card" id="compFreteSim"><div class="comp-titulo">Simulado</div><div class="comp-subtitle">Cálculo por km dos caminhões</div><div class="comp-final"><div class="lbl">Total Frete</div><div class="val" id="compFreteSimVal">R$ 0,00</div></div><div class="comp-diff" id="compFreteDiff">—</div></div>
+            </div>
+            <div class="sim-switches" style="margin-bottom:0">
+                <div class="sim-switch-card" id="cardSwFrete"><div class="info"><div class="label">Usar Frete Simulado no Orçamento?</div><div class="desc">Quando ativado, o frete da tabela é substituído pelo simulado.</div></div><div class="toggle-switch" id="swFrete" onclick="toggleSwitch('frete')"></div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MANUTENÇÃO -->
+    <div class="card no-print">
+        <button class="man-toggle" id="manToggle" type="button" onclick="toggleMan()">
+            <div class="left"><i class="fas fa-screwdriver-wrench"></i><span>Manutenção (deslocamento e hospedagem da equipe)</span><span class="badge-on">ATIVO</span></div>
+            <i class="fas fa-chevron-down chevron"></i>
+        </button>
+        <div class="man-body" id="manBody">
+            <div class="man-intro"><i class="fas fa-info-circle"></i> Custos da equipe em campo durante o evento (profissional externo, hospedagem, veículo). Inclua quantas linhas quiser — os valores daqui são <strong>somados direto no orçamento</strong>.</div>
+            <div class="aux-head">
+                <div class="sim-section-title" style="color:var(--verde)"><i class="fas fa-screwdriver-wrench"></i> Manutenção</div>
+                <div class="aux-add"><span class="lbl">Incluir:</span><span id="addMan"></span></div>
+            </div>
+            <div class="sim-table-wrap">
+                <table class="sim-table aux-table">
+                    <thead><tr><th>Descrição</th><th>Tipo de cálculo</th><th>Qtd.</th><th>KM</th><th>Diárias</th><th>Valor unit.</th><th style="text-align:right">Total</th><th></th></tr></thead>
+                    <tbody id="auxMan"></tbody>
+                    <tfoot><tr><td colspan="6" class="lbl">Total Manutenção:</td><td class="man-total-val" id="manTotal" style="text-align:right">R$ 0,00</td><td></td></tr></tfoot>
+                </table>
+            </div>
+            <label class="opt-mostrar" style="margin-bottom:0"><input type="checkbox" id="chkMostrarMan" onchange="setMostrar('man', this.checked)"> Mostrar esta conta no orçamento impresso <span class="aviso" id="avisoMostrarMan"></span></label>
+        </div>
+    </div>
+
+    <!-- MEMÓRIA DE CÁLCULO (só na impressão, quando marcado) -->
+    <div class="card card-memoria print-vazio" id="cardMemoria">
+        <div class="card-header"><i class="fas fa-calculator"></i><h3 id="memoriaTitulo">Serviço / Frete</h3></div>
+        <div class="card-body" id="memoriaBody"></div>
+    </div>
+
+    <!-- RESUMO FINANCEIRO -->
+    <div class="card">
+        <div class="card-header"><i class="fas fa-receipt"></i><h3>Resumo Financeiro</h3></div>
+        <div class="card-body">
+            <div class="so-completo">
+                <div class="resumo-grid">
+                    <div class="resumo-card"><i class="fas fa-boxes-stacked icone"></i><div class="label">Total Material</div><div class="valor" id="resMat">R$ 0,00</div></div>
+                    <div class="resumo-card"><i class="fas fa-users icone"></i><div class="label">Total Serviço</div><div class="valor" id="resServ">R$ 0,00</div><span class="tag tabela" id="resServTag">Tabela</span></div>
+                    <div class="resumo-card"><i class="fas fa-truck icone"></i><div class="label">Total Frete</div><div class="valor" id="resFrete">R$ 0,00</div><span class="tag tabela" id="resFreteTag">Tabela</span></div>
+                    <div class="resumo-card"><i class="fas fa-bolt icone"></i><div class="label">Aterramento</div><div class="valor" id="resAter">R$ 0,00</div></div>
+                    <div class="resumo-card" id="resManCard" style="display:none"><i class="fas fa-screwdriver-wrench icone" style="color:var(--verde)"></i><div class="label">Manutenção</div><div class="valor" id="resMan" style="color:var(--verde)">R$ 0,00</div></div>
+                </div>
+                <div class="resumo-subtotal"><div class="lbl"><i class="fas fa-equals"></i> Subtotal Geral (sem impostos)</div><div class="val" id="resSubtotal">R$ 0,00</div></div>
+                <div class="resumo-frete-info" id="freteEntregaInfo" style="display:none"></div>
+            </div>
+
+            <div class="trib-desc-grid no-print">
+                <div class="form-group">
+                    <label>Tipo de Tributação</label>
+                    <div class="trib-tabs">
+                        <button class="trib-btn ativo" type="button" data-tipo="0" onclick="setTrib('0')">Sem Tributação</button>
+                        <button class="trib-btn" type="button" data-tipo="recibo" onclick="setTrib('recibo')">Recibo (17,65%)</button>
+                        <button class="trib-btn" type="button" data-tipo="nf" onclick="setTrib('nf')">Nota Fiscal (22,65%)</button>
+                        <button class="trib-btn" type="button" data-tipo="beneficio" onclick="setTrib('beneficio')">Benefício (5%)</button>
+                        <button class="trib-btn" type="button" data-tipo="nota_beneficio" onclick="setTrib('nota_beneficio')">Nota Benefício (10%)</button>
+                        <div class="trib-outro">
+                            <button class="trib-btn" type="button" data-tipo="outro" onclick="setTrib('outro')">Outro:</button>
+                            <div class="pct-wrap"><input class="inp" id="impostoOutro" placeholder="0,00" inputmode="decimal"><span>%</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Desconto</label>
+                    <div class="desconto-row">
+                        <div class="pct-wrap"><input class="inp" id="descontoPct" inputmode="decimal" value="0,00"><span>%</span></div>
+                        <span class="ou">ou</span>
+                        <div class="money"><span>R$</span><input class="inp inp-money" id="descontoVlr" inputmode="decimal" value="0,00" style="width:110px"></div>
+                        <small><i class="fas fa-info-circle"></i> Digite em % ou em R$ — o outro campo é calculado.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="extras-total" id="extrasTotal"></div>
+
+            <div class="totais-grid">
+                <div class="total-card"><div class="lbl">Subtotal s/ imposto</div><div class="val" id="subtotalFinal">R$ 0,00</div></div>
+                <div class="total-card"><div class="lbl">Desconto</div><div class="val" style="color:var(--vermelho)" id="descontoVal">– R$ 0,00</div><div class="sub" id="descontoPctLabel"></div></div>
+                <div class="total-card"><div class="lbl">Tributação</div><div class="val" id="tributacaoVal">R$ 0,00</div><div class="sub" id="tributacaoLabel">Sem tributação</div></div>
+                <div class="total-card destaque"><div class="lbl">TOTAL FINAL</div><div class="val" id="totalGlobal">R$ 0,00</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORMA DE PAGAMENTO -->
+    <div class="card" id="cardPag">
+        <div class="card-header"><i class="fas fa-credit-card"></i><h3>Forma de Pagamento</h3></div>
+        <div class="card-body">
+            <div class="pag-config no-print">
+                <div class="form-group">
+                    <label>Forma de Pagamento</label>
+                    <select id="pagMetodo" onchange="onChangeMetodo()">
+                        <option value="">— Selecione —</option>
+                        <option value="Transferência Bancária">Transferência Bancária</option>
+                        <option value="Pix">Pix</option>
+                        <option value="Boleto">Boleto</option>
+                        <option value="__outros__">Outros (especificar)</option>
+                    </select>
+                    <input type="text" id="pagMetodoOutros" placeholder="Especifique a forma de pagamento..." style="margin-top:6px;display:none">
+                </div>
+                <div class="form-group">
+                    <label>Quantidade de Parcelas</label>
+                    <select id="pagQtdParcelas" onchange="gerarParcelas(parseInt(this.value)||0)">
+                        <option value="0">— Selecione —</option>
+                        <option value="1">1x (à vista)</option>
+                        <option value="2">2x</option><option value="3">3x</option><option value="4">4x</option><option value="5">5x</option><option value="6">6x</option><option value="7">7x</option><option value="8">8x</option><option value="9">9x</option><option value="10">10x</option><option value="11">11x</option><option value="12">12x</option>
+                    </select>
+                </div>
+            </div>
+            <div class="pag-parcelas-grid no-print" id="pagParcelasGrid"></div>
+            <div class="pag-aviso no-print" id="pagAviso"></div>
+            <div class="pag-resumo-formatado" id="pagResumoFormatado">
+                <div class="titulo"><i class="fas fa-file-invoice-dollar"></i> Forma de Pagamento:</div>
+                <div class="metodo" id="pagResumoMetodo"></div>
+                <div id="pagResumoLinhas"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OBSERVAÇÕES -->
+    <div class="card" id="cardObs">
+        <div class="card-header"><i class="fas fa-note-sticky"></i><h3>Observações</h3></div>
+        <div class="card-body">
+            <button class="obs-toggle no-print" id="obsToggle" type="button" onclick="toggleObsPadrao()">
+                <div class="left"><i class="fas fa-list-check"></i><span>Mensagens Padrão</span><span class="contador" id="obsContador">0 marcadas</span></div>
+                <i class="fas fa-chevron-down chevron"></i>
+            </button>
+            <div class="obs-collapse no-print" id="obsCollapse">
+                <div class="obs-padrao-box">
+                    <div class="obs-padrao-titulo"><i class="fas fa-circle-check"></i>Marque as mensagens que se aplicam a este orçamento (saem na impressão, antes do texto livre)</div>
+                    <div class="obs-padrao-lista" id="obsPadraoLista"></div>
+                    <div class="obs-add-btn" onclick="avisarFuncionalidadeFutura()" title="Disponível quando o sistema estiver no banco de dados">
+                        <i class="fas fa-plus-circle"></i><span>Adicionar Nova Mensagem Padrão</span><span class="em-breve">Em Breve</span>
+                    </div>
+                </div>
+            </div>
+            <div class="obs-marcadas-resumo no-print" id="obsMarcadasResumo"></div>
+            <div class="form-group screen-only">
+                <label>Observações Adicionais (texto livre)</label>
+                <textarea id="observacoes" rows="4" placeholder="Adicione aqui qualquer observação extra não coberta pelas mensagens padrão..."></textarea>
+            </div>
+            <div class="obs-print" id="obsPrint"></div>
+        </div>
+    </div>
+
+    <!-- AÇÕES -->
+    <div class="acoes-bar no-print">
+        <div class="rascunho">
+            <i class="fas fa-circle-check"></i> <span id="rascunhoStatus">Salva sozinho no banco de dados</span>
+            <label class="situacao"><span>Situação:</span>
+                <select id="selStatus" onchange="setStatus(this.value)">
+                    <option>Rascunho</option><option>Enviado</option><option>Aprovado</option><option>Perdido</option>
+                </select>
+            </label>
+        </div>
+        <div class="acoes">
+            <button class="btn btn-outline" type="button" onclick="exportarJSON()" title="Salva um arquivo .json com este orçamento"><i class="fas fa-download"></i> Baixar backup</button>
+            <label class="btn btn-outline" title="Abre um arquivo .json salvo antes"><i class="fas fa-folder-open"></i> Abrir backup<input type="file" id="fileImport" accept=".json,application/json" hidden onchange="importarJSON(this)"></label>
+            <button class="btn btn-outline" type="button" onclick="limparOrcamento()"><i class="fas fa-rotate-left"></i> Limpar</button>
+            <div class="seg" id="segImpressao">
+                <button type="button" data-modo="completo" class="ativo" onclick="setPrintMode('completo')" title="Imprime com material / serviço / frete e resumo interno"><i class="fas fa-list"></i> Completa</button>
+                <button type="button" data-modo="cliente" onclick="setPrintMode('cliente')" title="Imprime só produto, quantidades, subtotais e total"><i class="fas fa-user-tie"></i> Cliente</button>
+            </div>
+            <div class="seg" id="segPapel">
+                <button type="button" data-papel="retrato" class="ativo" onclick="setOrientacao('retrato')" title="Folha em pé (padrão)"><i class="fas fa-file"></i> Retrato</button>
+                <button type="button" data-papel="paisagem" onclick="setOrientacao('paisagem')" title="Folha deitada — use quando a tabela tiver muitas colunas"><i class="fas fa-file fa-rotate-90"></i> Paisagem</button>
+            </div>
+            <button class="btn btn-pdf" type="button" onclick="imprimir()"><i class="fas fa-file-pdf"></i> Gerar PDF / Imprimir</button>
+        </div>
+    </div>
+
+</div>
+
+<footer><strong>Grupo Tendas Plenart</strong> — "Sua visão, nosso compromisso." &nbsp;|&nbsp; (21) 3637-4455 &nbsp;|&nbsp; Emitido em <span id="dataGer"></span></footer>
+
+<script>
+/* =====================================================================
+   PLENART – ORÇAMENTO COMERCIAL PADRÃO (v3)
+   Estrutura: o orçamento inteiro vive no objeto `state` (JSON).
+   A tela é desenhada a partir dele (render) e os números são
+   recalculados a partir dele (recalc). É esse JSON que vai para o
+   banco de dados (Supabase) na Fase 2.
+   ===================================================================== */
+
+const TIPO_ORC = 'plenart';
+const ORC_KEY = 'plenart_orcamentos';            // todos os orçamentos deste computador
+const ULT_KEY = 'plenart_ultimo_' + TIPO_ORC;    // último aberto (para "continuar")
+let usuarioAtual = null;
+const SESSAO_KEY = 'plenart_usuario_logado';
+const $ = id => document.getElementById(id);
+
+// ---------- utilitários ----------
+function brl(v){ return (Number(v)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
+function fmtNum(v, dec){ dec = dec===undefined ? 2 : dec; return (Number(v)||0).toLocaleString('pt-BR',{minimumFractionDigits:dec, maximumFractionDigits:dec}); }
+function fmtQtd(v){ return (Number(v)||0).toLocaleString('pt-BR',{maximumFractionDigits:2}); }
+function fmtPct(v){ return (Number(v)||0).toLocaleString('pt-BR',{maximumFractionDigits:2}); }
+// Aceita "1.220,50", "1220.5", "1220,5", "16.4", "1.500" (milhar) e "R$ 10,00"
+function parseNum(s){
+    if(typeof s === 'number') return isNaN(s) ? 0 : s;
+    s = String(s == null ? '' : s).trim().replace(/R\$\s?/,'').replace(/\s/g,'').replace(/%$/,'');
+    if(!s) return 0;
+    if(s.indexOf(',') >= 0){ s = s.replace(/\./g,'').replace(',','.'); }
+    else if(/^-?\d{1,3}(\.\d{3})+$/.test(s)){ s = s.replace(/\./g,''); }
+    const n = parseFloat(s);
+    return isNaN(n) ? 0 : n;
+}
+function escapeHtml(t){ return String(t == null ? '' : t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
+function semAcento(t){ return String(t == null ? '' : t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+function formatarData(iso){ if(!iso) return ''; const p = String(iso).split('-'); return p.length === 3 ? `${p[2]}/${p[1]}/${p[0]}` : iso; }
+function hojeBR(){ return new Date().toLocaleDateString('pt-BR'); }
+
+// ---------- catálogo (nome = como sai no orçamento; rotulo = como aparece na lista) ----------
+const CATALOGO = [
+    { cat:'PISOS', itens:[
+        { key:'piso_elevado', nome:'Piso Elevado 1x1', rotulo:'Piso Elevado 1x1 – verificar desnível e montagem sempre com cobertura', v:20, s:12, f:5 },
+        { key:'piso_deck', nome:'Piso Deck 1x1', rotulo:'Piso Deck 1x1 – verificar desnível e montagem sempre com cobertura', v:36, s:12, f:5 },
+        { key:'piso_praticavel', nome:'Piso Praticável Ferro 2,20x1,60', v:38, s:18, f:8 },
+        { key:'piso_telescopico', nome:'Piso Telescópico Alumínio 2x1', v:60, s:30, f:20 },
+        { key:'piso_pantografico', nome:'Piso Pantográfico com Rodinha 2x1', v:500, s:30, f:20 },
+        { key:'piso_irmarfer', nome:'Piso Irmarfer Alumínio 1,25x1,25', v:70, s:30, f:20 },
+    ]},
+    { cat:'BARRICADAS', itens:[
+        { key:'barricadas_ml', nome:'Barricadas – ML', v:100, s:50, f:30 },
+    ]},
+    { cat:'FORRAÇÕES', itens:[
+        { key:'piso_easyfloor', nome:'Piso Easyfloor / Ekoeasy', v:14, s:8, f:4 },
+        { key:'piso_criadeck', nome:'Piso Criadeck', v:14, s:8, f:4 },
+        { key:'carpete', nome:'Carpete', rotulo:'Carpete (acrescentar 25% na metragem)', v:22, s:6, f:0 },
+        { key:'decorflex', nome:'Decorflex', rotulo:'Decorflex (acrescentar 25% na metragem)', v:45, s:6, f:0 },
+    ]},
+    { cat:'TENDAS – LONA BRANCA', itens:[
+        { key:'tenda_branca_3x3', nome:'Tenda 3x3 Lona Branca pé 2,20m', rotulo:'Tenda 3x3 pé direito 2,20m – Lona Branca', v:420, s:100, f:41.6 },
+        { key:'tenda_branca_4x4', nome:'Tenda 4x4 Lona Branca pé 2,50m', rotulo:'Tenda 4x4 pé direito 2,50m – Lona Branca', v:520, s:150, f:53.6 },
+        { key:'tenda_branca_5x5', nome:'Tenda 5x5 Lona Branca pé 2,50m', rotulo:'Tenda 5x5 pé direito 2,50m – Lona Branca', v:620, s:200, f:65.6 },
+        { key:'tenda_branca_6x6', nome:'Tenda 6x6 Lona Branca pé 3,00m', rotulo:'Tenda 6x6 pé direito 3,00m – Lona Branca', v:770, s:280, f:84 },
+        { key:'tenda_branca_8x8', nome:'Tenda 8x8 Lona Branca pé 3,00m', rotulo:'Tenda 8x8 pé direito 3,00m – Lona Branca', v:920, s:400, f:105.6 },
+        { key:'tenda_branca_10x10', nome:'Tenda 10x10 Lona Branca pé 3,00m', rotulo:'Tenda 10x10 pé direito 3,00m – Lona Branca', v:1220, s:650, f:187 },
+        { key:'tenda_branca_12x12', nome:'Tenda 12x12 Lona Branca pé 3,00m', rotulo:'Tenda 12x12 pé direito 3,00m – Lona Branca', v:1520, s:750, f:227 },
+        { key:'tenda_branca_15x10', nome:'Tenda 15x10 Lona Branca pé 3,00m', rotulo:'Tenda 15x10 pé direito 3,00m – Lona Branca', v:1850, s:900, f:275 },
+        { key:'tenda_branca_10x05', nome:'Tenda 10x05 Lona Branca pé 3,00m', rotulo:'Tenda 10x05 pé direito 3,00m – Lona Branca', v:1240, s:400, f:131.2 },
+    ]},
+    { cat:'TENDAS – LONA CRISTAL', itens:[
+        { key:'tenda_cristal_3x3', nome:'Tenda 3x3 Lona Cristal pé 2,20m', rotulo:'Tenda 3x3 pé direito 2,20m – Lona Cristal', v:630, s:100, f:58.4 },
+        { key:'tenda_cristal_4x4', nome:'Tenda 4x4 Lona Cristal pé 2,50m', rotulo:'Tenda 4x4 pé direito 2,50m – Lona Cristal', v:780, s:150, f:74.4 },
+        { key:'tenda_cristal_5x5', nome:'Tenda 5x5 Lona Cristal pé 2,50m', rotulo:'Tenda 5x5 pé direito 2,50m – Lona Cristal', v:930, s:200, f:90.4 },
+        { key:'tenda_cristal_6x6', nome:'Tenda 6x6 Lona Cristal pé 3,00m', rotulo:'Tenda 6x6 pé direito 3,00m – Lona Cristal', v:1155, s:280, f:114.8 },
+        { key:'tenda_cristal_8x8', nome:'Tenda 8x8 Lona Cristal pé 3,00m', rotulo:'Tenda 8x8 pé direito 3,00m – Lona Cristal', v:1380, s:400, f:142.4 },
+        { key:'tenda_cristal_10x10', nome:'Tenda 10x10 Lona Cristal pé 3,00m', rotulo:'Tenda 10x10 pé direito 3,00m – Lona Cristal', v:1830, s:650, f:248 },
+        { key:'tenda_cristal_12x12', nome:'Tenda 12x12 Lona Cristal pé 3,00m', rotulo:'Tenda 12x12 pé direito 3,00m – Lona Cristal', v:2280, s:750, f:303 },
+    ]},
+    { cat:'ACESSÓRIOS PARA TENDAS', itens:[
+        { key:'fech_3x3', nome:'Fechamento Lateral Tenda 3x3', v:40, s:30, f:5.6 },
+        { key:'fech_4x4', nome:'Fechamento Lateral Tenda 4x4', v:60, s:35, f:7.6 },
+        { key:'fech_5x5', nome:'Fechamento Lateral Tenda 5x5', v:70, s:40, f:8.8 },
+        { key:'fech_6x6', nome:'Fechamento Lateral Tenda 6x6', v:80, s:45, f:10 },
+        { key:'fech_8x8', nome:'Fechamento Lateral Tenda 8x8', v:110, s:60, f:13.6 },
+        { key:'fech_10x10', nome:'Fechamento Lateral Tenda 10x10', v:130, s:75, f:16.4 },
+        { key:'fech_12x12', nome:'Fechamento Lateral Tenda 12x12', v:160, s:90, f:20 },
+        { key:'fech_15x10', nome:'Fechamento Lateral Tenda 15x10 (7,5x3 e 10x3)', v:130, s:75, f:16.4 },
+        { key:'calha_3x3', nome:'Calha Tenda 3x3', v:20, s:0, f:0 },
+        { key:'calha_4x4', nome:'Calha Tenda 4x4', v:30, s:0, f:0 },
+        { key:'calha_5x5', nome:'Calha Tenda 5x5', v:40, s:0, f:0 },
+        { key:'calha_6x6', nome:'Calha Tenda 6x6', v:50, s:0, f:0 },
+        { key:'calha_8x8', nome:'Calha Tenda 8x8', v:60, s:0, f:0 },
+        { key:'calha_10x10', nome:'Calha Tenda 10x10', v:70, s:0, f:0 },
+        { key:'calha_12x12', nome:'Calha Tenda 12x12', v:80, s:0, f:0 },
+        { key:'calha_15x10', nome:'Calha Tenda 15x10', v:70, s:0, f:0 },
+        { key:'along_050_456', nome:'Alongador 0,50m – Tenda 4x4, 5x5, 6x6', v:40, s:40, f:6.4 },
+        { key:'along_050_81012', nome:'Alongador 0,50m – Tenda 8x8, 10x10, 12x12', v:50, s:50, f:8 },
+        { key:'along_100_81012', nome:'Alongador 1,00m – Tenda 8x8, 10x10, 12x12', v:60, s:50, f:8.8 },
+        { key:'along_050_3x3', nome:'Alongador 0,50m – Tenda 3x3', v:40, s:40, f:6.4 },
+    ]},
+    { cat:'GALPÕES', itens:[
+        { key:'galpao_luxo_10m', nome:'Tenda Galpão Luxo Boca 10m', v:42, s:26, f:8 },
+        { key:'galpao_tfs_10m', nome:'Tenda Galpão TFS Boca 10m', v:42, s:26, f:8 },
+        { key:'galpao_tfs_15m', nome:'Tenda Galpão TFS Boca 15m', v:42, s:26, f:8 },
+        { key:'galpao_tfs_20m', nome:'Tenda Galpão TFS Boca 20m', v:40, s:26, f:8 },
+        { key:'galpao_tfs_25m', nome:'Tenda Galpão TFS Boca 25m', v:42, s:26, f:8 },
+        { key:'galpao_tfs_30m', nome:'Tenda Galpão TFS Boca 30m', v:40, s:26, f:8 },
+    ]},
+    { cat:'ACESSÓRIOS PARA GALPÕES', itens:[
+        { key:'fech_galpao_5m', nome:'Fechamento Lateral Galpão 5m pé 4,50m', rotulo:'Fechamento Lateral Tenda Galpão 5m pé 4,50m', v:170, s:80, f:20 },
+        { key:'porta_dupla_galpao', nome:'Porta Dupla Translúcida com Tranca – Galpão', rotulo:'Porta Dupla Translúcida com Tranca – Tenda Galpão', v:2000, s:1200, f:256 },
+        { key:'porta_correr_galpao', nome:'Porta de Correr 5m – Galpão', rotulo:'Porta de Correr 5m – Tenda Galpão', v:1000, s:1200, f:176 },
+    ]},
+    { cat:'TÚNEL', itens:[
+        { key:'tunel_geodome', nome:'Túnel Geodome 18m de Boca', rotulo:'Túnel Geodome 18m de Boca – Módulo 18x4,30', v:42, s:24, f:8 },
+    ]},
+    { cat:'SALAS OCTANORM', itens:[
+        { key:'stand_basico_220', nome:'Stand Básico 2,20h', v:55, s:30, f:5 },
+        { key:'stand_basico_270', nome:'Stand Básico 2,70h', v:60, s:35, f:5 },
+        { key:'sala_basica_220', nome:'Sala Básica 2,20h', v:60, s:36, f:5 },
+        { key:'sala_basica_270', nome:'Sala Básica 2,70h', v:65, s:40, f:5 },
+        { key:'sala_refrig_220', nome:'Sala Refrigerada 2,20h', v:75, s:45, f:8 },
+        { key:'sala_refrig_270', nome:'Sala Refrigerada 2,70h', v:84, s:48, f:8 },
+        { key:'kit_mobiliario', nome:'Kit Mobiliário Básico', rotulo:'Kit Mobiliário Básico (sofá, frigobar, puff, mesa, cadeira, espelho)', v:1000, s:0, f:0 },
+        { key:'kit_torre_agua', nome:"Kit Torre com Caixa d'Água, Pia e Hidráulica", v:1000, s:500, f:120 },
+    ]},
+    { cat:'BALCÕES E PRATELEIRAS', itens:[
+        { key:'balcao_080h', nome:'Balcão Octanorm 0,80m H', rotulo:'Balcão Octanorm 0,80m H x 1,00m L x 0,50m P', v:80, s:40, f:9.6 },
+        { key:'balcao_100h', nome:'Balcão 1,00m H', rotulo:'Balcão 1,00m H x 1,00m L x 0,50m P', v:80, s:40, f:9.6 },
+        { key:'balcao_pia', nome:'Balcão com Pia 1,00m H', rotulo:'Balcão com Pia 1,00m H x 1,00m L x 0,50m P', v:180, s:50, f:18.4 },
+        { key:'prateleira_oct', nome:'Prateleira Octanorm 1,00 L x 0,50 P', v:45, s:10, f:4.4 },
+        { key:'prateleira_mf', nome:'Prateleira Mão Francesa 1,00 L x 0,30 P', v:30, s:10, f:3.2 },
+    ]},
+    { cat:'SALAS ESPECIAIS', itens:[
+        { key:'sala_vidro_baguete_220', nome:'Sala Refrigerada Vidro Baguete 2,20h', v:95, s:50, f:11.6 },
+        { key:'sala_vidro_baguete_270', nome:'Sala Refrigerada Vidro Baguete 2,70h', v:105, s:55, f:12.8 },
+        { key:'sala_vidro_spider_220', nome:'Sala Refrigerada Vidro Spider 2,20h', v:110, s:60, f:13.2 },
+        { key:'sala_vidro_spider_270', nome:'Sala Refrigerada Vidro Spider 2,70h', v:120, s:45, f:14.4 },
+        { key:'cozinha_basica', nome:'Cozinha Básica 2,20h com Balcão Frontal', v:90, s:45, f:5 },
+        { key:'bilheteria_220', nome:'Bilheteria 2,20h', v:75, s:35, f:8.8 },
+        { key:'bilheteria_270', nome:'Bilheteria 2,70h', v:85, s:40, f:10 },
+    ]},
+    { cat:'TRELIÇADOS', itens:[
+        { key:'galpao_p30_15m', nome:'Galpão Boca 15m – Treliça P30', rotulo:'Galpão Boca 15m – Treliça P30 (módulo 15,60x5,30)', v:42, s:26, f:8 },
+        { key:'trelica_p30', nome:'Treliça P30 – Metro Linear', rotulo:'Treliça P30 – Metro Linear (mL)', v:65, s:30, f:8 },
+        { key:'trelica_p50', nome:'Treliça P50 – Metro Linear', rotulo:'Treliça P50 – Metro Linear (mL)', v:130, s:30, f:16 },
+    ]},
+    { cat:'PALCOS', itens:[
+        { key:'palco_concha_18x14', nome:'Palco Concha 18x14', rotulo:'Palco Concha 18x14 com torre fly e house mix', v:30000, s:21000, f:10000 },
+        { key:'palco_2ag_18x14', nome:'Palco 2 Águas 18x14', rotulo:'Palco 2 Águas 18x14 com torre fly e house mix', v:30000, s:21000, f:10000 },
+        { key:'palco_2ag_14x10', nome:'Palco 2 Águas 14x10', rotulo:'Palco 2 Águas 14x10 com torre fly e house mix', v:25000, s:15000, f:10000 },
+        { key:'palco_2ag_12x10', nome:'Palco 2 Águas 12x10', rotulo:'Palco 2 Águas 12x10 com torre fly e house mix', v:17000, s:13000, f:8000 },
+        { key:'palco_2ag_10x8', nome:'Palco 2 Águas 10x8', rotulo:'Palco 2 Águas 10x8 com torre fly e house mix', v:15000, s:12000, f:8000 },
+        { key:'palco_2ag_9x6', nome:'Palco 2 Águas 9x6', rotulo:'Palco 2 Águas 9x6 com torre fly e house mix', v:14000, s:10000, f:8000 },
+    ]},
+    { cat:'BANHEIROS QUÍMICOS', itens:[
+        { key:'banheiro_stati', nome:'Banheiro Químico Stati', rotulo:'Banheiro Químico Stati (pedido mínimo R$12.000)', v:100, s:80, f:145, ds:true },
+        { key:'banheiro_vip', nome:'Banheiro Químico VIP', rotulo:'Banheiro Químico VIP (pedido mínimo R$12.000)', v:150, s:80, f:145, ds:true },
+        { key:'banheiro_pne', nome:'Banheiro Químico PNE', rotulo:'Banheiro Químico PNE (pedido mínimo R$12.000)', v:200, s:80, f:290, ds:true },
+    ]},
+    { cat:'ARQUIBANCADAS', itens:[
+        { key:'arqui_3deg', nome:'Arquibancada 3 Degraus', v:300, s:150, f:20 },
+        { key:'arqui_7deg', nome:'Arquibancada 7 Degraus', v:600, s:300, f:40 },
+    ]},
+    { cat:'FIXAÇÃO ESPECIAL', itens:[
+        { key:'caixa_ibc', nome:'Caixa IBC 1.000 Litros', v:170, s:0, f:0 },
+        { key:'galao_50l', nome:'Galão 50 Litros', v:55, s:0, f:0 },
+    ]},
+];
+// dm = material multiplica por diárias (todos); ds = serviço multiplica por diárias (só banheiros)
+const ITENS = {};
+CATALOGO.forEach(c => c.itens.forEach(i => { ITENS[i.key] = Object.assign({ dm:true, ds:false }, i); }));
+
+// ---------- tributação (todas "por dentro": total = base ÷ (1 − %)) ----------
+const TRIB = {
+    '0':             { pct:0,     label:'Sem tributação' },
+    'recibo':        { pct:17.65, label:'Recibo (17,65%)' },
+    'nf':            { pct:22.65, label:'Nota Fiscal (22,65%)' },
+    'beneficio':     { pct:5,     label:'Benefício Recibo (5%)' },
+    'nota_beneficio':{ pct:10,    label:'Benefício Nota (10%)' },
+};
+
+// ---------- simulação e manutenção: modelos de linha (atalhos) ----------
+// Os valores são os mesmos que já estavam no sistema e podem ser alterados em cada linha.
+const TIPOS_AUX = { diaria:'por diária', km:'por km', fechado:'valor fechado' };
+const MODELOS = {
+    serv: [
+        { botao:'Interno',    desc:'Diária Profissional Interno', tipo:'diaria', valor:200, antigo:'prof_int' },
+        { botao:'Externo',    desc:'Diária Profissional Externo', tipo:'diaria', valor:500, antigo:'prof_ext' },
+        { botao:'Hospedagem', desc:'Diária de Hospedagem',        tipo:'diaria', valor:100, antigo:'hosped' },
+        { botao:'Veículo',    desc:'Veículo de Passeio',          tipo:'km',     valor:2.5, antigo:'passeio' },
+        { botao:'Outro',      desc:'',                            tipo:'fechado', valor:0 },
+    ],
+    frete: [
+        { botao:'F350',            desc:'Frete F350',               tipo:'km', valor:5,  antigo:'f350' },
+        { botao:'Baú/Toco/Truck',  desc:'Frete Baú / Toco / Truck', tipo:'km', valor:8,  antigo:'toco' },
+        { botao:'Carreta/Munck',   desc:'Frete Carreta / Munck',    tipo:'km', valor:12, antigo:'carreta' },
+        { botao:'Outro veículo',   desc:'',                         tipo:'km', valor:0 },
+    ],
+    man: [
+        { botao:'Externo',    desc:'Diária Profissional Externo', tipo:'diaria', valor:500, antigo:'man_prof_ext' },
+        { botao:'Hospedagem', desc:'Diária de Hospedagem',        tipo:'diaria', valor:100, antigo:'man_hosped' },
+        { botao:'Veículo',    desc:'Veículo de Passeio',          tipo:'km',     valor:2.5, antigo:'man_passeio' },
+        { botao:'Outro',      desc:'',                            tipo:'fechado', valor:0 },
+    ]
+};
+const TITULO_AUX = { serv:'Serviço — equipe', frete:'Frete — veículos', man:'Manutenção — equipe em campo' };
+const NOME_AUX = { serv:'Serviço', frete:'Frete', man:'Manutenção' };
+
+// ---------- mensagens padrão ----------
+const OBS_PADRAO = [
+    { id:'orc_previo', titulo:'(Orçamento Prévio)', texto:'Os valores apresentados neste orçamento foram baseados em informações fornecidas pelo cliente, sem validação técnica por meio de visita do setor de projetos da empresa Grupo Tendas Plenart. Após a aprovação do presente orçamento e assinatura do contrato, será necessária visita técnica para avaliação das condições operacionais, técnicas e materiais, podendo haver custos adicionais não contemplados neste orçamento.' },
+    { id:'validade', titulo:'(Validade do Orçamento)', texto:'Este orçamento tem validade de 10 (dez) dias corridos a partir da data de emissão. Após este prazo, os valores poderão ser revisados.' },
+    { id:'aterramento_nc', titulo:'(Aterramento Não Contemplado)', texto:'O serviço de aterramento de estruturas não está contemplado neste orçamento. Caso seja necessário, o valor será calculado à parte.' },
+    { id:'horario_montagem', titulo:'(Horário de Montagem)', texto:'A montagem e desmontagem das estruturas serão realizadas em horário comercial (08h às 17h). Para serviços fora deste horário, poderá haver acréscimo no valor da mão de obra.' },
+    { id:'local_acesso', titulo:'(Acesso ao Local)', texto:'É de responsabilidade do contratante garantir o acesso adequado ao local de montagem para os veículos e equipe técnica, bem como providenciar local para descarga e armazenamento dos materiais.' },
+    { id:'vigilancia', titulo:'(Responsabilidade de Vigilância)', texto:'A vigilância e segurança das estruturas, materiais e equipamentos no local do evento — incluindo durante a montagem, realização e desmontagem — são de inteira responsabilidade do contratante. O Grupo Tendas Plenart não se responsabiliza por danos, furtos ou avarias ocorridos no local do evento por falta de vigilância adequada.' },
+];
+
+// =====================================================================
+// ESTADO
+// =====================================================================
+function novoEstado(){
+    return {
+        versao: 4,
+        id: uid(),
+        tipo: TIPO_ORC,
+        evento: { cliente:'', nome:'', numOrc:'', dataInicio:'', dataTermino:'', responsavel:'', contato:'', local:'' },
+        salas: [],        // [{ id, nome }]  – na ordem de criação / arrastada
+        itens: [],        // [{ id, salaId, key, nome, qtd, dia, mat, serv, frete, extra }] – ordem dentro de cada sala
+        aterramento: 0,
+        sim: { usarServ:false, usarFrete:false, servicos:[], fretes:[], mostrarServ:false, mostrarFrete:false },
+        man: { itens:[], mostrar:false },
+        desconto: { modo:'pct', pct:0, vlr:0 },
+        imposto: { tipo:'0', pctOutro:0 },
+        pagamento: { metodo:'', metodoOutros:'', qtdParcelas:0, parcelas:[] },
+        obs: { padrao:[], texto:'' },
+        ui: { verAbertura:false, printMode:'completo', orientacao:'retrato', comp:{ mat:'linha', serv:'linha', frete:'linha' }, somar:false },
+        meta: { criadoEm:new Date().toISOString(), salvoEm:null, elaboradoPor:'', criadoPor:'', atualizadoPor:'', atualizadoEm:null, status:'Rascunho', total:0 }
+    };
+}
+let state = novoEstado();
+function mesclarEstado(s){
+    const base = novoEstado();
+    const out = Object.assign({}, base, s);
+    ['evento','sim','man','desconto','imposto','pagamento','obs','ui','meta'].forEach(k => { out[k] = Object.assign({}, base[k], (s && s[k]) || {}); });
+    out.salas = Array.isArray(s.salas) ? s.salas.filter(x => x && x.id) : [];
+    out.itens = Array.isArray(s.itens) ? s.itens.filter(x => x && x.id) : [];
+    out.pagamento.parcelas = Array.isArray(out.pagamento.parcelas) ? out.pagamento.parcelas : [];
+    out.obs.padrao = Array.isArray(out.obs.padrao) ? out.obs.padrao : [];
+    // converte o formato antigo (uma linha fixa por tipo) para as linhas livres
+    function converter(qual, valores){
+        const linhas = [];
+        (MODELOS[qual] || []).forEach(m => {
+            const v = (valores || {})[m.antigo]; if(!v) return;
+            const qtd = Number(v.qtd) || 0, km = Number(v.km) || 0, dias = Number(v.dia) || 0;
+            if(qtd <= 0 && km <= 0 && dias <= 0) return;
+            linhas.push({ id: uid(), desc: m.desc, tipo: m.tipo, qtd, km, dias, valor: m.valor });
+        });
+        return linhas;
+    }
+    const simAntigo = (s.sim && s.sim.valores) || null;
+    const manAntigo = (s.man && s.man.valores) || null;
+    out.sim.servicos = (s.sim && Array.isArray(s.sim.servicos)) ? s.sim.servicos : converter('serv', simAntigo);
+    out.sim.fretes   = (s.sim && Array.isArray(s.sim.fretes))   ? s.sim.fretes   : converter('frete', simAntigo);
+    out.man.itens    = (s.man && Array.isArray(s.man.itens))    ? s.man.itens    : converter('man', manAntigo);
+    delete out.sim.valores; delete out.man.valores;
+    out.id = s.id || base.id;
+    out.ui.comp = Object.assign({ mat:'linha', serv:'linha', frete:'linha' }, (s.ui && s.ui.comp) || {});
+    out.meta.status = out.meta.status || 'Rascunho';
+    return out;
+}
+const itemPorId = id => state.itens.find(i => i.id === id);
+const salaPorId = id => state.salas.find(s => s.id === id);
+
+// ---------- gravação no banco de dados (Supabase, via PlenartDB) ----------
+let versaoBanco = null;        // versão que esta tela carregou do banco; null = ainda não está lá
+let salvarTimer = null;
+let salvando = false;
+let salvarDeNovo = false;
+let naoSalvo = false;          // tem alteração que ainda não subiu
+
+function statusSalvo(txt, tipo){
+    const el = $('rascunhoStatus'); if(!el) return;
+    el.textContent = txt;
+    const caixa = el.closest('.rascunho') || el.parentElement;
+    if(caixa) caixa.dataset.estado = tipo || '';
+}
+function horaAgora(){ return new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}); }
+
+function agendarSalvar(){
+    if(!temConteudo(state)) return;
+    naoSalvo = true;
+    statusSalvo('alterações não salvas', 'espera');
+    clearTimeout(salvarTimer);
+    salvarTimer = setTimeout(salvarOrcamento, 1500);   // grava 1,5s depois que você para de mexer
+}
+
+async function salvarOrcamento(){
+    if(!temConteudo(state)){ statusSalvo('Orçamento em branco', ''); return; }
+    if(salvando){ salvarDeNovo = true; return; }
+    clearTimeout(salvarTimer);
+    salvando = true;
+    statusSalvo('salvando...', 'espera');
+
+    const agora = new Date().toISOString();
+    state.meta.salvoEm = agora; state.meta.atualizadoEm = agora;
+    if(usuarioAtual && usuarioAtual.nome) state.meta.atualizadoPor = usuarioAtual.nome;
+    if(!state.meta.criadoPor) state.meta.criadoPor = state.meta.elaboradoPor || (usuarioAtual ? usuarioAtual.nome : '');
+    state.meta.total = calcular().total;
+
+    const r = await PlenartDB.salvar(state, versaoBanco);
+    salvando = false;
+
+    if(r.ok){
+        versaoBanco = r.versao;
+        naoSalvo = false;
+        statusSalvo('Salvo às ' + horaAgora(), 'ok');
+    } else if(r.conflito){
+        statusSalvo('Outra pessoa alterou este orçamento', 'alerta');
+        tratarConflito(r);
+    } else if(r.semRede){
+        statusSalvo('Sem internet — guardado neste computador', 'alerta');
+    } else if(r.precisaLogin){
+        statusSalvo('Sessão encerrada', 'alerta');
+        if(confirm('Sua sessão expirou. Entrar de novo?\n\nO que você fez está guardado neste computador e sobe assim que você voltar.')) PlenartDB.exigirLogin('plenart-sistema.html');
+    } else if(r.apagado){
+        statusSalvo('Orçamento excluído por outra pessoa', 'alerta');
+        alert(r.msg + '\n\nO que está na sua tela ficou guardado neste computador.');
+    } else {
+        statusSalvo('Não consegui salvar', 'alerta');
+        console.warn('Falha ao salvar:', r.msg);
+    }
+    if(salvarDeNovo){ salvarDeNovo = false; salvarOrcamento(); }
+}
+
+/* duas pessoas mexendo no mesmo orçamento: quem decide é o usuário, nunca o sistema */
+async function tratarConflito(r){
+    const quem = (r.linha && r.linha.atualizado_por_nome) || 'Outra pessoa';
+    const quando = r.linha && r.linha.atualizado_em ? new Date(r.linha.atualizado_em).toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}) : '';
+    if(confirm(`${quem} alterou este orçamento${quando ? ' às ' + quando : ''}, depois que você abriu.\n\n` +
+               `OK = abrir a versão dela (o que você mudou agora sai da tela)\n` +
+               `Cancelar = continuar com a sua versão na tela`)){
+        const atual = await PlenartDB.carregar(state.id);
+        if(atual.ok){
+            state = mesclarEstado(atual.state); versaoBanco = atual.versao; naoSalvo = false;
+            if(typeof iniciarComboValor === 'function') iniciarComboValor();
+            renderTudo();
+            statusSalvo('Aberta a versão de ' + quem, 'ok');
+        } else { alert('Não consegui buscar a versão dela: ' + (atual.msg || 'erro')); }
+        return;
+    }
+    if(confirm(`Quer gravar a SUA versão por cima da de ${quem}?\n\n` +
+               `OK = gravar por cima (o que ${quem} fez se perde)\n` +
+               `Cancelar = deixar como está, sem salvar`)){
+        versaoBanco = r.versaoNova;
+        salvarOrcamento();
+    } else {
+        statusSalvo('Não salvo — sua cópia está guardada neste computador', 'alerta');
+    }
+}
+
+/* avisa se fechar com coisa não salva */
+window.addEventListener('beforeunload', e => {
+    if(naoSalvo && temConteudo(state)){ e.preventDefault(); e.returnValue = ''; return ''; }
+});
+/* internet voltou: sobe o que ficou para trás */
+window.addEventListener('online', () => { PlenartDB.sincronizarPendentes().then(res => { if(res.subiram) statusSalvo('Salvo às ' + horaAgora(), 'ok'); }); });
+
+function temConteudo(s){
+    return !!((s.itens && s.itens.length) || (s.salas && s.salas.length) || (s.evento && (s.evento.nome || s.evento.cliente || s.evento.numOrc)));
+}
+// traz para a lista os rascunhos do modelo anterior (uma chave por tipo)
+function setStatus(v){ state.meta.status = v; atualizar(); }
+function atualizar(){ recalc(); agendarSalvar(); }
+
+// =====================================================================
+// CÁLCULO (puro: só lê o state)
+// =====================================================================
+// ---------- o que aparece na linha do produto e o que vai só para o total ----------
+const COMP_LABEL = { mat:'Material', serv:'Serviço', frete:'Frete' };
+function simulado(c){ return (c === 'serv' && state.sim.usarServ) || (c === 'frete' && state.sim.usarFrete); }
+function fora(c){ return state.ui.comp[c] === 'fora'; }
+function naLinha(c){ return state.ui.comp[c] === 'linha' && !simulado(c) && !fora(c); }
+function compsNaLinha(){ return ['mat','serv','frete'].filter(naLinha); }
+function modoSomar(){ return !!state.ui.somar && compsNaLinha().length > 1; }
+function colunasTabela(){
+    const comps = compsNaLinha();
+    const somar = modoSomar();
+    const abertura = !!state.ui.verAbertura && !somar && comps.length > 0;
+    return { comps, somar, abertura, n: 4 + (somar ? 1 : comps.length) + (abertura ? comps.length : 0) + 2 };
+}
+function calcItem(it){
+    const qtd = Math.max(0, Number(it.qtd) || 0);
+    const dia = Math.max(1, Number(it.dia) || 1);
+    const mat = Math.max(0, Number(it.mat) || 0), serv = Math.max(0, Number(it.serv) || 0), frete = Math.max(0, Number(it.frete) || 0);
+    let tM, tS, tF;
+    if(it.extra){ tM = qtd * mat * dia; tS = qtd * serv; tF = qtd * frete; }
+    else {
+        const def = ITENS[it.key] || { dm:true, ds:false };
+        tM = qtd * mat * (def.dm ? dia : 1);
+        tS = qtd * serv * (def.ds ? dia : 1);
+        tF = qtd * frete;
+    }
+    const sub = (naLinha('mat') ? tM : 0) + (naLinha('serv') ? tS : 0) + (naLinha('frete') ? tF : 0);
+    const div = qtd * dia;
+    return { tM, tS, tF, sub, unit: div > 0 ? sub / div : 0 };
+}
+function listaAux(qual){ return qual === 'serv' ? state.sim.servicos : qual === 'frete' ? state.sim.fretes : state.man.itens; }
+function calcLinhaAux(l){
+    const qtd = Math.max(0, Number(l.qtd) || 0), km = Math.max(0, Number(l.km) || 0);
+    const dias = Math.max(0, Number(l.dias) || 0), valor = Math.max(0, Number(l.valor) || 0);
+    if(l.tipo === 'km') return qtd * km * dias * valor;
+    if(l.tipo === 'fechado') return qtd * valor;
+    return qtd * dias * valor;
+}
+function calcAux(qual){
+    let total = 0; const porLinha = {};
+    listaAux(qual).forEach(l => { const t = calcLinhaAux(l); porLinha[l.id] = t; total += t; });
+    return { total, porLinha };
+}
+function calcSim(){
+    const s = calcAux('serv'), f = calcAux('frete');
+    return { serv: s.total, frete: f.total, porLinha: Object.assign({}, s.porLinha, f.porLinha) };
+}
+function calcMan(){ return calcAux('man'); }
+function impostoInfo(){
+    if(state.imposto.tipo === 'outro'){
+        const p = Math.min(99.99, Math.max(0, Number(state.imposto.pctOutro) || 0));
+        return { pct:p, label: p > 0 ? `Outro (${fmtPct(p)}%)` : 'Outro (informe o %)' };
+    }
+    return TRIB[state.imposto.tipo] || TRIB['0'];
+}
+function calcular(){
+    let totalMat = 0, totalServTab = 0, totalFreteTab = 0;
+    const porItem = {}, porSala = {};
+    state.itens.forEach(it => {
+        const c = calcItem(it); porItem[it.id] = c;
+        totalMat += c.tM; totalServTab += c.tS; totalFreteTab += c.tF;
+        const s = it.salaId || ''; porSala[s] = (porSala[s] || 0) + c.sub;
+    });
+    const sim = calcSim(), man = calcMan();
+    const matEf   = fora('mat')   ? 0 : totalMat;
+    const servEf  = fora('serv')  ? 0 : (state.sim.usarServ ? sim.serv : totalServTab);
+    const freteEf = fora('frete') ? 0 : (state.sim.usarFrete ? sim.frete : totalFreteTab);
+    const aterTotal = (Number(state.aterramento) || 0) * 2;
+    // o que entra no total mas NÃO está detalhado nas linhas
+    const extras = [];
+    if(!fora('mat') && !naLinha('mat') && matEf > 0) extras.push({ id:'mat', nome:'Material', valor: matEf });
+    if(!fora('serv') && !naLinha('serv') && servEf > 0) extras.push({ id:'serv', nome: 'Serviço (mão de obra)' + (state.sim.usarServ ? ' – simulado' : ''), valor: servEf });
+    if(!fora('frete') && !naLinha('frete') && freteEf > 0) extras.push({ id:'frete', nome:'Frete (entrega e retirada)' + (state.sim.usarFrete ? ' – simulado' : ''), valor: freteEf });
+    if(aterTotal > 0) extras.push({ id:'ater', nome:'Aterramento de estruturas', valor: aterTotal });
+    if(man.total > 0) extras.push({ id:'man', nome:'Manutenção (deslocamento e hospedagem da equipe)', valor: man.total });
+    const subtotal = matEf + servEf + freteEf + aterTotal + man.total;
+    let pct = Number(state.desconto.pct) || 0, vlr = Number(state.desconto.vlr) || 0;
+    if(state.desconto.modo === 'vlr'){ vlr = Math.min(Math.max(0, vlr), subtotal); pct = subtotal > 0 ? vlr / subtotal * 100 : 0; }
+    else { pct = Math.min(100, Math.max(0, pct)); vlr = subtotal * pct / 100; }
+    const base = subtotal - vlr;
+    const imp = impostoInfo();
+    const imposto = imp.pct > 0 ? base / (1 - imp.pct / 100) - base : 0;
+    const total = base + imposto;
+    return { porItem, porSala, totalMat, totalServTab, totalFreteTab, sim, man, matEf, servEf, freteEf, aterTotal, extras, subtotal, descPct:pct, descVlr:vlr, base, impPct:imp.pct, impLabel:imp.label, imposto, total };
+}
+
+// =====================================================================
+// RENDER (estrutura) – chamado quando muda a "forma" da tela
+// =====================================================================
+// ---------- busca de produto (combobox) ----------
+const PRODUTOS_BUSCA = [];
+CATALOGO.forEach(c => c.itens.forEach(i => PRODUTOS_BUSCA.push({ key:i.key, cat:c.cat, rotulo:i.rotulo || i.nome, busca: semAcento((i.rotulo || i.nome) + ' ' + i.nome + ' ' + c.cat) })));
+let produtoSel = PRODUTOS_BUSCA.length ? PRODUTOS_BUSCA[0].key : null;
+let comboFiltrados = [], comboIdx = -1;
+function produtoPorKey(k){ return PRODUTOS_BUSCA.find(p => p.key === k); }
+function filtrarProdutos(termo){
+    const t = semAcento(termo).trim();
+    if(!t) return PRODUTOS_BUSCA.slice();
+    const partes = t.split(/\s+/);
+    return PRODUTOS_BUSCA.filter(p => partes.every(x => p.busca.indexOf(x) >= 0));
+}
+function marcarTermos(texto, termo){
+    const t = semAcento(termo).trim();
+    if(!t) return escapeHtml(texto);
+    const base = semAcento(texto), marcas = [];
+    t.split(/\s+/).forEach(x => { let i = base.indexOf(x); while(i >= 0 && x){ marcas.push([i, i + x.length]); i = base.indexOf(x, i + x.length); } });
+    if(!marcas.length) return escapeHtml(texto);
+    marcas.sort((a, b) => a[0] - b[0]);
+    const juntas = [];
+    marcas.forEach(m => { const u = juntas[juntas.length - 1]; if(u && m[0] <= u[1]) u[1] = Math.max(u[1], m[1]); else juntas.push(m.slice()); });
+    let out = '', pos = 0;
+    juntas.forEach(m => { out += escapeHtml(texto.slice(pos, m[0])) + '<mark>' + escapeHtml(texto.slice(m[0], m[1])) + '</mark>'; pos = m[1]; });
+    return out + escapeHtml(texto.slice(pos));
+}
+function renderComboLista(termo){
+    comboFiltrados = filtrarProdutos(termo);
+    const lista = $('comboLista');
+    if(!comboFiltrados.length){
+        lista.innerHTML = `<div class="combo-vazio">Nenhum produto encontrado para "${escapeHtml(termo)}"</div>`;
+        comboIdx = -1; return;
+    }
+    if(comboIdx < 0 || comboIdx >= comboFiltrados.length) comboIdx = 0;
+    let html = '', cat = null;
+    comboFiltrados.forEach((p, i) => {
+        if(p.cat !== cat){ cat = p.cat; html += `<div class="combo-grupo">${escapeHtml(cat)}</div>`; }
+        const def = ITENS[p.key] || {};
+        html += `<div class="combo-op${i === comboIdx ? ' ativo' : ''}" data-key="${p.key}" data-i="${i}"><span class="preco">mat. ${brl(def.v || 0)}</span>${marcarTermos(p.rotulo, termo)}</div>`;
+    });
+    lista.innerHTML = html;
+}
+function marcarAtivo(){
+    const lista = $('comboLista');
+    lista.querySelectorAll('.combo-op').forEach(el => el.classList.toggle('ativo', Number(el.dataset.i) === comboIdx));
+    const at = lista.querySelector('.combo-op.ativo'); if(at) at.scrollIntoView({ block:'nearest' });
+}
+function comboAberto(){ return $('comboProduto').classList.contains('aberto'); }
+function abrirCombo(){
+    if(comboAberto()) return;
+    $('comboProduto').classList.add('aberto');
+    $('comboBusca').value = '';
+    comboIdx = Math.max(0, PRODUTOS_BUSCA.findIndex(p => p.key === produtoSel));
+    renderComboLista('');
+    marcarAtivo();
+}
+function fecharCombo(){
+    $('comboProduto').classList.remove('aberto');
+    const p = produtoPorKey(produtoSel);
+    $('comboBusca').value = p ? p.rotulo : '';
+}
+function escolherProduto(key){
+    if(!key) return;
+    produtoSel = key;
+    fecharCombo();
+}
+function iniciarCombo(){
+    const inp = $('comboBusca');
+    inp.addEventListener('focus', abrirCombo);
+    inp.addEventListener('click', abrirCombo);
+    inp.addEventListener('input', () => { comboIdx = 0; renderComboLista(inp.value); });
+    inp.addEventListener('keydown', e => {
+        if(e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+            e.preventDefault();
+            if(!comboAberto()){ abrirCombo(); return; }
+            comboIdx = Math.min(comboFiltrados.length - 1, Math.max(0, comboIdx + (e.key === 'ArrowDown' ? 1 : -1)));
+            marcarAtivo(); return;
+        }
+        if(e.key === 'Enter'){
+            e.preventDefault();
+            if(comboAberto()){ if(comboFiltrados[comboIdx]) escolherProduto(comboFiltrados[comboIdx].key); }
+            else adicionarItem();
+            return;
+        }
+        if(e.key === 'Escape'){ if(comboAberto()){ e.preventDefault(); fecharCombo(); } }
+    });
+    $('comboLista').addEventListener('mousedown', e => {
+        const op = e.target.closest('.combo-op'); if(!op) return;
+        e.preventDefault(); escolherProduto(op.dataset.key);
+    });
+    document.addEventListener('mousedown', e => { if(comboAberto() && !e.target.closest('#comboProduto')) fecharCombo(); });
+    fecharCombo();
+}
+function renderSalasDropdowns(){
+    ['salaDestino','salaDestinoExtra'].forEach(id => {
+        const sel = $(id); const atual = sel.value;
+        sel.innerHTML = '<option value="">— Sem sala (item solto) —</option>' + state.salas.map(s => `<option value="${s.id}">${escapeHtml(s.nome)}</option>`).join('');
+        if(state.salas.some(s => s.id === atual)) sel.value = atual;
+    });
+}
+let NCOLS = 12;
+function renderCabecalho(){
+    const { comps, somar, abertura, n } = colunasTabela();
+    NCOLS = n;
+    let g = `<tr class="grupos"><th rowspan="2">#</th><th rowspan="2">Produto <span class="print-only th-orc" id="thOrc"></span></th><th colspan="2" class="grp-hq">Quantidades</th>`;
+    let sb = `<tr class="sub"><th class="grp-q">Qtd.</th><th class="grp-q">Diárias</th>`;
+    if(somar){
+        g += `<th rowspan="2" class="grp-hv col-preco">Valor unit. (R$)<span class="th-sub">${comps.map(c => COMP_LABEL[c]).join(' + ')}</span></th>`;
+    } else if(comps.length){
+        g += `<th colspan="${comps.length}" class="grp-hv grp-v">Valor unitário (R$)</th>`;
+        sb += comps.map(c => `<th class="grp-v">${COMP_LABEL[c]}</th>`).join('');
+    }
+    if(abertura){
+        g += `<th colspan="${comps.length}" class="grp-ht grp-t">Totais por coluna</th>`;
+        sb += comps.map(c => `<th class="grp-t">${COMP_LABEL[c]}</th>`).join('');
+    }
+    g += `<th rowspan="2" class="col-sub">Subtotal</th><th rowspan="2" class="no-print">Ações</th></tr>`;
+    $('cabecalhoTabela').innerHTML = g + sb + '</tr>';
+}
+function renderTabela(){
+    const tbody = $('corpoTabela'); tbody.innerHTML = '';
+    if(!state.itens.length && !state.salas.length){
+        tbody.innerHTML = `<tr class="vazio"><td colspan="${NCOLS}"><i class="fas fa-inbox" style="font-size:1.3rem;display:block;margin-bottom:6px;opacity:.4"></i>Nenhum produto adicionado. Use o seletor acima para começar.</td></tr>`;
+        return;
+    }
+    const soltos = state.itens.filter(i => !i.salaId || !salaPorId(i.salaId));
+    if(state.salas.length){
+        const trDiv = document.createElement('tr');
+        trDiv.className = 'sem-sala-divisor' + (soltos.length ? '' : ' oculto');
+        trDiv.innerHTML = `<td colspan="${NCOLS}"><i class="fas fa-circle-dot"></i> Itens sem sala (avulsos)${soltos.length ? '' : ': nenhum — arraste um item para cá para tirá-lo da sala'}</td>`;
+        tbody.appendChild(trDiv);
+    }
+    soltos.forEach(it => tbody.appendChild(linhaItem(it)));
+    state.salas.forEach(sala => {
+        tbody.appendChild(linhaCabecalhoSala(sala));
+        const its = state.itens.filter(i => i.salaId === sala.id);
+        if(!its.length){
+            const tr = document.createElement('tr'); tr.className = 'sala-vazia'; tr.dataset.salaId = sala.id;
+            tr.innerHTML = `<td colspan="${NCOLS}">Nenhum item nesta sala ainda. Selecione "${escapeHtml(sala.nome)}" em "Adicionar em (Sala)" ou arraste itens para cá.</td>`;
+            tbody.appendChild(tr);
+        } else {
+            its.forEach(it => tbody.appendChild(linhaItem(it)));
+            tbody.appendChild(linhaRodapeSala(sala));
+        }
+    });
+    renumerar();
+}
+function linhaItem(it){
+    const { comps, somar, abertura } = colunasTabela();
+    const tr = document.createElement('tr');
+    tr.className = 'item' + (it.extra ? ' extra' : ''); tr.dataset.id = it.id; tr.dataset.salaId = it.salaId || '';
+    const opts = ['<option value="">Mover para…</option>']
+        .concat(it.salaId ? ['<option value="__sem__">— Sem sala —</option>'] : [])
+        .concat(state.salas.filter(s => s.id !== it.salaId).map(s => `<option value="${s.id}">${escapeHtml(s.nome)}</option>`)).join('');
+    const celVal = somar
+        ? `<td class="col-preco c-unico"><span class="vp-unico"></span></td>`
+        : comps.map(c => `<td class="grp-v"><div class="money screen-only"><span>R$</span><input class="inp inp-money" data-campo="${c}" value="${fmtNum(it[c])}" inputmode="decimal" title="${COMP_LABEL[c]} (unitário)"></div><span class="vp vp-${c} print-only"></span></td>`).join('');
+    const celTot = abertura ? comps.map(c => `<td class="grp-t tot t-${c}"></td>`).join('') : '';
+    tr.innerHTML = `
+        <td class="col-num"><span class="alca no-print" title="Arraste para mudar a ordem ou a sala"><i class="fas fa-grip-vertical"></i></span><span class="num"></span></td>
+        <td class="col-prod">${it.extra ? '<span class="tag-extra">EXTRA</span> ' : ''}${escapeHtml(it.nome)}</td>
+        <td class="grp-q"><input class="inp inp-qtd screen-only" data-campo="qtd" value="${fmtQtd(it.qtd)}" inputmode="decimal" title="Quantidade"><span class="vp vp-qtd print-only"></span></td>
+        <td class="grp-q"><input class="inp inp-dia screen-only" data-campo="dia" value="${Number(it.dia)||1}" inputmode="numeric" title="Diárias"><span class="vp vp-dia print-only"></span></td>
+        ${celVal}${celTot}
+        <td class="col-sub sub"></td>
+        <td class="col-acoes no-print"><select class="mover" title="Mover para outra sala">${opts}</select><button class="btn-del" type="button" title="Excluir item">✕</button></td>`;
+    return tr;
+}
+function linhaCabecalhoSala(sala){
+    const tr = document.createElement('tr'); tr.className = 'sala-header-row'; tr.dataset.salaId = sala.id;
+    tr.innerHTML = `<td colspan="${NCOLS}"><div class="sala-linha">
+        <div class="sala-titulo"><span class="alca no-print" title="Arraste para mudar a ordem das salas"><i class="fas fa-grip-vertical"></i></span><i class="fas fa-building"></i> ${escapeHtml(sala.nome)}</div>
+        <button class="btn-mini no-print" type="button" onclick="renomearSala('${sala.id}')"><i class="fas fa-pen"></i> Renomear</button>
+        <button class="btn-mini del no-print" type="button" onclick="excluirSala('${sala.id}')"><i class="fas fa-trash"></i> Excluir Sala</button>
+    </div></td>`;
+    return tr;
+}
+function linhaRodapeSala(sala){
+    const tr = document.createElement('tr'); tr.className = 'sala-footer-row'; tr.dataset.salaId = sala.id;
+    tr.innerHTML = `<td colspan="${Math.max(1, NCOLS - 2)}" class="lbl-total" title="Total da sala ${escapeHtml(sala.nome)}"><i class="fas fa-cart-shopping"></i> Total · ${escapeHtml(sala.nome)}</td>
+        <td class="col-sub sala-total">R$ 0,00</td><td class="no-print"></td>`;
+    return tr;
+}
+function renumerar(){ let n = 0; $('corpoTabela').querySelectorAll('tr.item .num').forEach(el => { el.textContent = ++n; }); }
+
+const TBODY_AUX = { serv:'auxServ', frete:'auxFrete', man:'auxMan' };
+function renderBotoesAux(){
+    [['serv','addServ'],['frete','addFrete'],['man','addMan']].forEach(([qual, alvo]) => {
+        $(alvo).innerHTML = MODELOS[qual].map((m, i) => `<button type="button" class="btn-add" onclick="addLinhaAux('${qual}', ${i})">+ ${escapeHtml(m.botao)}</button>`).join(' ');
+    });
+}
+function renderAux(qual){
+    const tb = $(TBODY_AUX[qual]); const lista = listaAux(qual);
+    if(!lista.length){
+        tb.innerHTML = `<tr class="aux-vazia"><td colspan="8">Nenhuma linha ainda — use os botões "Incluir" acima.</td></tr>`;
+        return;
+    }
+    tb.innerHTML = lista.map(l => {
+        const km = l.tipo === 'km'
+            ? `<td><input type="number" min="0" step="0.01" value="${Number(l.km) || 0}" data-campo="km"></td>`
+            : `<td class="trav">—</td>`;
+        const dias = l.tipo === 'fechado'
+            ? `<td class="trav">—</td>`
+            : `<td><input type="number" min="0" step="1" value="${Number(l.dias) || 0}" data-campo="dias"></td>`;
+        return `<tr data-aux="${qual}" data-id="${l.id}">
+            <td><input class="aux-desc" data-campo="desc" value="${escapeHtml(l.desc)}" placeholder="Descreva o item..."></td>
+            <td><select class="aux-tipo" data-campo="tipo">${Object.keys(TIPOS_AUX).map(t => `<option value="${t}" ${t === l.tipo ? 'selected' : ''}>${TIPOS_AUX[t]}</option>`).join('')}</select></td>
+            <td><input type="number" min="0" step="1" value="${Number(l.qtd) || 0}" data-campo="qtd"></td>
+            ${km}${dias}
+            <td><div class="money"><span>R$</span><input class="inp inp-money" data-campo="valor" value="${fmtNum(l.valor)}" inputmode="decimal"></div></td>
+            <td class="aux-total">R$ 0,00</td>
+            <td class="col-x"><button type="button" class="btn-del" title="Remover linha" onclick="removerLinhaAux('${qual}', '${l.id}')">✕</button></td>
+        </tr>`;
+    }).join('');
+}
+function renderTodasAux(){ ['serv','frete','man'].forEach(renderAux); }
+function addLinhaAux(qual, idx){
+    const m = MODELOS[qual][idx];
+    listaAux(qual).push({ id: uid(), desc: m.desc, tipo: m.tipo, qtd: 1, km: 0, dias: m.tipo === 'fechado' ? 0 : 1, valor: m.valor });
+    renderAux(qual); atualizar();
+    const tb = $(TBODY_AUX[qual]); const ultima = tb.querySelector('tr:last-child');
+    if(ultima){ const alvo = ultima.querySelector(m.desc ? 'input[data-campo="qtd"]' : 'input[data-campo="desc"]'); if(alvo){ alvo.focus(); alvo.select(); } }
+}
+function removerLinhaAux(qual, id){
+    const lista = listaAux(qual); const i = lista.findIndex(l => l.id === id);
+    if(i >= 0) lista.splice(i, 1);
+    renderAux(qual); atualizar();
+}
+function setMostrar(qual, on){
+    if(qual === 'serv') state.sim.mostrarServ = !!on;
+    else if(qual === 'frete') state.sim.mostrarFrete = !!on;
+    else state.man.mostrar = !!on;
+    atualizar();
+}
+// edição das linhas auxiliares
+['auxServ','auxFrete','auxMan'].forEach(idTb => {
+    const tb = document.getElementById(idTb);
+    tb.addEventListener('input', e => {
+        const el = e.target.closest('[data-campo]'); if(!el) return;
+        const tr = el.closest('tr[data-id]'); const qual = tr.dataset.aux;
+        const l = listaAux(qual).find(x => x.id === tr.dataset.id); if(!l) return;
+        const campo = el.dataset.campo;
+        if(campo === 'desc') l.desc = el.value;
+        else if(campo === 'valor') l.valor = Math.max(0, parseNum(el.value));
+        else l[campo] = Math.max(0, parseFloat(el.value) || 0);
+        atualizar();
+    });
+    tb.addEventListener('change', e => {
+        const sel = e.target.closest('select[data-campo="tipo"]'); if(!sel) return;
+        const tr = sel.closest('tr[data-id]'); const qual = tr.dataset.aux;
+        const l = listaAux(qual).find(x => x.id === tr.dataset.id); if(!l) return;
+        l.tipo = sel.value;
+        if(l.tipo !== 'fechado' && !l.dias) l.dias = 1;
+        renderAux(qual); atualizar();
+    });
+    tb.addEventListener('focusout', e => {
+        const el = e.target.closest('input[data-campo="valor"]'); if(!el) return;
+        const tr = el.closest('tr[data-id]'); const l = listaAux(tr.dataset.aux).find(x => x.id === tr.dataset.id);
+        if(l) el.value = fmtNum(l.valor);
+    });
+});
+function renderParcelas(){
+    const grid = $('pagParcelasGrid'); grid.innerHTML = '';
+    state.pagamento.parcelas.forEach((p, i) => {
+        const card = document.createElement('div'); card.className = 'pag-parcela-card';
+        card.innerHTML = `<div class="num">${i + 1}ª Parcela</div><div class="campos">
+            <div><label>% do total</label><input type="number" class="pag-pct" data-i="${i}" min="0" max="100" step="0.01" value="${p.pct}"></div>
+            <div><label>Data de Vencimento</label><input type="date" class="pag-data" data-i="${i}" value="${p.data || ''}"></div>
+        </div><div class="calc" id="pagCalc_${i}">R$ 0,00</div>`;
+        grid.appendChild(card);
+    });
+}
+function renderObsPadrao(){
+    const lista = $('obsPadraoLista'); lista.innerHTML = '';
+    OBS_PADRAO.forEach(o => {
+        const marcado = state.obs.padrao.includes(o.id);
+        const div = document.createElement('div');
+        div.className = 'obs-padrao-item' + (marcado ? ' marcado' : ''); div.dataset.obsId = o.id;
+        div.innerHTML = `<input type="checkbox" id="obs_${o.id}" ${marcado ? 'checked' : ''} onchange="onChangeObsPadrao('${o.id}', this.checked)"><label for="obs_${o.id}"><strong>${escapeHtml(o.titulo)}</strong> ${escapeHtml(o.texto)}</label>`;
+        lista.appendChild(div);
+    });
+}
+function renderTudo(){
+    document.querySelectorAll('[data-ev]').forEach(inp => { inp.value = state.evento[inp.dataset.ev] || ''; });
+    $('selStatus').value = state.meta.status || 'Rascunho';
+    renderSalasDropdowns(); renderChips(); renderCabecalho(); renderTabela();
+    $('aterramento').value = state.aterramento ? fmtNum(state.aterramento) : '';
+    renderBotoesAux(); renderTodasAux();
+    $('swServ').classList.toggle('on', !!state.sim.usarServ); $('cardSwServ').classList.toggle('ativo', !!state.sim.usarServ);
+    $('swFrete').classList.toggle('on', !!state.sim.usarFrete); $('cardSwFrete').classList.toggle('ativo', !!state.sim.usarFrete);
+    document.querySelectorAll('.trib-btn').forEach(b => b.classList.toggle('ativo', b.dataset.tipo === state.imposto.tipo));
+    $('impostoOutro').value = state.imposto.pctOutro ? fmtNum(state.imposto.pctOutro) : '';
+    $('descontoPct').value = fmtNum(state.desconto.pct); $('descontoVlr').value = fmtNum(state.desconto.vlr);
+    $('pagMetodo').value = state.pagamento.metodo || '';
+    $('pagMetodoOutros').value = state.pagamento.metodoOutros || '';
+    $('pagMetodoOutros').style.display = state.pagamento.metodo === '__outros__' ? 'block' : 'none';
+    $('pagQtdParcelas').value = String(state.pagamento.qtdParcelas || 0);
+    renderParcelas();
+    renderObsPadrao(); $('observacoes').value = state.obs.texto || '';
+    setOrientacao(state.ui.orientacao || 'retrato', true);
+    setPrintMode(state.ui.printMode || 'completo', true);
+    recalc();
+}
+
+// =====================================================================
+// RECALC – atualiza os números na tela sem recriar as linhas
+// =====================================================================
+function recalc(){
+    const c = calcular();
+    document.querySelectorAll('#corpoTabela tr.item').forEach(tr => {
+        const it = itemPorId(tr.dataset.id); const r = it && c.porItem[it.id]; if(!r) return;
+        tr.querySelector('.vp-qtd').textContent = fmtQtd(it.qtd);
+        tr.querySelector('.vp-dia').textContent = Number(it.dia) || 1;
+        const totais = { mat: r.tM, serv: r.tS, frete: r.tF };
+        ['mat','serv','frete'].forEach(c => {
+            const vp = tr.querySelector('.vp-' + c); if(vp) vp.textContent = fmtNum(it[c]);
+            const tt = tr.querySelector('.t-' + c); if(tt) tt.textContent = brl(totais[c]);
+        });
+        const un = tr.querySelector('.vp-unico'); if(un) un.textContent = brl(r.unit);
+        tr.querySelector('.sub').textContent = brl(r.sub);
+    });
+    document.querySelectorAll('#corpoTabela tr.sala-footer-row').forEach(tr => { tr.querySelector('.sala-total').textContent = brl(c.porSala[tr.dataset.salaId] || 0); });
+
+    // simulação e manutenção (linhas livres)
+    ['serv','frete','man'].forEach(qual => {
+        const r = qual === 'man' ? c.man : calcAux(qual);
+        $(TBODY_AUX[qual]).querySelectorAll('tr[data-id]').forEach(tr => {
+            const cel = tr.querySelector('.aux-total');
+            if(cel) cel.textContent = brl(r.porLinha[tr.dataset.id] || 0);
+        });
+    });
+    $('simServTotal').textContent = brl(c.sim.serv); $('simFreteTotal').textContent = brl(c.sim.frete);
+    $('compServTabelaVal').textContent = brl(c.totalServTab); $('compServSimVal').textContent = brl(c.sim.serv);
+    atualizarCompDiff('compServDiff', c.sim.serv, c.totalServTab);
+    $('compServTabela').classList.toggle('escolhido', !state.sim.usarServ); $('compServSim').classList.toggle('escolhido', !!state.sim.usarServ);
+    $('compFreteTabelaVal').textContent = brl(c.totalFreteTab); $('compFreteSimVal').textContent = brl(c.sim.frete);
+    atualizarCompDiff('compFreteDiff', c.sim.frete, c.totalFreteTab);
+    $('compFreteTabela').classList.toggle('escolhido', !state.sim.usarFrete); $('compFreteSim').classList.toggle('escolhido', !!state.sim.usarFrete);
+    $('simToggle').classList.toggle('tem-valor', !!(state.sim.usarServ || state.sim.usarFrete));
+
+    // manutenção
+    $('manTotal').textContent = brl(c.man.total);
+    $('manToggle').classList.toggle('tem-valor', c.man.total > 0);
+
+    // resumo
+    const marcarFora = (el, valor, c2) => {
+        if(fora(c2)){ el.textContent = 'Fora do orçamento'; el.classList.add('nc'); }
+        else { el.textContent = brl(valor); el.classList.remove('nc'); }
+    };
+    marcarFora($('resMat'), c.totalMat, 'mat');
+    marcarFora($('resServ'), c.servEf, 'serv');
+    marcarFora($('resFrete'), c.freteEf, 'frete');
+    const ater = $('resAter');
+    if(c.aterTotal > 0){ ater.textContent = brl(c.aterTotal); ater.classList.remove('nc'); } else { ater.textContent = 'Não contemplado'; ater.classList.add('nc'); }
+    $('resMan').textContent = brl(c.man.total); $('resManCard').style.display = c.man.total > 0 ? '' : 'none';
+    $('resSubtotal').textContent = brl(c.subtotal);
+    const servTag = $('resServTag'), freteTag = $('resFreteTag');
+    servTag.className = 'tag ' + (state.sim.usarServ ? 'simulado' : 'tabela'); servTag.textContent = state.sim.usarServ ? 'Simulado' : 'Tabela';
+    freteTag.className = 'tag ' + (state.sim.usarFrete ? 'simulado' : 'tabela'); freteTag.textContent = state.sim.usarFrete ? 'Simulado' : 'Tabela';
+    servTag.style.display = fora('serv') ? 'none' : ''; freteTag.style.display = fora('frete') ? 'none' : '';
+    renderMemoria(c);
+    const fi = $('freteEntregaInfo');
+    if(c.freteEf > 0){ fi.style.display = 'block'; fi.innerHTML = `<i class="fas fa-truck"></i> Frete em uso (${state.sim.usarFrete ? 'simulado' : 'tabela'}): <span>${brl(c.freteEf)}</span> &nbsp;|&nbsp; Entrega: <span>${brl(c.freteEf / 2)}</span> &nbsp;|&nbsp; Retirada: <span>${brl(c.freteEf / 2)}</span>`; }
+    else { fi.style.display = 'none'; fi.innerHTML = ''; }
+
+    // desconto: mantém no state o valor derivado e mostra no campo que NÃO está sendo digitado
+    if(state.desconto.modo === 'vlr'){ state.desconto.pct = c.descPct; if(document.activeElement !== $('descontoPct')) $('descontoPct').value = fmtNum(c.descPct); }
+    else { state.desconto.vlr = c.descVlr; if(document.activeElement !== $('descontoVlr')) $('descontoVlr').value = fmtNum(c.descVlr); }
+
+    // totais
+    const et = $('extrasTotal');
+    if(c.extras.length){
+        et.classList.add('visivel');
+        et.innerHTML = '<div class="et-titulo"><i class="fas fa-plus"></i> Somado ao total (não detalhado nas linhas)</div>' +
+            c.extras.map(e => `<div class="et-linha"><span class="et-nome">${escapeHtml(e.nome)}</span><span class="et-val">${brl(e.valor)}</span></div>`).join('');
+    } else { et.classList.remove('visivel'); et.innerHTML = ''; }
+    const thOrc = $('thOrc'); if(thOrc) thOrc.textContent = state.evento.numOrc ? '· Orçamento nº ' + state.evento.numOrc : '';
+
+    $('subtotalFinal').textContent = brl(c.subtotal);
+    $('descontoVal').textContent = '– ' + brl(c.descVlr);
+    $('descontoPctLabel').textContent = c.descVlr > 0 ? `${fmtPct(c.descPct)}% sobre o subtotal` : '';
+    $('tributacaoVal').textContent = brl(c.imposto);
+    $('tributacaoLabel').textContent = c.impLabel;
+    $('totalGlobal').textContent = brl(c.total);
+
+    atualizarPagamento(c.total);
+    renderEventoPrint();
+    renderObsPrint();
+}
+function atualizarCompDiff(elId, sim, tab){
+    const el = $(elId);
+    if(sim === 0 && tab === 0){ el.className = 'comp-diff igual'; el.textContent = '— Sem dados —'; return; }
+    if(sim === 0){ el.className = 'comp-diff igual'; el.textContent = '— Sem simulação —'; return; }
+    const diff = sim - tab;
+    if(Math.abs(diff) < 0.01){ el.className = 'comp-diff igual'; el.textContent = 'Valores idênticos'; return; }
+    if(diff < 0){ el.className = 'comp-diff economia'; el.innerHTML = `<i class="fas fa-arrow-down"></i> Simulado é ${brl(Math.abs(diff))} mais barato (${((Math.abs(diff) / tab) * 100).toFixed(1)}%)`; }
+    else { el.className = 'comp-diff acima'; el.innerHTML = `<i class="fas fa-arrow-up"></i> Simulado é ${brl(diff)} mais caro` + (tab > 0 ? ` (+${((diff / tab) * 100).toFixed(1)}%)` : ''); }
+}
+function renderMemoria(c){
+    const blocos = [];
+    const podeServ = state.sim.usarServ && !fora('serv') && c.sim.serv > 0;
+    const podeFrete = state.sim.usarFrete && !fora('frete') && c.sim.frete > 0;
+    if(state.sim.mostrarServ && podeServ) blocos.push({ qual:'serv', total: c.sim.serv });
+    if(state.sim.mostrarFrete && podeFrete) blocos.push({ qual:'frete', total: c.sim.frete });
+    if(state.man.mostrar && c.man.total > 0) blocos.push({ qual:'man', total: c.man.total });
+    // avisos ao lado das caixas de marcar
+    $('avisoMostrarServ').textContent = state.sim.mostrarServ && !podeServ ? (fora('serv') ? '(serviço está fora do orçamento)' : (!state.sim.usarServ ? '(ligue "usar serviço simulado" abaixo para esta conta valer)' : '(sem valores ainda)')) : '';
+    $('avisoMostrarFrete').textContent = state.sim.mostrarFrete && !podeFrete ? (fora('frete') ? '(frete está fora do orçamento)' : (!state.sim.usarFrete ? '(ligue "usar frete simulado" abaixo para esta conta valer)' : '(sem valores ainda)')) : '';
+    $('avisoMostrarMan').textContent = state.man.mostrar && c.man.total <= 0 ? '(sem valores ainda)' : '';
+    $('chkMostrarServ').checked = !!state.sim.mostrarServ;
+    $('chkMostrarFrete').checked = !!state.sim.mostrarFrete;
+    $('chkMostrarMan').checked = !!state.man.mostrar;
+
+    const card = $('cardMemoria');
+    if(!blocos.length){ card.classList.add('print-vazio'); $('memoriaBody').innerHTML = ''; return; }
+    card.classList.remove('print-vazio');
+    // o título nomeia o que está sendo detalhado (ex.: "Serviço / Frete")
+    $('memoriaTitulo').textContent = blocos.map(b => NOME_AUX[b.qual]).join(' / ');
+    $('memoriaBody').innerHTML = blocos.map(b => {
+        const r = b.qual === 'man' ? c.man : calcAux(b.qual);
+        const linhas = listaAux(b.qual).filter(l => calcLinhaAux(l) > 0);
+        return `<div class="memoria-bloco">
+            <div class="memoria-titulo">${escapeHtml(TITULO_AUX[b.qual])}</div>
+            <table class="memoria-tab">
+                <thead><tr><th>Descrição</th><th class="n">Qtd.</th><th class="n">KM</th><th class="n">Diárias</th><th class="v">Valor unit.</th><th class="v">Total</th></tr></thead>
+                <tbody>${linhas.map(l => `<tr>
+                    <td>${escapeHtml(l.desc || '—')}</td>
+                    <td class="n">${fmtQtd(l.qtd)}</td>
+                    <td class="n">${l.tipo === 'km' ? fmtQtd(l.km) : '—'}</td>
+                    <td class="n">${l.tipo === 'fechado' ? '—' : fmtQtd(l.dias)}</td>
+                    <td class="v">${brl(l.valor)}${l.tipo === 'km' ? ' /km' : ''}</td>
+                    <td class="v">${brl(r.porLinha[l.id] || 0)}</td>
+                </tr>`).join('')}</tbody>
+                <tfoot><tr><td colspan="5" class="v">Total ${escapeHtml(NOME_AUX[b.qual])}</td><td class="v">${brl(b.total)}</td></tr></tfoot>
+            </table>
+        </div>`;
+    }).join('');
+}
+function renderEventoPrint(){
+    const e = state.evento;
+    $('pcNum').textContent = e.numOrc ? 'Nº ' + e.numOrc : '';
+    $('pcData').textContent = hojeBR();
+    $('pcPor').textContent = state.meta.elaboradoPor ? ' · Elaborado por ' + state.meta.elaboradoPor : '';
+    const periodo = (e.dataInicio || e.dataTermino) ? `${formatarData(e.dataInicio) || '___/___/____'} a ${formatarData(e.dataTermino) || '___/___/____'}` : '';
+    const campos = [['Cliente / Empresa', e.cliente], ['Evento', e.nome], ['Período', periodo], ['Local', e.local, true], ['Responsável', e.responsavel], ['Contato', e.contato]];
+    $('eventoPrint').innerHTML = campos.map(c => `<div class="pe-campo${c[2] ? '' : ''}"><div class="pe-lbl">${c[0]}</div><div class="pe-val">${escapeHtml(c[1] || '—')}</div></div>`).join('');
+}
+function renderObsPrint(){
+    const marcadas = OBS_PADRAO.filter(o => state.obs.padrao.includes(o.id));
+    let html = marcadas.map(o => `<p><strong>${escapeHtml(o.titulo)}</strong> ${escapeHtml(o.texto)}</p>`).join('');
+    const livre = (state.obs.texto || '').trim();
+    if(livre) html += `<p class="obs-livre">${escapeHtml(livre)}</p>`;
+    $('obsPrint').innerHTML = html;
+    document.body.classList.toggle('obs-curtas', $('obsPrint').textContent.length < 700);
+    $('cardObs').classList.toggle('print-vazio', !html);
+    const resumo = $('obsMarcadasResumo');
+    resumo.innerHTML = marcadas.length ? `<i class="fas fa-check-double" style="color:var(--verde)"></i> Vão sair na impressão: ${marcadas.map(o => `<strong>${escapeHtml(o.titulo)}</strong>`).join(', ')}` : '';
+    const toggle = $('obsToggle'), cont = $('obsContador');
+    toggle.classList.toggle('tem-marcadas', marcadas.length > 0);
+    cont.textContent = `${marcadas.length} marcada${marcadas.length > 1 ? 's' : ''}`;
+}
+
+// =====================================================================
+// AÇÕES – salas
+// =====================================================================
+function criarSala(){
+    const input = $('novaSalaNome'); const nome = input.value.trim();
+    if(!nome){ alert('Digite o nome da sala.'); input.focus(); return; }
+    if(state.salas.some(s => s.nome.toLowerCase() === nome.toLowerCase())){ alert('Já existe uma sala com esse nome.'); return; }
+    const sala = { id: uid(), nome };
+    state.salas.push(sala); input.value = '';
+    renderSalasDropdowns(); $('salaDestino').value = sala.id; $('salaDestinoExtra').value = sala.id;
+    renderTabela(); atualizar();
+}
+function renomearSala(id){
+    const sala = salaPorId(id); if(!sala) return;
+    const novo = prompt('Novo nome da sala:', sala.nome); if(novo === null) return;
+    const nome = novo.trim(); if(!nome) return;
+    if(state.salas.some(s => s.id !== id && s.nome.toLowerCase() === nome.toLowerCase())){ alert('Já existe uma sala com esse nome.'); return; }
+    sala.nome = nome; renderSalasDropdowns(); renderTabela(); atualizar();
+}
+function excluirSala(id){
+    const sala = salaPorId(id); if(!sala) return;
+    const n = state.itens.filter(i => i.salaId === id).length;
+    let msg = `Excluir a sala "${sala.nome}"?`;
+    if(n > 0) msg += `\n\nExistem ${n} item(ns) nesta sala.\n\nOK = excluir a sala E os itens dela.\nCancelar = manter tudo.\n\n(Se quiser só tirar os itens da sala, arraste-os para "Itens sem sala" antes.)`;
+    if(!confirm(msg)) return;
+    state.itens = state.itens.filter(i => i.salaId !== id);
+    state.salas = state.salas.filter(s => s.id !== id);
+    renderSalasDropdowns(); renderTabela(); atualizar();
+}
+
+// =====================================================================
+// AÇÕES – itens
+// =====================================================================
+function adicionarItem(){
+    const key = produtoSel; const def = ITENS[key];
+    if(!def){ alert('Escolha um produto na lista.'); $('comboBusca').focus(); return; }
+    const salaId = $('salaDestino').value || null;
+    const it = { id: uid(), salaId, key, nome: def.nome, qtd: 1, dia: 1, mat: def.v, serv: def.s, frete: def.f, extra: false };
+    state.itens.push(it); renderTabela(); atualizar(); focarItem(it.id);
+}
+function adicionarExtra(){
+    const desc = $('extraDesc').value.trim();
+    if(!desc){ alert('Informe a descrição do item extra.'); $('extraDesc').focus(); return; }
+    const salaId = $('salaDestinoExtra').value || null;
+    const it = { id: uid(), salaId, key: '__extra__', nome: desc, qtd: 1, dia: 1, mat: parseNum($('extraMat').value), serv: parseNum($('extraServ').value), frete: parseNum($('extraFrete').value), extra: true };
+    state.itens.push(it);
+    ['extraDesc','extraMat','extraServ','extraFrete'].forEach(id => $(id).value = '');
+    renderTabela(); atualizar(); focarItem(it.id);
+}
+function focarItem(id){
+    const tr = $('corpoTabela').querySelector(`tr.item[data-id="${id}"]`); if(!tr) return;
+    tr.scrollIntoView({ block:'nearest' });
+    const inp = tr.querySelector('.inp-qtd'); if(inp){ inp.focus(); inp.select(); }
+}
+function removerItem(id){ state.itens = state.itens.filter(i => i.id !== id); renderTabela(); atualizar(); }
+function moverItemParaSala(id, salaId){
+    const it = itemPorId(id); if(!it) return;
+    state.itens = state.itens.filter(i => i.id !== id);
+    it.salaId = salaId || null; state.itens.push(it);
+    renderTabela(); atualizar();
+}
+function inserirItemAntesDe(it, alvoId, depois){
+    state.itens = state.itens.filter(i => i.id !== it.id);
+    const idx = state.itens.findIndex(i => i.id === alvoId);
+    if(idx < 0){ state.itens.push(it); return; }
+    it.salaId = state.itens[idx].salaId || null;
+    state.itens.splice(depois ? idx + 1 : idx, 0, it);
+}
+function renderChips(){
+    ['mat','serv','frete'].forEach(c => {
+        const b = document.querySelector('.comp-chip[data-comp="' + c + '"]'); if(!b) return;
+        const estado = state.ui.comp[c];
+        const sim = simulado(c) && estado !== 'fora';
+        b.classList.toggle('off', estado === 'total' || sim);
+        b.classList.toggle('fora', estado === 'fora');
+        const icone = estado === 'fora' ? 'ban' : (estado === 'linha' && !sim ? 'check' : 'turn-down');
+        const texto = estado === 'fora' ? 'não entra' : (sim ? 'simulado · só no total' : (estado === 'linha' ? 'na linha' : 'só no total'));
+        b.innerHTML = `<i class="fas fa-${icone}"></i> ${COMP_LABEL[c]}<span class="est">${texto}</span>`;
+        b.title = 'Clique para trocar: na linha → só no total → não entra no orçamento';
+    });
+    const nLinha = compsNaLinha().length;
+    $('chkSomar').checked = !!state.ui.somar; $('chkSomar').disabled = nLinha < 2;
+    $('optSomar').classList.toggle('desligada', nLinha < 2);
+    $('chkAbertura').checked = !!state.ui.verAbertura; $('chkAbertura').disabled = modoSomar();
+    $('optAbertura').classList.toggle('desligada', modoSomar());
+    const dentro = compsNaLinha().map(c => COMP_LABEL[c]);
+    const soTotal = ['mat','serv','frete'].filter(c => !naLinha(c) && !fora(c)).map(c => COMP_LABEL[c]);
+    const excluidos = ['mat','serv','frete'].filter(fora).map(c => COMP_LABEL[c]);
+    let txt = '';
+    if(dentro.length === 1) txt = `Cada linha mostra o valor de <strong>${dentro[0]}</strong>.`;
+    else if(modoSomar()) txt = `Cada linha mostra <strong>${dentro.join(' + ')}</strong> somados em um valor só.`;
+    else txt = `Cada linha mostra <strong>${dentro.join(', ')}</strong> em colunas separadas.`;
+    if(soTotal.length) txt += ` <strong>${soTotal.join(' e ')}</strong> ${soTotal.length > 1 ? 'entram' : 'entra'} só na soma do total.`;
+    if(excluidos.length) txt += ` <strong>${excluidos.join(' e ')}</strong> ${excluidos.length > 1 ? 'não entram' : 'não entra'} neste orçamento (valor desconsiderado).`;
+    $('dicaValores').innerHTML = txt;
+}
+function aplicarModoValores(){ renderChips(); renderCabecalho(); renderTabela(); atualizar(); }
+// na linha -> só no total -> não entra -> na linha
+const CICLO_COMP = { linha:'total', total:'fora', fora:'linha' };
+function toggleComp(c){
+    const proximo = CICLO_COMP[state.ui.comp[c]] || 'linha';
+    if(proximo !== 'linha' && naLinha(c) && compsNaLinha().length <= 1){
+        alert('Pelo menos um valor precisa aparecer na linha do produto.\n\nMarque material ou serviço antes de tirar este.');
+        return;
+    }
+    state.ui.comp[c] = proximo;
+    aplicarModoValores();
+}
+function setSomar(on){ state.ui.somar = !!on; aplicarModoValores(); }
+function toggleAbertura(on){ state.ui.verAbertura = !!on; aplicarModoValores(); }
+
+// ---------- eventos da tabela (delegação) ----------
+(function ligarTabela(){
+    const tbody = $('corpoTabela');
+    tbody.addEventListener('input', e => {
+        const inp = e.target.closest('input[data-campo]'); if(!inp) return;
+        const tr = inp.closest('tr.item'); const it = tr && itemPorId(tr.dataset.id); if(!it) return;
+        const campo = inp.dataset.campo; const v = parseNum(inp.value);
+        if(campo === 'qtd') it.qtd = Math.max(0, v);
+        else if(campo === 'dia') it.dia = Math.max(1, Math.floor(v) || 1);
+        else it[campo] = Math.max(0, v);
+        atualizar();   // NUNCA reescreve o campo enquanto digita (evita o "13")
+    });
+    tbody.addEventListener('focusout', e => {
+        const inp = e.target.closest('input[data-campo]'); if(!inp) return;
+        const tr = inp.closest('tr.item'); const it = tr && itemPorId(tr.dataset.id); if(!it) return;
+        const campo = inp.dataset.campo;
+        inp.value = campo === 'qtd' ? fmtQtd(it.qtd) : campo === 'dia' ? String(Number(it.dia) || 1) : fmtNum(it[campo]);
+    });
+    tbody.addEventListener('focusin', e => { const inp = e.target.closest('input[data-campo]'); if(inp) inp.select(); });
+    tbody.addEventListener('keydown', e => {
+        if(e.key !== 'Enter') return;
+        const inp = e.target.closest('input[data-campo]'); if(!inp) return;
+        e.preventDefault();
+        const inputs = Array.from(tbody.querySelectorAll('input[data-campo]'));
+        const prox = inputs[inputs.indexOf(inp) + 1]; if(prox){ prox.focus(); }
+    });
+    tbody.addEventListener('click', e => {
+        const del = e.target.closest('.btn-del'); if(!del) return;
+        const tr = del.closest('tr.item'); if(tr) removerItem(tr.dataset.id);
+    });
+    tbody.addEventListener('change', e => {
+        const sel = e.target.closest('select.mover'); if(!sel || !sel.value) return;
+        const tr = sel.closest('tr.item'); moverItemParaSala(tr.dataset.id, sel.value === '__sem__' ? null : sel.value);
+    });
+
+    // ----- arrastar e soltar (pointer events: funciona igual em linha e em sala, mouse e touch) -----
+    let drag = null;          // { tipo:'item'|'sala', id, x0, y0, ativo, ghost, tr }
+    let ultimoAlvo = null;
+    function alvoDeDrop(tr, y){
+        if(!drag || !tr) return null;
+        const rect = tr.getBoundingClientRect(); const depois = y > rect.top + rect.height / 2;
+        if(drag.tipo === 'item'){
+            if(tr.classList.contains('item')) return tr.dataset.id === drag.id ? null : { tipo:'item', id: tr.dataset.id, depois };
+            if(tr.classList.contains('sala-header-row')) return { tipo:'sala-inicio', salaId: tr.dataset.salaId };
+            if(tr.classList.contains('sala-footer-row') || tr.classList.contains('sala-vazia')) return { tipo:'sala-fim', salaId: tr.dataset.salaId };
+            if(tr.classList.contains('sem-sala-divisor')) return { tipo:'sem-sala' };
+            return null;
+        }
+        // arrastando uma sala: solta antes/depois de outra sala
+        const salaId = tr.dataset.salaId; if(!salaId || salaId === drag.id) return null;
+        if(tr.classList.contains('sala-header-row')) return { tipo:'sala-ordem', salaId, depois:false };
+        return { tipo:'sala-ordem', salaId, depois:true };
+    }
+    function limparMarcas(){ tbody.querySelectorAll('.drop-antes, .drop-depois, .drop-dentro').forEach(el => el.classList.remove('drop-antes','drop-depois','drop-dentro')); }
+    function marcar(alvo){
+        limparMarcas();
+        if(!alvo) return;
+        if(alvo.tipo === 'item'){ const tr = tbody.querySelector(`tr.item[data-id="${alvo.id}"]`); if(tr) tr.classList.add(alvo.depois ? 'drop-depois' : 'drop-antes'); return; }
+        if(alvo.tipo === 'sem-sala'){ const tr = tbody.querySelector('tr.sem-sala-divisor'); if(tr) tr.classList.add('drop-dentro'); return; }
+        tbody.querySelectorAll(`tr[data-sala-id="${alvo.salaId}"]`).forEach(tr => tr.classList.add('drop-dentro'));
+    }
+    function linhaSobPonto(x, y){
+        const el = document.elementFromPoint(x, y); if(!el) return null;
+        const tr = el.closest('tr'); return (tr && tbody.contains(tr)) ? tr : null;
+    }
+    tbody.addEventListener('pointerdown', e => {
+        const alca = e.target.closest('.alca'); if(!alca || (e.pointerType === 'mouse' && e.button !== 0)) return;
+        const tr = alca.closest('tr'); if(!tr) return;
+        drag = tr.classList.contains('sala-header-row')
+            ? { tipo:'sala', id: tr.dataset.salaId, nome: (salaPorId(tr.dataset.salaId) || {}).nome }
+            : { tipo:'item', id: tr.dataset.id, nome: (itemPorId(tr.dataset.id) || {}).nome };
+        drag.x0 = e.clientX; drag.y0 = e.clientY; drag.ativo = false; drag.tr = tr; drag.pointerId = e.pointerId; drag.alca = alca;
+        try { alca.setPointerCapture(e.pointerId); } catch(err) {}
+        e.preventDefault();
+    });
+    function iniciarDrag(){
+        drag.ativo = true;
+        drag.tr.classList.add('dragging'); document.body.classList.add('arrastando');
+        const g = document.createElement('div'); g.className = 'drag-ghost';
+        g.innerHTML = `<i class="fas fa-${drag.tipo === 'sala' ? 'building' : 'box'}"></i> ${escapeHtml(drag.nome || '')}`;
+        document.body.appendChild(g); drag.ghost = g;
+        // rolagem automática enquanto o ponteiro fica perto da borda de cima/baixo
+        drag.timer = setInterval(() => {
+            if(!drag || !drag.ativo) return;
+            const margem = 80, h = window.innerHeight, y = drag.y, x = drag.x;
+            let passo = 0;
+            if(y < margem) passo = -Math.ceil((margem - y) / margem * 22);
+            else if(y > h - margem) passo = Math.ceil((y - (h - margem)) / margem * 22);
+            if(passo){ window.scrollBy(0, passo); ultimoAlvo = alvoDeDrop(linhaSobPonto(x, y), y); marcar(ultimoAlvo); }
+        }, 30);
+    }
+    function moverGhost(x, y){ if(drag && drag.ghost){ drag.ghost.style.left = (x + 14) + 'px'; drag.ghost.style.top = (y + 10) + 'px'; } }
+    document.addEventListener('pointermove', e => {
+        if(!drag) return;
+        if(!drag.ativo){ if(Math.abs(e.clientX - drag.x0) + Math.abs(e.clientY - drag.y0) < 5) return; iniciarDrag(); }
+        e.preventDefault();
+        drag.x = e.clientX; drag.y = e.clientY;
+        moverGhost(e.clientX, e.clientY);
+        const tr = linhaSobPonto(e.clientX, e.clientY);
+        ultimoAlvo = alvoDeDrop(tr, e.clientY);
+        marcar(ultimoAlvo);
+    });
+    function finalizarDrag(soltar){
+        if(!drag) return;
+        const alvo = soltar ? ultimoAlvo : null;
+        try { if(drag.alca && drag.pointerId != null) drag.alca.releasePointerCapture(drag.pointerId); } catch(err) {}
+        if(drag.ghost) drag.ghost.remove();
+        if(drag.timer) clearInterval(drag.timer);
+        limparMarcas();
+        tbody.querySelectorAll('tr.dragging').forEach(tr => tr.classList.remove('dragging'));
+        document.body.classList.remove('arrastando');
+        const d = drag; drag = null; ultimoAlvo = null;
+        if(alvo && d.ativo){ executarDrop(d, alvo); }
+    }
+    document.addEventListener('pointerup', e => { if(drag) finalizarDrag(true); });
+    document.addEventListener('pointercancel', () => { if(drag) finalizarDrag(false); });
+    document.addEventListener('keydown', e => { if(e.key === 'Escape' && drag) finalizarDrag(false); });
+    function executarDrop(d, alvo){
+        if(d.tipo === 'item'){
+            const it = itemPorId(d.id); if(!it) return;
+            if(alvo.tipo === 'item'){ inserirItemAntesDe(it, alvo.id, alvo.depois); }
+            else if(alvo.tipo === 'sala-inicio'){
+                state.itens = state.itens.filter(i => i.id !== it.id); it.salaId = alvo.salaId;
+                const idx = state.itens.findIndex(i => i.salaId === alvo.salaId);
+                if(idx < 0) state.itens.push(it); else state.itens.splice(idx, 0, it);
+            }
+            else if(alvo.tipo === 'sala-fim'){ moverItemParaSala(it.id, alvo.salaId); return; }
+            else if(alvo.tipo === 'sem-sala'){ moverItemParaSala(it.id, null); return; }
+            else return;
+        } else if(alvo.tipo === 'sala-ordem'){
+            const sala = salaPorId(d.id); if(!sala) return;
+            state.salas = state.salas.filter(s => s.id !== d.id);
+            const idx = state.salas.findIndex(s => s.id === alvo.salaId);
+            state.salas.splice(alvo.depois ? idx + 1 : idx, 0, sala);
+        } else return;
+        renderTabela(); atualizar();
+    }
+    // expõe para testes / uso externo
+    window._dnd = { executarDrop };
+})();
+
+// ---------- dados do evento, aterramento, extras ----------
+document.querySelectorAll('[data-ev]').forEach(inp => inp.addEventListener('input', () => { state.evento[inp.dataset.ev] = inp.value; atualizar(); if(inp.dataset.ev === 'numOrc') conferirNumeroRepetido(); }));
+$('aterramento').addEventListener('input', function(){ state.aterramento = Math.max(0, parseNum(this.value)); atualizar(); });
+$('aterramento').addEventListener('blur', function(){ this.value = state.aterramento ? fmtNum(state.aterramento) : ''; });
+['extraMat','extraServ','extraFrete'].forEach(id => $(id).addEventListener('blur', function(){ const v = parseNum(this.value); this.value = this.value.trim() ? fmtNum(v) : ''; }));
+
+// ---------- simulação / manutenção ----------
+function toggleSim(){ $('simToggle').classList.toggle('open'); $('simBody').classList.toggle('open'); }
+function toggleMan(){ $('manToggle').classList.toggle('open'); $('manBody').classList.toggle('open'); }
+function toggleSwitch(tipo){
+    if(tipo === 'serv'){ state.sim.usarServ = !state.sim.usarServ; $('swServ').classList.toggle('on', state.sim.usarServ); $('cardSwServ').classList.toggle('ativo', state.sim.usarServ); }
+    else { state.sim.usarFrete = !state.sim.usarFrete; $('swFrete').classList.toggle('on', state.sim.usarFrete); $('cardSwFrete').classList.toggle('ativo', state.sim.usarFrete); }
+    aplicarModoValores();
+}
+
+// ---------- tributação e desconto ----------
+function setTrib(tipo){
+    state.imposto.tipo = tipo;
+    document.querySelectorAll('.trib-btn').forEach(b => b.classList.toggle('ativo', b.dataset.tipo === tipo));
+    if(tipo === 'outro' && !(Number(state.imposto.pctOutro) > 0)) $('impostoOutro').focus();
+    atualizar();
+}
+$('impostoOutro').addEventListener('input', function(){
+    state.imposto.pctOutro = Math.min(99.99, Math.max(0, parseNum(this.value)));
+    if(state.imposto.tipo !== 'outro'){ state.imposto.tipo = 'outro'; document.querySelectorAll('.trib-btn').forEach(b => b.classList.toggle('ativo', b.dataset.tipo === 'outro')); }
+    atualizar();
+});
+$('impostoOutro').addEventListener('blur', function(){ this.value = state.imposto.pctOutro ? fmtNum(state.imposto.pctOutro) : ''; });
+$('descontoPct').addEventListener('input', function(){ state.desconto.modo = 'pct'; state.desconto.pct = Math.min(100, Math.max(0, parseNum(this.value))); atualizar(); });
+$('descontoPct').addEventListener('blur', function(){ this.value = fmtNum(state.desconto.pct); });
+$('descontoVlr').addEventListener('input', function(){ state.desconto.modo = 'vlr'; state.desconto.vlr = Math.max(0, parseNum(this.value)); atualizar(); });
+$('descontoVlr').addEventListener('blur', function(){ const c = calcular(); state.desconto.vlr = c.descVlr; this.value = fmtNum(c.descVlr); });
+
+// ---------- pagamento ----------
+function onChangeMetodo(){
+    const sel = $('pagMetodo'); state.pagamento.metodo = sel.value;
+    const outros = $('pagMetodoOutros');
+    if(sel.value === '__outros__'){ outros.style.display = 'block'; outros.focus(); } else { outros.style.display = 'none'; outros.value = ''; state.pagamento.metodoOutros = ''; }
+    atualizar();
+}
+$('pagMetodoOutros').addEventListener('input', function(){ state.pagamento.metodoOutros = this.value; atualizar(); });
+function gerarParcelas(qtd){
+    state.pagamento.qtdParcelas = qtd; state.pagamento.parcelas = [];
+    if(qtd > 0){
+        const pctBase = +(100 / qtd).toFixed(2); let restante = 100;
+        for(let i = 1; i <= qtd; i++){ const pct = (i === qtd) ? +restante.toFixed(2) : pctBase; restante -= pctBase; state.pagamento.parcelas.push({ pct, data:'' }); }
+    }
+    renderParcelas(); atualizar();
+}
+$('pagParcelasGrid').addEventListener('input', e => {
+    const inp = e.target; const i = parseInt(inp.dataset.i); const p = state.pagamento.parcelas[i]; if(!p) return;
+    if(inp.classList.contains('pag-pct')) p.pct = parseFloat(inp.value) || 0;
+    else if(inp.classList.contains('pag-data')) p.data = inp.value;
+    atualizar();
+});
+function atualizarPagamento(total){
+    const p = state.pagamento; const qtd = p.parcelas.length;
+    const aviso = $('pagAviso'), resumo = $('pagResumoFormatado');
+    aviso.classList.remove('ok','erro');
+    if(!qtd){ resumo.classList.remove('visivel'); $('cardPag').classList.add('print-vazio'); return; }
+    let soma = 0; const linhas = [];
+    p.parcelas.forEach((par, i) => {
+        const pct = Number(par.pct) || 0; soma += pct; const val = total * pct / 100;
+        const calcEl = $('pagCalc_' + i); if(calcEl) calcEl.textContent = brl(val);
+        linhas.push(`<div class="parcela-linha"><strong>${i + 1}ª PARCELA (${fmtPct(pct)}%)</strong> ${brl(val)} – DIA ${par.data ? formatarData(par.data) : '___/___/______'}</div>`);
+    });
+    const diff = soma - 100;
+    if(Math.abs(diff) < 0.01){ aviso.classList.add('ok'); aviso.innerHTML = `<i class="fas fa-check-circle"></i> Soma das parcelas: ${fmtNum(soma)}% (confere com 100%)`; }
+    else { aviso.classList.add('erro'); aviso.innerHTML = `<i class="fas fa-triangle-exclamation"></i> Soma das parcelas: ${fmtNum(soma)}% — ${diff > 0 ? 'excedeu' : 'falta'} ${fmtNum(Math.abs(diff))}% para completar 100%`; }
+    const metodo = p.metodo === '__outros__' ? (p.metodoOutros || '').trim() : p.metodo;
+    $('pagResumoMetodo').textContent = metodo || '(forma de pagamento não informada)';
+    $('pagResumoLinhas').innerHTML = linhas.join('');
+    resumo.classList.add('visivel'); $('cardPag').classList.remove('print-vazio');
+}
+
+// ---------- observações ----------
+function onChangeObsPadrao(id, marcado){
+    state.obs.padrao = state.obs.padrao.filter(x => x !== id);
+    if(marcado) state.obs.padrao = OBS_PADRAO.map(o => o.id).filter(x => x === id || state.obs.padrao.includes(x));
+    const item = document.querySelector(`.obs-padrao-item[data-obs-id="${id}"]`); if(item) item.classList.toggle('marcado', marcado);
+    atualizar();
+}
+$('observacoes').addEventListener('input', function(){ state.obs.texto = this.value; atualizar(); });
+function toggleObsPadrao(){ $('obsToggle').classList.toggle('open'); $('obsCollapse').classList.toggle('open'); }
+function avisarFuncionalidadeFutura(){ alert('Em breve: a criação de novas mensagens padrão vai funcionar quando o sistema estiver no banco de dados (Supabase).\n\nPor enquanto, para adicionar/editar mensagens padrão, é preciso editar o código HTML (lista OBS_PADRAO).'); }
+
+// ---------- impressão ----------
+function setPrintMode(modo, silencioso){
+    state.ui.printMode = modo;
+    document.body.classList.toggle('print-cliente', modo === 'cliente');
+    document.querySelectorAll('#segImpressao button').forEach(b => b.classList.toggle('ativo', b.dataset.modo === modo));
+    aplicarPapel();
+    if(!silencioso) agendarSalvar();
+}
+function setOrientacao(o, silencioso){
+    state.ui.orientacao = (o === 'paisagem') ? 'paisagem' : 'retrato';
+    aplicarPapel();
+    if(!silencioso) agendarSalvar();
+}
+function aplicarPapel(){
+    const paisagem = state.ui.orientacao === 'paisagem';
+    document.body.classList.toggle('print-paisagem', paisagem);
+    document.body.classList.toggle('print-retrato', !paisagem);
+    document.querySelectorAll('#segPapel button').forEach(b => b.classList.toggle('ativo', (b.dataset.papel === 'paisagem') === paisagem));
+    $('printPageStyle').textContent = paisagem ? '@page { size: A4 landscape; margin: 8mm; }' : '@page { size: A4 portrait; margin: 9mm 8mm; }';
+}
+function imprimir(){ recalc(); window.print(); }
+window.addEventListener('beforeprint', recalc);
+
+// ---------- backup em arquivo / limpar ----------
+function exportarJSON(){
+    salvarOrcamento();
+    const nome = (state.evento.numOrc || state.evento.nome || 'orcamento').replace(/[^\w\-]+/g, '_');
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type:'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `orcamento-${nome}.json`;
+    document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+function importarJSON(input){
+    const f = input.files && input.files[0]; if(!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+        try {
+            const s = JSON.parse(r.result);
+            if(!s || !Array.isArray(s.itens)){ alert('Este arquivo não é um backup de orçamento.'); return; }
+            if(temConteudo(state) && !confirm('Substituir o orçamento atual pelo do arquivo?')) return;
+            state = mesclarEstado(s); iniciarComboValor(); renderTudo(); salvarOrcamento();
+        } catch(e){ alert('Não consegui ler o arquivo.'); }
+        input.value = '';
+    };
+    r.readAsText(f);
+}
+function limparOrcamento(){
+    if(!confirm('Limpar o orçamento inteiro (itens, salas, dados do evento, pagamento e observações)?\n\nEle sai também da lista do Hub.')) return;
+    const por = state.meta.elaboradoPor, criador = state.meta.criadoPor;
+    try { const m = mapaOrcamentos(); delete m[state.id]; gravarMapa(m); localStorage.removeItem(ULT_KEY); } catch(e) {}
+    state = novoEstado(); state.meta.elaboradoPor = por; state.meta.criadoPor = criador;
+    renderTudo(); $('rascunhoStatus').textContent = 'Orçamento em branco';
+}
+// mantém a caixa de busca coerente depois de trocar o state inteiro
+function iniciarComboValor(){ const p = produtoPorKey(produtoSel); $('comboBusca').value = p ? p.rotulo : ''; }
+
+// =====================================================================
+// INICIALIZAÇÃO
+// =====================================================================
+(async function init(){
+    $('dataGer').textContent = hojeBR();
+
+    // 1. precisa estar logado
+    const perfil = await PlenartDB.retomar();
+    if(!perfil){ PlenartDB.exigirLogin('plenart-sistema.html'); return; }
+    usuarioAtual = { id: perfil.id, nome: perfil.nome, email: perfil.email, admin: perfil.admin };
+
+    // 2. qual orçamento abrir
+    const par = new URLSearchParams(location.search);
+    const novo = par.get('novo');
+    const novoId = (novo && /^[a-z0-9]{8,}$/i.test(novo)) ? novo : null;   // o Hub manda o id do orçamento novo
+    const id = par.get('id') || novoId;
+
+    if(id){
+        const r = await PlenartDB.carregar(id);
+        if(r.ok && r.state && (!r.state.tipo || r.state.tipo === TIPO_ORC)){
+            state = mesclarEstado(r.state); versaoBanco = r.versao;
+        } else if(r.naoExiste && novoId){
+            state = novoEstado(); state.id = novoId; versaoBanco = null;    // orçamento novo com o id do Hub
+        } else if(r.naoExiste){
+            alert('Não encontrei esse orçamento no banco. Vou abrir um novo.');
+        } else if(r.semRede){
+            const local = PlenartDB.lerLocal(id);
+            if(local){
+                state = mesclarEstado(local.state); versaoBanco = local.versao;
+                alert('Sem internet agora. Abri a cópia guardada neste computador — ela sobe sozinha quando a conexão voltar.');
+            } else if(!novoId){
+                alert('Sem internet e não tenho cópia deste orçamento neste computador.');
+            } else { state = novoEstado(); state.id = novoId; versaoBanco = null; }
+        } else if(!r.ok && !novoId){
+            alert('Não consegui abrir este orçamento: ' + (r.msg || 'erro'));
+        }
+    } else if(novo){
+        state = novoEstado(); versaoBanco = null;
+    } else {
+        location.href = 'plenart-sistema.html';    // sem orçamento indicado, a porta de entrada é a lista
+        return;
+    }
+
+    // 3. quem está mexendo
+    if(!state.meta.elaboradoPor) state.meta.elaboradoPor = usuarioAtual.nome;
+    if(!state.meta.criadoPor) state.meta.criadoPor = usuarioAtual.nome;
+    $('userChipNome').textContent = usuarioAtual.nome; $('userChip').classList.add('visivel');
+
+    iniciarCombo();
+    renderTudo();
+    if(!temConteudo(state)) statusSalvo('Salva sozinho no banco de dados', '');
+    else statusSalvo(versaoBanco ? 'Salvo no banco' : 'ainda não salvo', versaoBanco ? 'ok' : 'espera');
+
+    // avisa se o número do orçamento já existe em outro
+    conferirNumeroRepetido();
+
+    window.plenartPronto = true;      // a tela terminou de carregar o orçamento
+})();
+
+let ultimoNumConferido = null;
+async function conferirNumeroRepetido(){
+    const n = (state.evento && state.evento.numOrc || '').trim();
+    if(!n || n === ultimoNumConferido) return;
+    ultimoNumConferido = n;
+    const outro = await PlenartDB.numeroRepetido(TIPO_ORC, n, state.id);
+    const el = $('avisoNumRepetido');
+    if(el) el.textContent = outro ? ('Atenção: o nº ' + n + ' já existe em outro orçamento (' + (outro.cliente || 'sem nome') + ').') : '';
+}
+</script>
+</body>
+</html>

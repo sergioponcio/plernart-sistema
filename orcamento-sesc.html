@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orçamento SESC – Grupo Tendas Plenart</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+    --azul: #1a2d6b;
+    --azul-med: #2a4490;
+    --azul-claro: #e8ecf5;
+    --laranja: #f47920;
+    --laranja-med: #e35900;
+    --laranja-claro: #fff1e6;
+    --verde: #2e7d32;
+    --vermelho: #c62828;
+    --cinza: #607d8b;
+    --bg: #f0f4f8;
+    --branco: #ffffff;
+    --texto: #1a2a3a;
+    --borda: #d0dde8;
+    --sombra: 0 2px 12px rgba(26,45,107,0.10);
+    /* tema SESC */
+    --tema: #e65100;
+    --tema-med: #ef6c00;
+    --tema-claro: #fff3e0;
+    --catTendas: #1565c0;
+    --catPalcos: #6a1b9a;
+    --catOctanorms: #2e7d32;
+    --catGradis: #c62828;
+    --catTrelicas: #5d4037;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Source Sans 3', sans-serif; background: var(--bg); color: var(--texto); min-height: 100vh; }
+.print-only { display: none; }
+
+/* ===== TOPO (tela) ===== */
+.topo { background: linear-gradient(135deg, var(--azul) 0%, var(--azul-med) 100%); padding: 18px 40px; display: flex; align-items: center; gap: 18px; box-shadow: 0 4px 20px rgba(26,45,107,0.25); position: relative; overflow: hidden; flex-wrap: wrap; border-bottom: 4px solid var(--tema); }
+.topo::before { content: ''; position: absolute; top: -50%; right: -10%; width: 400px; height: 200%; background: var(--laranja); opacity: 0.08; transform: rotate(15deg); pointer-events: none; }
+.topo > * { position: relative; z-index: 1; }
+.logo-icon { width: 56px; height: 56px; background: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 26px; color: var(--azul); flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.topo-texto h1 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.4rem; color: #fff; letter-spacing: 0.5px; }
+.topo-texto h1 .destaque { color: var(--laranja); }
+.topo-texto p { color: rgba(255,255,255,0.85); font-size: 0.85rem; margin-top: 3px; font-style: italic; }
+.topo-dir { margin-left: auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.topo-badge { background: var(--tema); color: #fff; padding: 7px 16px; border-radius: 20px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.82rem; display: flex; align-items: center; gap: 9px; text-transform: uppercase; letter-spacing: .5px; box-shadow: 0 3px 10px rgba(230,81,0,.35); }
+.topo-badge .sub { font-size: 0.68rem; font-weight: 600; opacity: .9; text-transform: none; letter-spacing: 0; display: block; }
+.topo-user { background: rgba(255,255,255,0.14); color: #fff; padding: 7px 14px; border-radius: 20px; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.8rem; display: none; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.25); }
+.topo-user.visivel { display: flex; }
+.btn-hub { background: rgba(255,255,255,0.15); color: #fff; padding: 8px 14px; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.82rem; text-decoration: none; display: flex; align-items: center; gap: 7px; transition: all .2s; border: 1.5px solid rgba(255,255,255,0.25); }
+.btn-hub:hover { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.5); transform: translateX(-2px); }
+
+.print-cabecalho { display: none; }
+
+/* ===== LAYOUT ===== */
+.container { max-width: 1180px; margin: 26px auto; padding: 0 18px 40px; display: flex; flex-direction: column; gap: 18px; }
+.card { background: var(--branco); border-radius: 12px; box-shadow: var(--sombra); border: 1px solid var(--borda); overflow: hidden; }
+.card-header { background: linear-gradient(90deg, var(--tema-claro) 0%, #fff 100%); border-bottom: 2px solid var(--tema); padding: 12px 22px; display: flex; align-items: center; gap: 9px; }
+.card-header i { color: var(--tema); font-size: 0.95rem; }
+.card-header h2, .card-header h3 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--tema); }
+.card-header .dica { margin-left: auto; font-size: 0.78rem; color: var(--cinza); font-weight: 400; font-family: 'Source Sans 3', sans-serif; }
+.card-body { padding: 20px 22px; }
+
+/* ===== FORMULÁRIOS ===== */
+.grid-evento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 4px; }
+.form-group label { font-size: 0.72rem; font-weight: 700; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.5px; }
+.form-group input, .form-group select, .form-group textarea { padding: 9px 11px; border: 1.5px solid var(--borda); border-radius: 7px; font-family: 'Source Sans 3', sans-serif; font-size: 0.93rem; color: var(--texto); background: #fafcff; transition: border-color .2s, box-shadow .2s; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--tema); box-shadow: 0 0 0 3px rgba(230,81,0,.12); background: #fff; }
+textarea { resize: vertical; min-height: 80px; width: 100%; }
+.inp { padding: 6px 7px; border: 1.5px solid var(--borda); border-radius: 6px; font-family: 'Source Sans 3', sans-serif; font-size: 0.9rem; background: #fafcff; color: var(--texto); }
+.inp:focus { outline: none; border-color: var(--laranja); box-shadow: 0 0 0 3px rgba(244,121,32,.18); background: #fff; }
+.inp-qtd, .inp-dia { width: 62px; text-align: center; background: #eef3ff; border-color: #b9c7e6; font-weight: 700; color: var(--azul); }
+.money { display: inline-flex; align-items: center; border: 1.5px solid #f3c9a3; border-radius: 6px; background: #fff7ef; padding-left: 7px; }
+.money > span { font-size: 0.7rem; color: #b35c12; font-weight: 700; margin-right: 3px; }
+.money .inp-money { border: none; background: transparent; text-align: right; padding: 6px 7px 6px 0; width: 92px; box-shadow: none; }
+.money:focus-within { border-color: var(--laranja); box-shadow: 0 0 0 3px rgba(244,121,32,.18); background: #fff; }
+.pct-wrap { display: inline-flex; align-items: center; border: 1.5px solid var(--borda); border-radius: 6px; background: #fafcff; padding-right: 8px; }
+.pct-wrap .inp { border: none; background: transparent; text-align: right; width: 80px; box-shadow: none; }
+.pct-wrap > span { font-size: 0.8rem; color: var(--cinza); font-weight: 700; }
+.pct-wrap:focus-within { border-color: var(--azul-med); box-shadow: 0 0 0 3px rgba(42,68,144,.12); }
+
+/* ===== REGIÃO PADRÃO ===== */
+.regiao-box { display: flex; gap: 14px; align-items: center; padding: 12px 18px; margin-bottom: 14px; background: linear-gradient(90deg, var(--tema) 0%, var(--tema-med) 100%); color: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(230,81,0,0.25); flex-wrap: wrap; }
+.regiao-box .lbl-titulo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+.regiao-box select { padding: 8px 14px; border: none; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.9rem; background: #fff; color: var(--tema); cursor: pointer; min-width: 280px; }
+.regiao-box .hint { flex: 1; font-size: 0.78rem; opacity: 0.95; font-style: italic; min-width: 200px; }
+
+/* ===== SALAS ===== */
+.sala-controls { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; padding: 10px 14px; background: linear-gradient(90deg, #e8f5e9 0%, #fff 100%); border-left: 3px solid var(--verde); border-radius: 6px; flex-wrap: wrap; }
+.sala-controls .lbl { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; color: var(--verde); text-transform: uppercase; letter-spacing: 0.4px; }
+.sala-controls input[type="text"] { flex: 1; min-width: 180px; padding: 8px 10px; border: 1.5px solid var(--borda); border-radius: 6px; font-size: 0.9rem; background: #fff; font-family: inherit; }
+.sala-controls input[type="text"]:focus { outline: none; border-color: var(--verde); }
+.btn-sala { background: var(--verde); color: #fff; padding: 8px 14px; font-size: 0.82rem; }
+.btn-sala:hover { background: #1b5e20; }
+.add-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+.add-row .form-group.prod { flex: 1; min-width: 280px; }
+.add-row select { width: 100%; }
+.preco-preview { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--tema); background: var(--tema-claro); border: 1.5px solid #ffcc80; border-radius: 7px; padding: 9px 12px; white-space: nowrap; min-width: 130px; text-align: right; }
+
+/* ===== TABELA ===== */
+.tabela-wrap { overflow-x: auto; margin-top: 16px; border-radius: 8px; border: 1px solid var(--borda); }
+#tabelaOrc { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+#tabelaOrc thead tr { background: linear-gradient(90deg, var(--tema) 0%, var(--tema-med) 100%); color: #fff; }
+#tabelaOrc thead th { padding: 7px 8px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.72rem; letter-spacing: .3px; text-align: left; white-space: nowrap; vertical-align: middle; }
+#tabelaOrc thead tr.grupos th { text-align: center; font-size: 0.66rem; letter-spacing: .6px; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,.35); }
+#tabelaOrc thead th.grp-hq { background: rgba(26,45,107,.45); }
+#tabelaOrc thead tr.grupos th[rowspan] { text-align: left; font-size: 0.72rem; text-transform: none; letter-spacing: .3px; }
+#tabelaOrc thead tr.grupos th.col-sub, #tabelaOrc thead tr.grupos th.col-preco { text-align: right; }
+#tabelaOrc thead tr.sub th { font-weight: 600; font-size: 0.7rem; text-align: center; }
+#tabelaOrc thead tr.sub th.grp-q { background: rgba(26,45,107,.3); }
+#tabelaOrc tbody tr { border-bottom: 1px solid var(--borda); transition: background .15s; }
+#tabelaOrc tbody tr.item:hover { background: #fffaf5; }
+#tabelaOrc tbody tr.item:focus-within { background: #fffbe6 !important; box-shadow: inset 4px 0 0 var(--laranja); }
+#tabelaOrc tbody td { padding: 7px 8px; vertical-align: middle; }
+#tabelaOrc td.grp-q { text-align: center; }
+#tabelaOrc td.col-preco { text-align: right; white-space: nowrap; font-weight: 600; }
+#tabelaOrc td.col-preco .nd { color: var(--vermelho); font-weight: 700; font-size: 0.78rem; }
+#tabelaOrc td.col-sub { font-weight: 700; color: var(--verde); font-size: 0.93rem; white-space: nowrap; text-align: right; }
+#tabelaOrc td.col-num { width: 56px; white-space: nowrap; color: var(--cinza); font-size: 0.8rem; }
+#tabelaOrc td.col-prod { font-weight: 600; min-width: 170px; }
+#tabelaOrc td.col-prod .und { display: block; font-weight: 400; font-size: 0.72rem; color: var(--cinza); }
+#tabelaOrc td.col-acoes { white-space: nowrap; text-align: right; }
+select.inp-regiao { padding: 5px 6px; border: 1.5px solid var(--borda); border-radius: 6px; font-family: inherit; font-size: 0.8rem; background: #fff; color: var(--texto); max-width: 140px; cursor: pointer; }
+select.inp-regiao:focus { outline: none; border-color: var(--tema); }
+.tag-cat { display: inline-block; padding: 2px 7px; border-radius: 4px; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; color: #fff; white-space: nowrap; }
+.tag-cat.TENDAS { background: var(--catTendas); }
+.tag-cat.PALCOS { background: var(--catPalcos); }
+.tag-cat.OCTANORMS { background: var(--catOctanorms); }
+.tag-cat.GRADIS { background: var(--catGradis); }
+.tag-cat.TRELICAS { background: var(--catTrelicas); }
+.tag-cat.EXTRA { background: var(--laranja); }
+.alca { cursor: grab; margin-right: 6px; width: 16px; height: 22px; border-radius: 4px; display: inline-block; vertical-align: middle; background-image: radial-gradient(#b0bec5 1.3px, transparent 1.4px); background-size: 6px 6px; background-position: 2px 2px; background-repeat: repeat; touch-action: none; }
+.alca i { display: none; }
+.alca:hover { background-color: var(--laranja-claro); background-image: radial-gradient(var(--laranja) 1.3px, transparent 1.4px); }
+.alca:active { cursor: grabbing; }
+.sala-header-row .alca { background-image: radial-gradient(rgba(255,255,255,.75) 1.3px, transparent 1.4px); }
+.sala-header-row .alca:hover { background-color: rgba(255,255,255,.15); background-image: radial-gradient(#fff 1.3px, transparent 1.4px); }
+tr.item.dragging { opacity: .35; }
+tr.drop-antes td { box-shadow: inset 0 3px 0 var(--laranja); }
+tr.drop-depois td { box-shadow: inset 0 -3px 0 var(--laranja); }
+tr.drop-dentro td { background: var(--laranja-claro) !important; }
+body.arrastando, body.arrastando * { cursor: grabbing !important; user-select: none; }
+.drag-ghost { position: fixed; z-index: 1000; pointer-events: none; background: var(--azul); color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.8rem; padding: 6px 12px; border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,.25); max-width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mover { padding: 5px 6px; border: 1.5px solid var(--borda); border-radius: 6px; font-family: inherit; font-size: 0.78rem; color: var(--cinza); background: #fff; max-width: 120px; margin-right: 6px; cursor: pointer; }
+.btn-del { background: #ffebee; color: var(--vermelho); border: none; border-radius: 6px; width: 32px; height: 30px; cursor: pointer; font-size: 0.95rem; font-weight: 700; line-height: 1; }
+.btn-del:hover { background: var(--vermelho); color: #fff; }
+.vazio td { text-align: center; padding: 30px; color: var(--cinza); font-style: italic; }
+.sala-header-row { background: linear-gradient(90deg, #455a64 0%, #607d8b 100%) !important; color: #fff; }
+.sala-header-row td { padding: 8px 12px !important; border: none !important; }
+.sala-header-row .sala-linha { display: flex; align-items: center; gap: 10px; }
+.sala-header-row .sala-titulo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.6px; display: flex; align-items: center; gap: 9px; flex: 1; }
+.sala-header-row .btn-mini { background: rgba(255,255,255,.14); color: #fff; border: 1px solid rgba(255,255,255,.3); border-radius: 5px; padding: 4px 10px; font-size: 0.72rem; font-family: 'Montserrat', sans-serif; font-weight: 700; cursor: pointer; }
+.sala-header-row .btn-mini:hover { background: rgba(255,255,255,.28); }
+.sala-header-row .btn-mini.del { background: var(--vermelho); border-color: var(--vermelho); }
+.sala-header-row .btn-mini.del:hover { background: #b71c1c; }
+.sala-footer-row { background: #f0f4f8 !important; border-top: 2px solid #b0bec5 !important; }
+.sala-footer-row td { padding: 8px 12px !important; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; color: #455a64; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; }
+.sala-footer-row td.lbl-total { overflow: hidden; text-overflow: ellipsis; max-width: 0; }
+.sala-footer-row td.sala-total { color: var(--verde); font-size: 0.95rem; text-align: right; white-space: nowrap; }
+.sala-vazia td { text-align: center; padding: 12px !important; color: var(--cinza); font-style: italic; font-size: 0.84rem; background: #fafafa; }
+.sem-sala-divisor td { background: #fafafa !important; padding: 6px 14px !important; font-size: 0.72rem !important; color: var(--cinza) !important; font-style: italic; border-top: 1px dashed var(--borda) !important; border-bottom: 1px dashed var(--borda) !important; }
+.sem-sala-divisor.oculto td { padding: 3px 14px !important; font-size: 0.68rem !important; color: #90a4ae !important; }
+.tabela-opcoes { display: flex; justify-content: flex-end; align-items: center; gap: 16px; margin-top: 8px; font-size: 0.8rem; color: var(--cinza); }
+.legenda { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.75rem; color: var(--cinza); margin-right: auto; }
+.legenda span { display: inline-flex; align-items: center; gap: 5px; }
+.legenda i.sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; border: 1px solid #b9c7e6; background: #eef3ff; }
+.legenda i.sw.v { border-color: #ffcc80; background: var(--tema-claro); }
+
+/* ===== BUSCA DE PRODUTO ===== */
+.combo { position: relative; }
+.combo > input { width: 100%; padding: 9px 32px 9px 11px; border: 1.5px solid var(--borda); border-radius: 7px; font-family: 'Source Sans 3', sans-serif; font-size: 0.93rem; color: var(--texto); background: #fafcff; cursor: pointer; text-overflow: ellipsis; }
+.combo > input:focus { outline: none; border-color: var(--tema); box-shadow: 0 0 0 3px rgba(230,81,0,.12); background: #fff; cursor: text; }
+.combo .combo-seta { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--cinza); font-size: 0.78rem; pointer-events: none; transition: transform .2s; }
+.combo.aberto .combo-seta { transform: translateY(-50%) rotate(180deg); }
+.combo-lista { position: absolute; z-index: 40; left: 0; right: 0; top: calc(100% + 4px); background: #fff; border: 1.5px solid var(--tema); border-radius: 8px; box-shadow: 0 12px 30px rgba(230,81,0,.20); max-height: 340px; overflow-y: auto; display: none; }
+.combo.aberto .combo-lista { display: block; }
+.combo-grupo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.64rem; text-transform: uppercase; letter-spacing: .5px; color: var(--cinza); background: var(--tema-claro); padding: 5px 12px; position: sticky; top: 0; }
+.combo-op { padding: 8px 12px; font-size: 0.88rem; cursor: pointer; border-bottom: 1px solid #f0f4f8; }
+.combo-op:last-child { border-bottom: none; }
+.combo-op mark { background: #ffe9a8; color: inherit; padding: 0 1px; border-radius: 2px; }
+.combo-op.ativo, .combo-op:hover { background: var(--tema-claro); }
+.combo-op .preco { float: right; color: var(--tema); font-size: 0.76rem; font-family: 'Montserrat', sans-serif; font-weight: 700; margin-left: 12px; }
+.combo-vazio { padding: 16px 12px; font-size: 0.86rem; color: var(--cinza); font-style: italic; text-align: center; }
+.rascunho .situacao { display: inline-flex; align-items: center; gap: 6px; margin-left: 6px; }
+.rascunho .situacao select { padding: 5px 8px; border: 1.5px solid var(--borda); border-radius: 7px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.76rem; color: var(--tema); background: #fff; cursor: pointer; }
+
+/* ===== EXTRAS ===== */
+.bloco-extras { margin-top: 18px; }
+.bloco-titulo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--laranja); margin-bottom: 8px; }
+.extras-grid { display: grid; grid-template-columns: 2fr 1fr 1.4fr; gap: 10px; align-items: end; padding: 14px; background: #fafcff; border: 1.5px dashed var(--borda); border-radius: 8px; }
+.extras-grid .form-group label { color: var(--laranja); }
+
+/* ===== RESUMO ===== */
+.aviso-vazio { padding: 16px; text-align: center; color: var(--cinza); font-style: italic; background: #fafcff; border: 1.5px dashed var(--borda); border-radius: 8px; }
+.resumo-regioes { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.resumo-regiao-card { border: 1.5px solid var(--borda); border-radius: 10px; padding: 12px 16px; background: #fafcff; }
+.resumo-regiao-card .regiao-titulo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--tema); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; padding-bottom: 6px; border-bottom: 2px solid var(--tema-claro); }
+.resumo-regiao-card .cat-linha { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 0.86rem; border-bottom: 1px dashed rgba(0,0,0,0.06); }
+.resumo-regiao-card .cat-linha:last-of-type { border-bottom: none; }
+.resumo-regiao-card .cat-nome { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.resumo-regiao-card .cat-valor { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+.resumo-regiao-card .subtotal-regiao { margin-top: 6px; padding-top: 6px; border-top: 2px solid var(--tema); display: flex; justify-content: space-between; align-items: center; }
+.resumo-regiao-card .subtotal-regiao .lbl { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; color: var(--tema); text-transform: uppercase; letter-spacing: 0.4px; }
+.resumo-regiao-card .subtotal-regiao .val { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--tema); }
+.desc-grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin: 18px 0 14px; padding-top: 16px; border-top: 1px dashed var(--borda); }
+.desconto-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+.desconto-row .ou { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--cinza); font-size: 0.9rem; }
+.desconto-row small { color: var(--cinza); font-style: italic; font-size: 0.78rem; margin-left: 6px; }
+.totais-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.total-card { border-radius: 10px; padding: 12px 16px; text-align: center; border: 1.5px solid var(--borda); background: #fafcff; }
+.total-card .lbl { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--cinza); margin-bottom: 4px; }
+.total-card .val { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--texto); }
+.total-card .sub { font-size: 0.72rem; color: var(--cinza); margin-top: 3px; }
+.total-card.destaque { background: linear-gradient(135deg, var(--tema) 0%, var(--tema-med) 100%); border-color: var(--tema); box-shadow: 0 4px 16px rgba(230,81,0,.25); }
+.total-card.destaque .lbl { color: rgba(255,255,255,.85); }
+.total-card.destaque .val { color: #fff; font-size: 1.35rem; }
+
+/* ===== PAGAMENTO ===== */
+.pag-prazo-box { display: flex; gap: 14px; align-items: end; flex-wrap: wrap; padding: 14px 18px; background: var(--tema-claro); border-left: 4px solid var(--tema); border-radius: 8px; }
+.pag-prazo-box .form-group { flex: 0 0 220px; }
+.pag-prazo-box .hint { flex: 1; color: var(--cinza); font-size: 0.85rem; font-style: italic; padding-bottom: 8px; }
+.pag-resumo-pag { margin-top: 16px; padding: 14px 18px; background: linear-gradient(90deg, var(--tema-claro) 0%, #fff 100%); border-left: 4px solid var(--tema); border-radius: 8px; font-size: 0.94rem; line-height: 1.6; display: none; }
+.pag-resumo-pag.visivel { display: block; }
+.pag-resumo-pag .titulo { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--tema); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.4px; font-size: 0.82rem; }
+.pag-resumo-pag .frase strong { color: var(--azul); }
+.pag-resumo-pag .frase .venc { color: var(--tema); }
+
+/* ===== OBSERVAÇÕES ===== */
+.obs-toggle { width: 100%; padding: 12px 16px; background: linear-gradient(90deg, var(--azul-claro) 0%, #fff 100%); border: 1.5px solid var(--borda); border-radius: 8px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.88rem; color: var(--azul); cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: background .2s; margin-bottom: 14px; }
+.obs-toggle:hover { background: linear-gradient(90deg, #c5dafc 0%, #fff 100%); }
+.obs-toggle .left { display: flex; align-items: center; gap: 9px; }
+.obs-toggle .chevron { transition: transform .3s; }
+.obs-toggle.open .chevron { transform: rotate(180deg); }
+.obs-toggle .contador { background: var(--azul); color: #fff; font-size: 0.7rem; padding: 2px 9px; border-radius: 10px; margin-left: 8px; display: none; }
+.obs-toggle.tem-marcadas .contador { display: inline-block; }
+.obs-collapse { display: none; }
+.obs-collapse.open { display: block; }
+.obs-padrao-box { margin-bottom: 14px; padding: 14px 16px; background: #fafcff; border: 1.5px solid var(--borda); border-radius: 8px; }
+.obs-padrao-titulo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.obs-padrao-titulo i { color: var(--azul); }
+.obs-padrao-lista { display: flex; flex-direction: column; gap: 8px; }
+.obs-padrao-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: #fff; border: 1.5px solid var(--borda); border-radius: 6px; cursor: pointer; transition: all .2s; }
+.obs-padrao-item:hover { border-color: var(--azul-med); background: var(--azul-claro); }
+.obs-padrao-item input[type="checkbox"] { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--azul); cursor: pointer; flex-shrink: 0; }
+.obs-padrao-item label { font-size: 0.86rem; cursor: pointer; line-height: 1.45; flex: 1; }
+.obs-padrao-item label strong { color: var(--azul); font-family: 'Montserrat', sans-serif; font-weight: 700; margin-right: 4px; }
+.obs-padrao-item.marcado { border-color: var(--azul); background: var(--azul-claro); }
+.obs-add-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: 10px; padding: 10px 14px; background: #f5f5f5; border: 1.5px dashed #c0c0c0; border-radius: 6px; color: #999; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.82rem; cursor: not-allowed; font-style: italic; }
+.obs-add-btn .em-breve { background: #999; color: #fff; font-size: 0.68rem; padding: 2px 7px; border-radius: 8px; font-style: normal; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+.obs-marcadas-resumo { font-size: 0.8rem; color: var(--cinza); margin-bottom: 10px; line-height: 1.5; }
+.obs-marcadas-resumo strong { color: var(--azul); }
+.obs-print { display: none; }
+
+/* ===== BOTÕES / AÇÕES ===== */
+.btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; border: none; border-radius: 7px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.86rem; cursor: pointer; transition: all .2s; white-space: nowrap; }
+.btn-primary { background: var(--tema); color: #fff; }
+.btn-primary:hover { background: var(--tema-med); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(230,81,0,.35); }
+.btn-outline { background: transparent; border: 2px solid var(--borda); color: var(--cinza); }
+.btn-outline:hover { border-color: var(--cinza); background: var(--bg); }
+.btn-pdf { background: linear-gradient(135deg, var(--azul) 0%, #1976d2 100%); color: #fff; }
+.btn-pdf:hover { box-shadow: 0 4px 14px rgba(13,71,161,.35); transform: translateY(-1px); }
+.acoes { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.acoes-bar { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; background: #fff; border: 1px solid var(--borda); border-radius: 12px; padding: 14px 18px; box-shadow: var(--sombra); position: sticky; bottom: 12px; z-index: 5; }
+.rascunho { font-size: 0.8rem; color: var(--cinza); display: flex; align-items: center; gap: 8px; }
+.rascunho i { color: var(--verde); }
+.rascunho[data-estado="espera"], .rascunho[data-estado="espera"] i { color: var(--laranja-med); }
+.rascunho[data-estado="alerta"], .rascunho[data-estado="alerta"] i { color: var(--vermelho); font-weight: 700; }
+.rascunho[data-estado="ok"] i { color: var(--verde); }
+.aviso-num-rep { display: block; margin-top: 4px; font-size: 0.74rem; color: var(--vermelho); font-weight: 600; }
+.seg { display: inline-flex; border: 2px solid var(--borda); border-radius: 8px; overflow: hidden; }
+.seg button { border: none; background: #fff; padding: 8px 12px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem; color: var(--cinza); cursor: pointer; }
+.seg button.ativo { background: var(--azul); color: #fff; }
+.seg button + button { border-left: 2px solid var(--borda); }
+footer { text-align: center; padding: 18px; color: var(--cinza); font-size: 0.83rem; border-top: 1px solid var(--borda); margin-top: 8px; }
+footer strong { color: var(--tema); }
+
+@media (max-width: 900px) {
+    .grid-evento { grid-template-columns: 1fr 1fr; }
+    .totais-grid { grid-template-columns: 1fr; }
+    .extras-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+    .grid-evento { grid-template-columns: 1fr; }
+    .topo { padding: 16px 18px; }
+}
+
+/* ===== IMPRESSÃO ===== */
+@media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    html, body { background: #fff !important; font-size: 9.5pt; margin: 0; padding: 0; }
+    .no-print, .screen-only, .topo, .acoes-bar { display: none !important; }
+    /* a coluna de ações some sem deixar coluna vazia no fim da tabela */
+    #tabelaOrc td.no-print, #tabelaOrc th.no-print { display: table-cell !important; width: 0 !important; max-width: 0 !important; padding: 0 !important; border: none !important; font-size: 0 !important; line-height: 0 !important; overflow: hidden; }
+    #tabelaOrc td.no-print > *, #tabelaOrc th.no-print > * { display: none !important; }
+    .print-only { display: inline; }
+    div.print-only { display: block; }
+    .obs-print { display: block; }
+
+    .print-cabecalho { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 0 8px; margin-bottom: 8px; border-bottom: 3px solid var(--tema); page-break-after: avoid; }
+    .pc-esq { display: flex; align-items: center; gap: 12px; }
+    .pc-logo { width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; }
+    .pc-logo svg, .pc-logo img { width: 46px; height: 46px; object-fit: contain; }
+    .pc-nome { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.15rem; color: var(--azul); line-height: 1.05; }
+    .pc-nome span { color: var(--laranja); }
+    .pc-slogan { font-size: 0.72rem; color: var(--cinza); font-style: italic; margin-top: 2px; }
+    .pc-dir { text-align: right; }
+    .pc-titulo { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.05rem; color: var(--azul); letter-spacing: .5px; }
+    .pc-titulo span { color: var(--laranja); }
+    .pc-meta { font-size: 0.74rem; color: var(--cinza); margin-top: 2px; }
+    .pc-badge { display: inline-block; margin-top: 4px; background: var(--tema); color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.7rem; padding: 3px 10px; border-radius: 10px; text-transform: uppercase; letter-spacing: .4px; margin-right: 6px; }
+    .pc-fone { display: inline-block; margin-top: 4px; background: var(--azul); color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.72rem; padding: 3px 10px; border-radius: 10px; }
+
+    .container { display: block !important; margin: 0 !important; padding: 0 !important; max-width: 100% !important; }
+    .card { margin-bottom: 6px !important; }
+    /* pagamento e observações lado a lado na paisagem quando as observações são curtas */
+    body.obs-curtas:not(.print-cliente) #cardPag, body.obs-curtas:not(.print-cliente) #cardObs { float: left; width: 49.5%; }
+    body.obs-curtas:not(.print-cliente) #cardPag { margin-right: 1%; }
+    body:not(.obs-curtas) #cardObs, body.print-cliente #cardObs { break-inside: auto !important; page-break-inside: auto !important; }
+    footer { clear: both; }
+    .th-orc { font-weight: 600 !important; opacity: .9; margin-left: 5px; font-size: 0.55rem !important; }
+    .card { box-shadow: none !important; border: 1px solid #b0bec5 !important; border-radius: 4px !important; break-inside: avoid; page-break-inside: avoid; }
+    .card.itens { break-inside: auto; page-break-inside: auto; }
+    .card-header { background: var(--tema-claro) !important; padding: 4px 10px !important; border-bottom: 1px solid var(--tema) !important; page-break-after: avoid; }
+    .card-header h2, .card-header h3 { font-size: 0.8rem !important; }
+    .card-body { padding: 7px 10px !important; }
+    .card.print-vazio { display: none !important; }
+
+    .print-only.pe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 16px; }
+    .pe-lbl { font-size: 0.6rem; font-weight: 700; color: var(--cinza); text-transform: uppercase; letter-spacing: .4px; }
+    .pe-val { font-size: 0.82rem; font-weight: 600; border-bottom: 1px solid #cfd8dc; padding-bottom: 1px; }
+
+    .tabela-wrap { overflow: visible !important; border: 1px solid #b0bec5 !important; margin-top: 4px !important; border-radius: 3px !important; }
+    #tabelaOrc { font-size: 0.7rem !important; }
+    #tabelaOrc thead { display: table-header-group; }
+    #tabelaOrc thead tr { background: var(--tema) !important; color: #fff !important; }
+    #tabelaOrc thead th { padding: 3px 5px !important; font-size: 0.58rem !important; }
+    #tabelaOrc thead th.grp-hq, #tabelaOrc thead tr.sub th.grp-q { background: var(--azul-med) !important; }
+    #tabelaOrc tbody td { padding: 3px 5px !important; font-size: 0.7rem !important; }
+    #tabelaOrc td.col-prod { min-width: 0 !important; }
+    #tabelaOrc td.col-prod .und { font-size: 0.6rem; display: inline; margin-left: 4px; }
+    #tabelaOrc td.col-num { width: auto !important; }
+    #tabelaOrc tr { page-break-inside: avoid; break-inside: avoid; }
+    #tabelaOrc tr.sala-header-row { break-after: avoid; page-break-after: avoid; }
+    #tabelaOrc tr.sala-footer-row { break-before: avoid; page-break-before: avoid; }
+    .sala-header-row { background: #546e7a !important; }
+    .sala-header-row td { padding: 4px 8px !important; }
+    .sala-header-row .sala-titulo { font-size: 0.74rem !important; }
+    .sala-footer-row td { padding: 3px 8px !important; font-size: 0.68rem !important; }
+    .sala-footer-row td.sala-total { font-size: 0.78rem !important; }
+    .sem-sala-divisor td { padding: 2px 8px !important; font-size: 0.62rem !important; }
+    .sem-sala-divisor.oculto { display: none !important; }
+    .sala-vazia td { padding: 4px !important; font-size: 0.7rem !important; }
+    .vazio td { padding: 10px !important; }
+    #tabelaOrc td.col-sub { font-size: 0.74rem !important; }
+    .tag-cat { font-size: 0.52rem; padding: 1px 5px; }
+
+    .resumo-regioes { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important; gap: 6px !important; }
+    .resumo-regiao-card { padding: 5px 9px !important; border-radius: 4px !important; }
+    .resumo-regiao-card .regiao-titulo { font-size: 0.66rem !important; margin-bottom: 3px !important; padding-bottom: 3px !important; }
+    .resumo-regiao-card .cat-linha { font-size: 0.66rem !important; padding: 1px 0 !important; }
+    .resumo-regiao-card .subtotal-regiao { margin-top: 3px !important; padding-top: 3px !important; }
+    .resumo-regiao-card .subtotal-regiao .lbl { font-size: 0.62rem !important; }
+    .resumo-regiao-card .subtotal-regiao .val { font-size: 0.8rem !important; }
+    .aviso-vazio { display: none !important; }
+    .desc-grid { display: none !important; }
+    .totais-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 6px !important; margin-top: 7px !important; }
+    .total-card { padding: 5px 8px !important; border-radius: 4px !important; }
+    .total-card .lbl { font-size: 0.58rem !important; margin-bottom: 1px !important; }
+    .total-card .val { font-size: 0.85rem !important; }
+    .total-card .sub { font-size: 0.6rem !important; margin-top: 1px !important; }
+    .total-card.destaque { background: var(--tema) !important; }
+    .total-card.destaque .val { font-size: 1rem !important; }
+
+    .pag-resumo-pag.visivel { margin-top: 0 !important; padding: 5px 10px !important; font-size: 0.78rem !important; line-height: 1.5 !important; }
+    .pag-resumo-pag .titulo { font-size: 0.68rem !important; margin-bottom: 2px !important; }
+
+    .obs-print p { font-size: 0.74rem; line-height: 1.4; margin: 0 0 5px; text-align: justify; }
+    .obs-print p strong { color: var(--azul); }
+    .obs-print p.obs-livre { white-space: pre-wrap; font-weight: 600; margin-top: 6px; padding-top: 5px; border-top: 1px dashed #cfd8dc; }
+
+    footer { margin-top: 6px !important; padding: 5px !important; font-size: 0.66rem !important; page-break-inside: avoid; }
+
+    /* ---- modo CLIENTE (resumido): sem o resumo por região/categoria ---- */
+    body.print-cliente .so-completo { display: none !important; }
+    body.print-cliente #tabelaOrc tbody td { font-size: 0.78rem !important; padding: 4px 6px !important; }
+    body.print-cliente .obs-print p { font-size: 0.78rem; }
+}
+</style>
+<style id="printPageStyle">@page { size: A4 landscape; margin: 9mm; }</style>
+<script src="plenart-db.js"></script>
+</head>
+<body>
+
+<!-- TOPO (tela) -->
+<div class="topo">
+    <a href="plenart-sistema.html" class="btn-hub no-print" title="Voltar para o Hub"><i class="fas fa-arrow-left"></i> Hub</a>
+    <div class="logo-icon"><i class="fas fa-tent"></i></div>
+    <div class="topo-texto">
+        <h1>Grupo <span class="destaque">Tendas</span> Plenart</h1>
+        <p>"Sua visão, nosso compromisso."</p>
+    </div>
+    <div class="topo-dir">
+        <div class="topo-user" id="userChip"><i class="fas fa-user"></i> <span id="userChipNome"></span></div>
+        <div class="topo-badge"><i class="fas fa-file-contract"></i><div>Contratos SESC<span class="sub">Múltiplas regiões</span></div></div>
+    </div>
+</div>
+
+<!-- CABEÇALHO (impressão) -->
+<div class="print-cabecalho">
+    <div class="pc-esq">
+        <div class="pc-logo" id="pcLogo">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6 L3 54 H61 Z" fill="#1a2d6b"/><path d="M32 6 V54" stroke="#f47920" stroke-width="3"/><path d="M21 54 L32 32 L43 54 Z" fill="#f47920"/></svg>
+        </div>
+        <div>
+            <div class="pc-nome">Grupo <span>Tendas</span> Plenart</div>
+            <div class="pc-slogan">"Sua visão, nosso compromisso."</div>
+        </div>
+    </div>
+    <div class="pc-dir">
+        <div class="pc-titulo">ORÇAMENTO <span id="pcNum"></span></div>
+        <div class="pc-meta">Emitido em <span id="pcData"></span><span id="pcPor"></span></div>
+        <span class="pc-badge">Contratos SESC</span><span class="pc-fone"><i class="fas fa-phone"></i> (21) 3637-4455</span>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- DADOS DO EVENTO -->
+    <div class="card">
+        <div class="card-header"><i class="fas fa-calendar-star"></i><h2>Dados do Evento</h2></div>
+        <div class="card-body">
+            <div class="grid-evento screen-only">
+                <div class="form-group"><label>Unidade</label><input type="text" id="evUnidade" data-ev="unidade" placeholder="Ex: SESC Niterói, SESC Nova Friburgo..."></div>
+                <div class="form-group"><label>Nome do Evento</label><input type="text" id="evNome" data-ev="nome" placeholder="Ex: Atividade SESC Verão"></div>
+                <div class="form-group"><label>Nº do Orçamento</label><input type="text" id="evNumOrc" data-ev="numOrc" placeholder="SES-2026-0001"><span class="aviso-num-rep" id="avisoNumRepetido"></span></div>
+                <div class="form-group"><label>Data de Início</label><input type="date" id="evDataInicio" data-ev="dataInicio"></div>
+                <div class="form-group"><label>Data de Término</label><input type="date" id="evDataTermino" data-ev="dataTermino"></div>
+                <div class="form-group"><label>Nome do Responsável</label><input type="text" id="evResp" data-ev="responsavel" placeholder="Ex: João da Silva"></div>
+                <div class="form-group"><label>Contato do Responsável</label><input type="text" id="evContato" data-ev="contato" placeholder="(21) 99999-9999 / email@sesc.com.br"></div>
+                <div class="form-group" style="grid-column: span 2"><label>Local do Evento</label><input type="text" id="evLocal" data-ev="local" placeholder="Rua, número, bairro, cidade – RJ"></div>
+            </div>
+            <div class="print-only pe-grid" id="eventoPrint"></div>
+        </div>
+    </div>
+
+    <!-- ITENS -->
+    <div class="card itens">
+        <div class="card-header"><i class="fas fa-boxes-stacked"></i><h2>Itens do Orçamento (Contratos SESC)</h2><span class="dica no-print"><i class="fas fa-grip-vertical"></i> arraste pela alça para mudar a ordem ou a sala</span></div>
+        <div class="card-body">
+
+            <div class="regiao-box no-print">
+                <div class="lbl-titulo"><i class="fas fa-map-marker-alt"></i> Região padrão:</div>
+                <select id="regiaoPadrao" onchange="setRegiaoPadrao(this.value)"></select>
+                <div class="hint">A lista de produtos mostra o que tem preço nesta região. Cada linha pode ter a região trocada depois.</div>
+            </div>
+
+            <div class="sala-controls no-print">
+                <span class="lbl"><i class="fas fa-building"></i> Salas / Ambientes:</span>
+                <input type="text" id="novaSalaNome" placeholder="Ex: Pátio Central, Quadra Coberta..." onkeydown="if(event.key==='Enter'){criarSala();event.preventDefault();}">
+                <button class="btn btn-sala" type="button" onclick="criarSala()"><i class="fas fa-plus"></i> Criar Sala</button>
+            </div>
+
+            <div class="add-row no-print">
+                <div class="form-group prod">
+                    <label>Produto <span style="text-transform:none;font-weight:400;color:var(--cinza)">— clique e digite para buscar (só os que têm preço na região)</span></label>
+                    <div class="combo" id="comboProduto">
+                        <input type="text" id="comboBusca" placeholder="Digite para buscar: tenda, palco, treliça, octanorm..." autocomplete="off" spellcheck="false">
+                        <i class="fas fa-chevron-down combo-seta"></i>
+                        <div class="combo-lista" id="comboLista"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Preço do contrato</label>
+                    <div class="preco-preview" id="precoPreview">R$ 0,00</div>
+                </div>
+                <div class="form-group" style="min-width:200px">
+                    <label>Adicionar em (Sala)</label>
+                    <select id="salaDestino"><option value="">— Sem sala (item solto) —</option></select>
+                </div>
+                <div class="acoes">
+                    <button class="btn btn-primary" type="button" onclick="adicionarItem()"><i class="fas fa-plus"></i> Incluir</button>
+                </div>
+            </div>
+
+            <div class="tabela-wrap">
+                <table id="tabelaOrc">
+                    <thead>
+                        <tr class="grupos">
+                            <th rowspan="2">#</th>
+                            <th rowspan="2" class="col-cat">Cat.</th>
+                            <th rowspan="2">Região</th>
+                            <th rowspan="2">Produto <span class="print-only th-orc" id="thOrc"></span></th>
+                            <th colspan="2" class="grp-hq">Quantidades</th>
+                            <th rowspan="2" class="col-preco">Preço unit. (R$)</th>
+                            <th rowspan="2" class="col-sub">Subtotal</th>
+                            <th rowspan="2" class="no-print">Ações</th>
+                        </tr>
+                        <tr class="sub">
+                            <th class="grp-q">Qtd.</th>
+                            <th class="grp-q">Diárias</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabela"></tbody>
+                </table>
+            </div>
+            <div class="tabela-opcoes no-print">
+                <div class="legenda">
+                    <span><i class="sw"></i> quantidades (editáveis)</span>
+                    <span><i class="sw v"></i> preço do contrato (fixo por região; extras são editáveis)</span>
+                </div>
+            </div>
+
+            <div class="bloco-extras no-print">
+                <div class="bloco-titulo"><i class="fas fa-plus-circle"></i> EXTRAS / OUTROS (itens fora dos contratos)</div>
+                <div class="extras-grid">
+                    <div class="form-group"><label>Descrição do Item</label><input type="text" id="extraDesc" placeholder="Ex: Serviço adicional..." onkeydown="if(event.key==='Enter'){adicionarExtra();event.preventDefault();}"></div>
+                    <div class="form-group"><label>Valor Unit. (R$)</label><input type="text" id="extraValor" placeholder="0,00" inputmode="decimal"></div>
+                    <div class="form-group"><label>Região</label><select id="extraRegiao"></select></div>
+                </div>
+                <div style="margin-top:10px;display:flex;gap:10px;align-items:end;flex-wrap:wrap">
+                    <div class="form-group" style="min-width:200px">
+                        <label>Adicionar em (Sala)</label>
+                        <select id="salaDestinoExtra"><option value="">— Sem sala (item solto) —</option></select>
+                    </div>
+                    <button class="btn btn-primary" type="button" onclick="adicionarExtra()"><i class="fas fa-plus"></i> Adicionar Extra</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESUMO FINANCEIRO -->
+    <div class="card">
+        <div class="card-header"><i class="fas fa-calculator"></i><h3>Resumo Financeiro</h3></div>
+        <div class="card-body">
+            <div class="so-completo">
+                <div class="aviso-vazio" id="avisoVazio"><i class="fas fa-inbox" style="display:block;margin-bottom:6px;opacity:.4"></i>Adicione produtos para ver o resumo por região.</div>
+                <div class="resumo-regioes" id="resumoRegioes"></div>
+            </div>
+            <div class="desc-grid no-print">
+                <div class="form-group">
+                    <label>Desconto geral</label>
+                    <div class="desconto-row">
+                        <div class="pct-wrap"><input class="inp" id="descontoPct" inputmode="decimal" value="0,00"><span>%</span></div>
+                        <span class="ou">ou</span>
+                        <div class="money"><span>R$</span><input class="inp inp-money" id="descontoVlr" inputmode="decimal" value="0,00" style="width:110px"></div>
+                        <small><i class="fas fa-info-circle"></i> Digite em % ou em R$ — o outro campo é calculado.</small>
+                    </div>
+                </div>
+            </div>
+            <div class="totais-grid">
+                <div class="total-card"><div class="lbl">Subtotal</div><div class="val" id="subtotalFinal">R$ 0,00</div></div>
+                <div class="total-card"><div class="lbl">Desconto</div><div class="val" style="color:var(--vermelho)" id="descontoVal">– R$ 0,00</div><div class="sub" id="descontoPctLabel"></div></div>
+                <div class="total-card destaque"><div class="lbl">TOTAL GERAL</div><div class="val" id="totalGlobal">R$ 0,00</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORMA DE PAGAMENTO -->
+    <div class="card" id="cardPag">
+        <div class="card-header"><i class="fas fa-credit-card"></i><h3>Forma de Pagamento</h3></div>
+        <div class="card-body">
+            <div class="pag-prazo-box no-print">
+                <div class="form-group">
+                    <label>Prazo (dias após o evento)</label>
+                    <input type="number" id="pagPrazo" min="0" step="1" placeholder="Ex: 30">
+                </div>
+                <div class="hint"><i class="fas fa-info-circle"></i> Pagamento sempre <strong>a prazo</strong>, em parcela única após o evento. Informe a Data de Término para calcular o vencimento.</div>
+            </div>
+            <div class="pag-resumo-pag" id="pagResumoPag">
+                <div class="titulo"><i class="fas fa-file-invoice-dollar"></i> Forma de Pagamento</div>
+                <div class="frase" id="pagFrase"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OBSERVAÇÕES -->
+    <div class="card" id="cardObs">
+        <div class="card-header"><i class="fas fa-note-sticky"></i><h3>Observações</h3></div>
+        <div class="card-body">
+            <button class="obs-toggle no-print" id="obsToggle" type="button" onclick="toggleObsPadrao()">
+                <div class="left"><i class="fas fa-list-check"></i><span>Mensagens Padrão</span><span class="contador" id="obsContador">0 marcadas</span></div>
+                <i class="fas fa-chevron-down chevron"></i>
+            </button>
+            <div class="obs-collapse no-print" id="obsCollapse">
+                <div class="obs-padrao-box">
+                    <div class="obs-padrao-titulo"><i class="fas fa-circle-check"></i>Marque as mensagens que se aplicam a este orçamento (saem na impressão, antes do texto livre)</div>
+                    <div class="obs-padrao-lista" id="obsPadraoLista"></div>
+                    <div class="obs-add-btn" onclick="avisarFuncionalidadeFutura()" title="Disponível quando o sistema estiver no banco de dados">
+                        <i class="fas fa-plus-circle"></i><span>Adicionar Nova Mensagem Padrão</span><span class="em-breve">Em Breve</span>
+                    </div>
+                </div>
+            </div>
+            <div class="obs-marcadas-resumo no-print" id="obsMarcadasResumo"></div>
+            <div class="form-group screen-only">
+                <label>Observações Adicionais (texto livre)</label>
+                <textarea id="observacoes" rows="4" placeholder="Adicione aqui qualquer observação extra não coberta pelas mensagens padrão..."></textarea>
+            </div>
+            <div class="obs-print" id="obsPrint"></div>
+        </div>
+    </div>
+
+    <!-- AÇÕES -->
+    <div class="acoes-bar no-print">
+        <div class="rascunho">
+            <i class="fas fa-circle-check"></i> <span id="rascunhoStatus">Salva sozinho no banco de dados</span>
+            <label class="situacao"><span>Situação:</span>
+                <select id="selStatus" onchange="setStatus(this.value)">
+                    <option>Rascunho</option><option>Enviado</option><option>Aprovado</option><option>Perdido</option>
+                </select>
+            </label>
+        </div>
+        <div class="acoes">
+            <button class="btn btn-outline" type="button" onclick="exportarJSON()" title="Salva um arquivo .json com este orçamento"><i class="fas fa-download"></i> Baixar backup</button>
+            <label class="btn btn-outline" title="Abre um arquivo .json salvo antes"><i class="fas fa-folder-open"></i> Abrir backup<input type="file" id="fileImport" accept=".json,application/json" hidden onchange="importarJSON(this)"></label>
+            <button class="btn btn-outline" type="button" onclick="limparOrcamento()"><i class="fas fa-rotate-left"></i> Limpar</button>
+            <div class="seg" id="segImpressao">
+                <button type="button" data-modo="completo" class="ativo" onclick="setPrintMode('completo')" title="Imprime com o resumo por região e categoria"><i class="fas fa-list"></i> Completa</button>
+                <button type="button" data-modo="cliente" onclick="setPrintMode('cliente')" title="Imprime só a tabela, totais, pagamento e observações"><i class="fas fa-user-tie"></i> Cliente</button>
+            </div>
+            <button class="btn btn-pdf" type="button" onclick="imprimir()"><i class="fas fa-file-pdf"></i> Gerar PDF / Imprimir</button>
+        </div>
+    </div>
+
+</div>
+
+<footer><strong>Grupo Tendas Plenart</strong> &nbsp;|&nbsp; Contratos SESC – Múltiplas Regiões &nbsp;|&nbsp; (21) 3637-4455 &nbsp;|&nbsp; Emitido em <span id="dataGer"></span></footer>
+
+<script>
+/* =====================================================================
+   PLENART – ORÇAMENTO CONTRATOS SESC (v3, mesmo motor do Comercial)
+   O orçamento inteiro vive no objeto `state` (JSON); a tela é desenhada
+   a partir dele. É esse JSON que vai para o Supabase na Fase 2.
+   ===================================================================== */
+
+const TIPO_ORC = 'sesc';
+const ORC_KEY = 'plenart_orcamentos';
+const ULT_KEY = 'plenart_ultimo_' + TIPO_ORC;
+let usuarioAtual = null;
+const SESSAO_KEY = 'plenart_usuario_logado';
+const $ = id => document.getElementById(id);
+
+// ---------- utilitários ----------
+function brl(v){ return (Number(v)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
+function fmtNum(v, dec){ dec = dec===undefined ? 2 : dec; return (Number(v)||0).toLocaleString('pt-BR',{minimumFractionDigits:dec, maximumFractionDigits:dec}); }
+function fmtQtd(v){ return (Number(v)||0).toLocaleString('pt-BR',{maximumFractionDigits:2}); }
+function fmtPct(v){ return (Number(v)||0).toLocaleString('pt-BR',{maximumFractionDigits:2}); }
+function parseNum(s){
+    if(typeof s === 'number') return isNaN(s) ? 0 : s;
+    s = String(s == null ? '' : s).trim().replace(/R\$\s?/,'').replace(/\s/g,'').replace(/%$/,'');
+    if(!s) return 0;
+    if(s.indexOf(',') >= 0){ s = s.replace(/\./g,'').replace(',','.'); }
+    else if(/^-?\d{1,3}(\.\d{3})+$/.test(s)){ s = s.replace(/\./g,''); }
+    const n = parseFloat(s);
+    return isNaN(n) ? 0 : n;
+}
+function escapeHtml(t){ return String(t == null ? '' : t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
+function semAcento(t){ return String(t == null ? '' : t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+function formatarData(iso){ if(!iso) return ''; const p = String(iso).split('-'); return p.length === 3 ? `${p[2]}/${p[1]}/${p[0]}` : iso; }
+function hojeBR(){ return new Date().toLocaleDateString('pt-BR'); }
+
+// ---------- regiões e catálogo dos contratos SESC ----------
+const REGIOES = [
+    { id:'metropolitana',  nome:'Região Metropolitana',                curto:'Metropolitana' },
+    { id:'medio_paraiba',  nome:'Região Médio Paraíba',                curto:'Médio Paraíba' },
+    { id:'serrana',        nome:'Região Serrana',                      curto:'Serrana' },
+    { id:'serrana_3',      nome:'Região Serrana 3',                    curto:'Serrana 3' },
+    { id:'norte_noroeste', nome:'Região Norte e Noroeste Fluminense',  curto:'Norte/Noroeste' },
+    { id:'baixadas',       nome:'Região Baixadas Litorâneas',          curto:'Baixadas Lit.' },
+    { id:'centro_sul',     nome:'Região Centro-Sul',                   curto:'Centro-Sul' },
+    { id:'itaipava_penedo',nome:'Itaipava | Penedo',                   curto:'Itaipava/Penedo' },
+];
+const REG = {}; REGIOES.forEach(r => REG[r.id] = r);
+
+const CATALOGO = {
+    tenda_pir_3x3:       { nome:'Tenda Piramidal 3x3m', categoria:'TENDAS', unidade:'unidade', precos:{ metropolitana:927.3, serrana_3:726.82, norte_noroeste:639.98 } },
+    tenda_pir_5x5:       { nome:'Tenda Piramidal 5x5m', categoria:'TENDAS', unidade:'unidade', precos:{ metropolitana:1276.8, serrana:350.03, serrana_3:1016.99, norte_noroeste:880.98 } },
+    tenda_pir_10x10:     { nome:'Tenda Piramidal 10x10m', categoria:'TENDAS', unidade:'unidade', precos:{ metropolitana:3763.2, serrana:983.9, serrana_3:2856.22, norte_noroeste:2596.98 } },
+    piso_madeira:        { nome:'Piso de Madeira c/ Revestimento (Carpete, Easy Floor ou Deck)', categoria:'TENDAS', unidade:'m²', precos:{ metropolitana:114.24, serrana:31.69, serrana_3:91.99, norte_noroeste:78.84 } },
+    tenda_modular_q30:   { nome:'Tenda Modular c/ Estrutura Q30', categoria:'TENDAS', unidade:'m²', precos:{ serrana:36.13, serrana_3:104.88 } },
+    tenda_galpao_tfs:    { nome:'Tenda Galpão Modular Estrutural TFS', categoria:'TENDAS', unidade:'m²', precos:{ itaipava_penedo:68.32 } },
+    palco_sc_8x6:        { nome:'Palco Completo sem Cobertura – 8x6m', categoria:'PALCOS', unidade:'unidade', precos:{ metropolitana:10236.78, medio_paraiba:17557.68, serrana:10423.28, norte_noroeste:17052.0 } },
+    palco_sc_14x10:      { nome:'Palco Completo sem Cobertura – 14x10m', categoria:'PALCOS', unidade:'unidade', precos:{ metropolitana:20260.8 } },
+    palco_cob_8x6:       { nome:'Palco Completo c/ Cobertura 2 Águas – 8x6m', categoria:'PALCOS', unidade:'unidade', precos:{ metropolitana:15930.0, medio_paraiba:21203.9, serrana:15095.79, norte_noroeste:19894.0 } },
+    palco_cob_10x8:      { nome:'Palco Completo c/ Cobertura 2 Águas – 10x8m', categoria:'PALCOS', unidade:'unidade', precos:{ metropolitana:18068.4, medio_paraiba:24661.41, serrana:18330.6, norte_noroeste:23954.0 } },
+    palco_cob_12x10:     { nome:'Palco Completo c/ Cobertura 2 Águas – 12x10m', categoria:'PALCOS', unidade:'unidade', precos:{ metropolitana:19353.6, medio_paraiba:26539.19, serrana:19768.29, norte_noroeste:25984.0 } },
+    palco_concha_12x11:  { nome:'Palco Concha (Geo Space) – 12x11m', categoria:'PALCOS', unidade:'unidade', precos:{ serrana_3:30800.0 } },
+    palco_concha_18x14:  { nome:'Palco Concha (Geo Space) – 18x14m', categoria:'PALCOS', unidade:'unidade', precos:{ serrana:60600.0, serrana_3:50512.0 } },
+    palco_modular_18x20: { nome:'Palco Modular Completo c/ Cobertura – 18x20m', categoria:'PALCOS', unidade:'unidade', precos:{ serrana:60600.0, serrana_3:58520.0 } },
+    pratica_telescopico: { nome:'Praticável Telescópico 2x1m', categoria:'PALCOS', unidade:'unidade', precos:{ metropolitana:166.32, medio_paraiba:217.34, serrana:179.71, norte_noroeste:211.12 } },
+    pratica_pantografico:{ nome:'Praticável Pantográfico 2x1m', categoria:'PALCOS', unidade:'unidade', precos:{ metropolitana:267.55, medio_paraiba:342.74, serrana:301.92, norte_noroeste:332.92 } },
+    octa_9m2:            { nome:'Octanorm Simples c/ Piso e Tenda – 9m²', categoria:'OCTANORMS', unidade:'unidade', precos:{ metropolitana:2580.48, medio_paraiba:3169.15, serrana:3035.7, serrana_3:3035.7, baixadas:2011.5, centro_sul:3225.69 } },
+    octa_12m2:           { nome:'Octanorm Simples c/ Piso e Tenda – 12m²', categoria:'OCTANORMS', unidade:'unidade', precos:{ metropolitana:3440.64, medio_paraiba:4227.71, serrana:4075.8, serrana_3:4075.8, baixadas:2682.0, centro_sul:4300.81 } },
+    octa_16m2:           { nome:'Octanorm Simples c/ Piso e Tenda – 16m²', categoria:'OCTANORMS', unidade:'unidade', precos:{ metropolitana:4747.51, medio_paraiba:5637.98, serrana:5420.0, serrana_3:5420.0, baixadas:3576.0, centro_sul:5734.37 } },
+    octa_25m2:           { nome:'Octanorm Simples c/ Piso e Tenda – 25m²', categoria:'OCTANORMS', unidade:'unidade', precos:{ metropolitana:7168.0, medio_paraiba:8809.6, serrana:8500.0, serrana_3:8500.0, baixadas:5587.5, centro_sul:8960.0 } },
+    octa_posto_medico:   { nome:'Octanorm Posto Médico c/ Instalação Hidráulica – 16m²', categoria:'OCTANORMS', unidade:'unidade', precos:{ metropolitana:5932.77, medio_paraiba:7488.56, serrana:7208.0, serrana_3:7208.0, baixadas:6451.0, centro_sul:7616.0 } },
+    gradil:              { nome:'Gradil', categoria:'GRADIS', unidade:'unidade', precos:{ metropolitana:69.19, medio_paraiba:57.88, centro_sul:57.12 } },
+    fech_metalico:       { nome:'Fechamento Metálico', categoria:'GRADIS', unidade:'unidade', precos:{ metropolitana:87.04, medio_paraiba:72.35, centro_sul:71.4 } },
+    barricada:           { nome:'Barricada 1x1,20m', categoria:'GRADIS', unidade:'unidade', precos:{ metropolitana:200.85, medio_paraiba:178.75, centro_sul:176.4 } },
+    trelica_q15:         { nome:'Treliça em Alumínio Q15', categoria:'TRELICAS', unidade:'m linear', precos:{ metropolitana:76.1, medio_paraiba:91.84, serrana:88.8, serrana_3:88.8, centro_sul:91.84 } },
+    trelica_q30:         { nome:'Treliça em Alumínio Q30', categoria:'TRELICAS', unidade:'m linear', precos:{ metropolitana:88.4, medio_paraiba:106.4, serrana:102.88, serrana_3:102.88, centro_sul:106.4 } },
+    trelica_q50:         { nome:'Treliça em Alumínio Q50', categoria:'TRELICAS', unidade:'m linear', precos:{ metropolitana:123.11, medio_paraiba:168.0, serrana:162.45, serrana_3:162.45, centro_sul:168.0 } },
+};
+const ORDEM_CATEGORIAS = ['TENDAS', 'PALCOS', 'OCTANORMS', 'GRADIS', 'TRELICAS', 'EXTRA'];
+const LABEL_CATEGORIA = { TENDAS:'Tendas', PALCOS:'Palcos', OCTANORMS:'Octanorms', GRADIS:'Gradis / Barricadas', TRELICAS:'Treliças', EXTRA:'Extras / Outros' };
+const TAG_CATEGORIA = { TENDAS:'Tendas', PALCOS:'Palcos', OCTANORMS:'Octanorm', GRADIS:'Gradis', TRELICAS:'Treliça', EXTRA:'Extra' };
+
+// ---------- mensagens padrão ----------
+const OBS_PADRAO = [
+    { id:'acesso', titulo:'(Acesso ao Local)', texto:'É de responsabilidade do contratante garantir o acesso adequado ao local de montagem para os veículos e equipe técnica.' },
+    { id:'vigilancia', titulo:'(Responsabilidade de Vigilância)', texto:'A vigilância e segurança das estruturas, materiais e equipamentos no local do evento são de inteira responsabilidade do contratante.' },
+    { id:'aguardando_pc', titulo:'(Aguardando Pedidos de Compra)', texto:'Aguardando a emissão dos Pedidos de Compra por parte do SESC.' },
+];
+
+// =====================================================================
+// ESTADO
+// =====================================================================
+function novoEstado(){
+    return {
+        versao: 4,
+        id: uid(),
+        tipo: TIPO_ORC,
+        evento: { unidade:'', nome:'', numOrc:'', dataInicio:'', dataTermino:'', responsavel:'', contato:'', local:'' },
+        regiaoPadrao: REGIOES[0].id,
+        salas: [],        // [{ id, nome }]
+        itens: [],        // [{ id, salaId, key, nome, categoria, unidade, regiao, qtd, dia, preco, extra }]
+        desconto: { modo:'pct', pct:0, vlr:0 },
+        pagamento: { prazoDias:null },
+        obs: { padrao:[], texto:'' },
+        ui: { printMode:'completo' },
+        meta: { criadoEm:new Date().toISOString(), salvoEm:null, elaboradoPor:'', criadoPor:'', atualizadoPor:'', atualizadoEm:null, status:'Rascunho', total:0 }
+    };
+}
+let state = novoEstado();
+function mesclarEstado(s){
+    const base = novoEstado();
+    const out = Object.assign({}, base, s);
+    ['evento','desconto','pagamento','obs','ui','meta'].forEach(k => { out[k] = Object.assign({}, base[k], (s && s[k]) || {}); });
+    out.salas = Array.isArray(s.salas) ? s.salas.filter(x => x && x.id) : [];
+    out.itens = Array.isArray(s.itens) ? s.itens.filter(x => x && x.id) : [];
+    out.obs.padrao = Array.isArray(out.obs.padrao) ? out.obs.padrao : [];
+    if(!REG[out.regiaoPadrao]) out.regiaoPadrao = REGIOES[0].id;
+    out.id = s.id || base.id;
+    out.meta.status = out.meta.status || 'Rascunho';
+    return out;
+}
+const itemPorId = id => state.itens.find(i => i.id === id);
+const salaPorId = id => state.salas.find(s => s.id === id);
+function precoCatalogo(it){ const def = CATALOGO[it.key]; if(!def) return null; const p = def.precos[it.regiao]; return (p === undefined) ? null : p; }
+function precoDoItem(it){ if(it.extra) return Math.max(0, Number(it.preco) || 0); const p = precoCatalogo(it); return p === null ? 0 : p; }
+
+// ---------- gravação no banco de dados (Supabase, via PlenartDB) ----------
+let versaoBanco = null;        // versão que esta tela carregou do banco; null = ainda não está lá
+let salvarTimer = null;
+let salvando = false;
+let salvarDeNovo = false;
+let naoSalvo = false;          // tem alteração que ainda não subiu
+
+function statusSalvo(txt, tipo){
+    const el = $('rascunhoStatus'); if(!el) return;
+    el.textContent = txt;
+    const caixa = el.closest('.rascunho') || el.parentElement;
+    if(caixa) caixa.dataset.estado = tipo || '';
+}
+function horaAgora(){ return new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}); }
+
+function agendarSalvar(){
+    if(!temConteudo(state)) return;
+    naoSalvo = true;
+    statusSalvo('alterações não salvas', 'espera');
+    clearTimeout(salvarTimer);
+    salvarTimer = setTimeout(salvarOrcamento, 1500);   // grava 1,5s depois que você para de mexer
+}
+
+async function salvarOrcamento(){
+    if(!temConteudo(state)){ statusSalvo('Orçamento em branco', ''); return; }
+    if(salvando){ salvarDeNovo = true; return; }
+    clearTimeout(salvarTimer);
+    salvando = true;
+    statusSalvo('salvando...', 'espera');
+
+    const agora = new Date().toISOString();
+    state.meta.salvoEm = agora; state.meta.atualizadoEm = agora;
+    if(usuarioAtual && usuarioAtual.nome) state.meta.atualizadoPor = usuarioAtual.nome;
+    if(!state.meta.criadoPor) state.meta.criadoPor = state.meta.elaboradoPor || (usuarioAtual ? usuarioAtual.nome : '');
+    state.meta.total = calcular().total;
+
+    const r = await PlenartDB.salvar(state, versaoBanco);
+    salvando = false;
+
+    if(r.ok){
+        versaoBanco = r.versao;
+        naoSalvo = false;
+        statusSalvo('Salvo às ' + horaAgora(), 'ok');
+    } else if(r.conflito){
+        statusSalvo('Outra pessoa alterou este orçamento', 'alerta');
+        tratarConflito(r);
+    } else if(r.semRede){
+        statusSalvo('Sem internet — guardado neste computador', 'alerta');
+    } else if(r.precisaLogin){
+        statusSalvo('Sessão encerrada', 'alerta');
+        if(confirm('Sua sessão expirou. Entrar de novo?\n\nO que você fez está guardado neste computador e sobe assim que você voltar.')) PlenartDB.exigirLogin('plenart-sistema.html');
+    } else if(r.apagado){
+        statusSalvo('Orçamento excluído por outra pessoa', 'alerta');
+        alert(r.msg + '\n\nO que está na sua tela ficou guardado neste computador.');
+    } else {
+        statusSalvo('Não consegui salvar', 'alerta');
+        console.warn('Falha ao salvar:', r.msg);
+    }
+    if(salvarDeNovo){ salvarDeNovo = false; salvarOrcamento(); }
+}
+
+/* duas pessoas mexendo no mesmo orçamento: quem decide é o usuário, nunca o sistema */
+async function tratarConflito(r){
+    const quem = (r.linha && r.linha.atualizado_por_nome) || 'Outra pessoa';
+    const quando = r.linha && r.linha.atualizado_em ? new Date(r.linha.atualizado_em).toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}) : '';
+    if(confirm(`${quem} alterou este orçamento${quando ? ' às ' + quando : ''}, depois que você abriu.\n\n` +
+               `OK = abrir a versão dela (o que você mudou agora sai da tela)\n` +
+               `Cancelar = continuar com a sua versão na tela`)){
+        const atual = await PlenartDB.carregar(state.id);
+        if(atual.ok){
+            state = mesclarEstado(atual.state); versaoBanco = atual.versao; naoSalvo = false;
+            if(typeof iniciarComboValor === 'function') iniciarComboValor();
+            renderTudo();
+            statusSalvo('Aberta a versão de ' + quem, 'ok');
+        } else { alert('Não consegui buscar a versão dela: ' + (atual.msg || 'erro')); }
+        return;
+    }
+    if(confirm(`Quer gravar a SUA versão por cima da de ${quem}?\n\n` +
+               `OK = gravar por cima (o que ${quem} fez se perde)\n` +
+               `Cancelar = deixar como está, sem salvar`)){
+        versaoBanco = r.versaoNova;
+        salvarOrcamento();
+    } else {
+        statusSalvo('Não salvo — sua cópia está guardada neste computador', 'alerta');
+    }
+}
+
+/* avisa se fechar com coisa não salva */
+window.addEventListener('beforeunload', e => {
+    if(naoSalvo && temConteudo(state)){ e.preventDefault(); e.returnValue = ''; return ''; }
+});
+/* internet voltou: sobe o que ficou para trás */
+window.addEventListener('online', () => { PlenartDB.sincronizarPendentes().then(res => { if(res.subiram) statusSalvo('Salvo às ' + horaAgora(), 'ok'); }); });
+
+function temConteudo(s){
+    return !!((s.itens && s.itens.length) || (s.salas && s.salas.length) || (s.evento && (s.evento.nome || s.evento.unidade || s.evento.numOrc)));
+}
+function setStatus(v){ state.meta.status = v; atualizar(); }
+function atualizar(){ recalc(); agendarSalvar(); }
+
+// =====================================================================
+// CÁLCULO (puro)
+// =====================================================================
+function calcItem(it){
+    const qtd = Math.max(0, Number(it.qtd) || 0), dia = Math.max(1, Number(it.dia) || 1);
+    const preco = precoDoItem(it);
+    return { preco, sub: qtd * dia * preco, nd: (!it.extra && precoCatalogo(it) === null) };
+}
+function calcular(){
+    let subtotal = 0; const porItem = {}, porSala = {}, porRegiaoCat = {};
+    state.itens.forEach(it => {
+        const c = calcItem(it); porItem[it.id] = c; subtotal += c.sub;
+        const s = it.salaId || ''; porSala[s] = (porSala[s] || 0) + c.sub;
+        const reg = it.regiao || '?', cat = it.categoria || 'EXTRA';
+        porRegiaoCat[reg] = porRegiaoCat[reg] || {}; porRegiaoCat[reg][cat] = (porRegiaoCat[reg][cat] || 0) + c.sub;
+    });
+    let pct = Number(state.desconto.pct) || 0, vlr = Number(state.desconto.vlr) || 0;
+    if(state.desconto.modo === 'vlr'){ vlr = Math.min(Math.max(0, vlr), subtotal); pct = subtotal > 0 ? vlr / subtotal * 100 : 0; }
+    else { pct = Math.min(100, Math.max(0, pct)); vlr = subtotal * pct / 100; }
+    const total = subtotal - vlr;
+    return { porItem, porSala, porRegiaoCat, subtotal, descPct:pct, descVlr:vlr, total };
+}
+
+// =====================================================================
+// RENDER (estrutura)
+// =====================================================================
+function renderRegioes(){
+    $('regiaoPadrao').innerHTML = REGIOES.map(r => `<option value="${r.id}">${escapeHtml(r.nome)}</option>`).join('');
+    $('regiaoPadrao').value = state.regiaoPadrao;
+    $('extraRegiao').innerHTML = REGIOES.map(r => `<option value="${r.id}">${escapeHtml(r.nome)}</option>`).join('');
+    $('extraRegiao').value = state.regiaoPadrao;
+}
+// ---------- busca de produto (combobox), sempre dentro da região padrão ----------
+let PRODUTOS_BUSCA = [], produtoSel = null, comboFiltrados = [], comboIdx = -1;
+function montarProdutosBusca(){
+    const reg = state.regiaoPadrao;
+    PRODUTOS_BUSCA = [];
+    ORDEM_CATEGORIAS.filter(c => c !== 'EXTRA').forEach(cat => {
+        Object.keys(CATALOGO).filter(k => CATALOGO[k].categoria === cat && CATALOGO[k].precos[reg] !== undefined).forEach(k => {
+            const d = CATALOGO[k];
+            PRODUTOS_BUSCA.push({ key:k, cat: LABEL_CATEGORIA[cat], rotulo: d.nome + (d.unidade !== 'unidade' ? ' (' + d.unidade + ')' : ''), preco: d.precos[reg], busca: semAcento(d.nome + ' ' + LABEL_CATEGORIA[cat] + ' ' + d.unidade) });
+        });
+    });
+    if(!PRODUTOS_BUSCA.some(p => p.key === produtoSel)) produtoSel = PRODUTOS_BUSCA.length ? PRODUTOS_BUSCA[0].key : null;
+    atualizarPrecoPreview();
+    if($('comboBusca')) fecharCombo();
+}
+function produtoPorKey(k){ return PRODUTOS_BUSCA.find(p => p.key === k); }
+function atualizarPrecoPreview(){
+    const def = CATALOGO[produtoSel]; const p = def ? def.precos[state.regiaoPadrao] : undefined;
+    $('precoPreview').textContent = p === undefined ? 'R$ 0,00' : brl(p) + (def.unidade !== 'unidade' ? ' / ' + def.unidade : '');
+}
+function filtrarProdutos(termo){
+    const t = semAcento(termo).trim();
+    if(!t) return PRODUTOS_BUSCA.slice();
+    const partes = t.split(/\s+/);
+    return PRODUTOS_BUSCA.filter(p => partes.every(x => p.busca.indexOf(x) >= 0));
+}
+function marcarTermos(texto, termo){
+    const t = semAcento(termo).trim();
+    if(!t) return escapeHtml(texto);
+    const base = semAcento(texto), marcas = [];
+    t.split(/\s+/).forEach(x => { let i = base.indexOf(x); while(i >= 0 && x){ marcas.push([i, i + x.length]); i = base.indexOf(x, i + x.length); } });
+    if(!marcas.length) return escapeHtml(texto);
+    marcas.sort((a, b) => a[0] - b[0]);
+    const juntas = [];
+    marcas.forEach(m => { const u = juntas[juntas.length - 1]; if(u && m[0] <= u[1]) u[1] = Math.max(u[1], m[1]); else juntas.push(m.slice()); });
+    let out = '', pos = 0;
+    juntas.forEach(m => { out += escapeHtml(texto.slice(pos, m[0])) + '<mark>' + escapeHtml(texto.slice(m[0], m[1])) + '</mark>'; pos = m[1]; });
+    return out + escapeHtml(texto.slice(pos));
+}
+function renderComboLista(termo){
+    comboFiltrados = filtrarProdutos(termo);
+    const lista = $('comboLista');
+    if(!comboFiltrados.length){
+        lista.innerHTML = `<div class="combo-vazio">${PRODUTOS_BUSCA.length ? 'Nenhum produto encontrado para "' + escapeHtml(termo) + '"' : 'Nenhum produto com preço nesta região.'}</div>`;
+        comboIdx = -1; return;
+    }
+    if(comboIdx < 0 || comboIdx >= comboFiltrados.length) comboIdx = 0;
+    let html = '', cat = null;
+    comboFiltrados.forEach((p, i) => {
+        if(p.cat !== cat){ cat = p.cat; html += `<div class="combo-grupo">${escapeHtml(cat)}</div>`; }
+        html += `<div class="combo-op${i === comboIdx ? ' ativo' : ''}" data-key="${p.key}" data-i="${i}"><span class="preco">${brl(p.preco)}</span>${marcarTermos(p.rotulo, termo)}</div>`;
+    });
+    lista.innerHTML = html;
+}
+function marcarAtivo(){
+    const lista = $('comboLista');
+    lista.querySelectorAll('.combo-op').forEach(el => el.classList.toggle('ativo', Number(el.dataset.i) === comboIdx));
+    const at = lista.querySelector('.combo-op.ativo'); if(at) at.scrollIntoView({ block:'nearest' });
+}
+function comboAberto(){ return $('comboProduto').classList.contains('aberto'); }
+function abrirCombo(){
+    if(comboAberto()) return;
+    $('comboProduto').classList.add('aberto');
+    $('comboBusca').value = '';
+    comboIdx = Math.max(0, PRODUTOS_BUSCA.findIndex(p => p.key === produtoSel));
+    renderComboLista(''); marcarAtivo();
+}
+function fecharCombo(){
+    $('comboProduto').classList.remove('aberto');
+    const p = produtoPorKey(produtoSel);
+    $('comboBusca').value = p ? p.rotulo : '';
+}
+function escolherProduto(key){ if(!key) return; produtoSel = key; atualizarPrecoPreview(); fecharCombo(); }
+function iniciarCombo(){
+    const inp = $('comboBusca');
+    inp.addEventListener('focus', abrirCombo);
+    inp.addEventListener('click', abrirCombo);
+    inp.addEventListener('input', () => { comboIdx = 0; renderComboLista(inp.value); });
+    inp.addEventListener('keydown', e => {
+        if(e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+            e.preventDefault();
+            if(!comboAberto()){ abrirCombo(); return; }
+            comboIdx = Math.min(comboFiltrados.length - 1, Math.max(0, comboIdx + (e.key === 'ArrowDown' ? 1 : -1)));
+            marcarAtivo(); return;
+        }
+        if(e.key === 'Enter'){
+            e.preventDefault();
+            if(comboAberto()){ if(comboFiltrados[comboIdx]) escolherProduto(comboFiltrados[comboIdx].key); }
+            else adicionarItem();
+            return;
+        }
+        if(e.key === 'Escape'){ if(comboAberto()){ e.preventDefault(); fecharCombo(); } }
+    });
+    $('comboLista').addEventListener('mousedown', e => {
+        const op = e.target.closest('.combo-op'); if(!op) return;
+        e.preventDefault(); escolherProduto(op.dataset.key);
+    });
+    document.addEventListener('mousedown', e => { if(comboAberto() && !e.target.closest('#comboProduto')) fecharCombo(); });
+    fecharCombo();
+}
+function setRegiaoPadrao(id){ if(!REG[id]) return; state.regiaoPadrao = id; $('extraRegiao').value = id; montarProdutosBusca(); agendarSalvar(); }
+function renderSalasDropdowns(){
+    ['salaDestino','salaDestinoExtra'].forEach(id => {
+        const sel = $(id); const atual = sel.value;
+        sel.innerHTML = '<option value="">— Sem sala (item solto) —</option>' + state.salas.map(s => `<option value="${s.id}">${escapeHtml(s.nome)}</option>`).join('');
+        if(state.salas.some(s => s.id === atual)) sel.value = atual;
+    });
+}
+const NCOLS = 9;
+function renderTabela(){
+    const tbody = $('corpoTabela'); tbody.innerHTML = '';
+    if(!state.itens.length && !state.salas.length){
+        tbody.innerHTML = `<tr class="vazio"><td colspan="${NCOLS}"><i class="fas fa-inbox" style="font-size:1.3rem;display:block;margin-bottom:6px;opacity:.4"></i>Nenhum produto adicionado. Escolha a região e o produto acima para começar.</td></tr>`;
+        return;
+    }
+    const soltos = state.itens.filter(i => !i.salaId || !salaPorId(i.salaId));
+    if(state.salas.length){
+        const trDiv = document.createElement('tr');
+        trDiv.className = 'sem-sala-divisor' + (soltos.length ? '' : ' oculto');
+        trDiv.innerHTML = `<td colspan="${NCOLS}"><i class="fas fa-circle-dot"></i> Itens sem sala (avulsos)${soltos.length ? '' : ': nenhum — arraste um item para cá para tirá-lo da sala'}</td>`;
+        tbody.appendChild(trDiv);
+    }
+    soltos.forEach(it => tbody.appendChild(linhaItem(it)));
+    state.salas.forEach(sala => {
+        tbody.appendChild(linhaCabecalhoSala(sala));
+        const its = state.itens.filter(i => i.salaId === sala.id);
+        if(!its.length){
+            const tr = document.createElement('tr'); tr.className = 'sala-vazia'; tr.dataset.salaId = sala.id;
+            tr.innerHTML = `<td colspan="${NCOLS}">Nenhum item nesta sala ainda. Selecione "${escapeHtml(sala.nome)}" em "Adicionar em (Sala)" ou arraste itens para cá.</td>`;
+            tbody.appendChild(tr);
+        } else {
+            its.forEach(it => tbody.appendChild(linhaItem(it)));
+            tbody.appendChild(linhaRodapeSala(sala));
+        }
+    });
+    renumerar();
+}
+function linhaItem(it){
+    const tr = document.createElement('tr');
+    tr.className = 'item' + (it.extra ? ' extra' : ''); tr.dataset.id = it.id; tr.dataset.salaId = it.salaId || '';
+    const regioesDisp = it.extra ? REGIOES : REGIOES.filter(r => CATALOGO[it.key] && CATALOGO[it.key].precos[r.id] !== undefined);
+    const optsReg = regioesDisp.map(r => `<option value="${r.id}" ${r.id === it.regiao ? 'selected' : ''}>${escapeHtml(r.curto)}</option>`).join('')
+        + (regioesDisp.some(r => r.id === it.regiao) ? '' : `<option value="${escapeHtml(it.regiao || '')}" selected>${escapeHtml((REG[it.regiao] || {}).curto || 'Região?')}</option>`);
+    const optsMover = ['<option value="">Mover para…</option>']
+        .concat(it.salaId ? ['<option value="__sem__">— Sem sala —</option>'] : [])
+        .concat(state.salas.filter(s => s.id !== it.salaId).map(s => `<option value="${s.id}">${escapeHtml(s.nome)}</option>`)).join('');
+    const cat = it.categoria || 'EXTRA';
+    const und = it.unidade && it.unidade !== 'unidade' ? `<span class="und">por ${escapeHtml(it.unidade)}</span>` : '';
+    const precoCell = it.extra
+        ? `<div class="money screen-only"><span>R$</span><input class="inp inp-money" data-campo="preco" value="${fmtNum(it.preco)}" inputmode="decimal" title="Valor unitário do extra"></div><span class="vp vp-preco print-only"></span>`
+        : `<span class="vp-preco"></span>`;
+    tr.innerHTML = `
+        <td class="col-num"><span class="alca no-print" title="Arraste para mudar a ordem ou a sala"><i class="fas fa-grip-vertical"></i></span><span class="num"></span></td>
+        <td class="col-cat"><span class="tag-cat ${cat}">${TAG_CATEGORIA[cat] || cat}</span></td>
+        <td class="col-reg"><select class="inp-regiao screen-only" title="Região do contrato usada nesta linha">${optsReg}</select><span class="vp vp-reg print-only"></span></td>
+        <td class="col-prod">${escapeHtml(it.nome)}${und}</td>
+        <td class="grp-q"><input class="inp inp-qtd screen-only" data-campo="qtd" value="${fmtQtd(it.qtd)}" inputmode="decimal" title="Quantidade"><span class="vp vp-qtd print-only"></span></td>
+        <td class="grp-q"><input class="inp inp-dia screen-only" data-campo="dia" value="${Number(it.dia)||1}" inputmode="numeric" title="Diárias"><span class="vp vp-dia print-only"></span></td>
+        <td class="col-preco">${precoCell}</td>
+        <td class="col-sub sub"></td>
+        <td class="col-acoes no-print"><select class="mover" title="Mover para outra sala">${optsMover}</select><button class="btn-del" type="button" title="Excluir item">✕</button></td>`;
+    return tr;
+}
+function linhaCabecalhoSala(sala){
+    const tr = document.createElement('tr'); tr.className = 'sala-header-row'; tr.dataset.salaId = sala.id;
+    tr.innerHTML = `<td colspan="${NCOLS}"><div class="sala-linha">
+        <div class="sala-titulo"><span class="alca no-print" title="Arraste para mudar a ordem das salas"><i class="fas fa-grip-vertical"></i></span><i class="fas fa-building"></i> ${escapeHtml(sala.nome)}</div>
+        <button class="btn-mini no-print" type="button" onclick="renomearSala('${sala.id}')"><i class="fas fa-pen"></i> Renomear</button>
+        <button class="btn-mini del no-print" type="button" onclick="excluirSala('${sala.id}')"><i class="fas fa-trash"></i> Excluir Sala</button>
+    </div></td>`;
+    return tr;
+}
+function linhaRodapeSala(sala){
+    const tr = document.createElement('tr'); tr.className = 'sala-footer-row'; tr.dataset.salaId = sala.id;
+    tr.innerHTML = `<td colspan="4" class="lbl-total" title="Total da sala ${escapeHtml(sala.nome)}"><i class="fas fa-cart-shopping"></i> Total · ${escapeHtml(sala.nome)}</td>
+        <td class="grp-q"></td><td class="grp-q"></td><td class="col-preco"></td>
+        <td class="col-sub sala-total">R$ 0,00</td><td class="no-print"></td>`;
+    return tr;
+}
+function renumerar(){ let n = 0; $('corpoTabela').querySelectorAll('tr.item .num').forEach(el => { el.textContent = ++n; }); }
+function renderObsPadrao(){
+    const lista = $('obsPadraoLista'); lista.innerHTML = '';
+    OBS_PADRAO.forEach(o => {
+        const marcado = state.obs.padrao.includes(o.id);
+        const div = document.createElement('div');
+        div.className = 'obs-padrao-item' + (marcado ? ' marcado' : ''); div.dataset.obsId = o.id;
+        div.innerHTML = `<input type="checkbox" id="obs_${o.id}" ${marcado ? 'checked' : ''} onchange="onChangeObsPadrao('${o.id}', this.checked)"><label for="obs_${o.id}"><strong>${escapeHtml(o.titulo)}</strong> ${escapeHtml(o.texto)}</label>`;
+        lista.appendChild(div);
+    });
+}
+function renderTudo(){
+    document.querySelectorAll('[data-ev]').forEach(inp => { inp.value = state.evento[inp.dataset.ev] || ''; });
+    $('selStatus').value = state.meta.status || 'Rascunho';
+    renderRegioes(); montarProdutosBusca();
+    renderSalasDropdowns(); renderTabela();
+    $('descontoPct').value = fmtNum(state.desconto.pct); $('descontoVlr').value = fmtNum(state.desconto.vlr);
+    $('pagPrazo').value = state.pagamento.prazoDias == null ? '' : state.pagamento.prazoDias;
+    renderObsPadrao(); $('observacoes').value = state.obs.texto || '';
+    setPrintMode(state.ui.printMode || 'completo', true);
+    recalc();
+}
+
+// =====================================================================
+// RECALC – atualiza números sem recriar as linhas
+// =====================================================================
+function recalc(){
+    const c = calcular();
+    document.querySelectorAll('#corpoTabela tr.item').forEach(tr => {
+        const it = itemPorId(tr.dataset.id); const r = it && c.porItem[it.id]; if(!r) return;
+        if(!it.extra) it.preco = r.preco;   // guarda o preço do contrato no registro
+        tr.querySelector('.vp-qtd').textContent = fmtQtd(it.qtd);
+        tr.querySelector('.vp-dia').textContent = Number(it.dia) || 1;
+        tr.querySelector('.vp-reg').textContent = (REG[it.regiao] || {}).curto || it.regiao || '';
+        const vp = tr.querySelector('.vp-preco');
+        if(vp) vp.innerHTML = r.nd ? '<span class="nd">N/D nesta região</span>' : brl(r.preco);
+        tr.querySelector('.sub').textContent = brl(r.sub);
+    });
+    document.querySelectorAll('#corpoTabela tr.sala-footer-row').forEach(tr => { tr.querySelector('.sala-total').textContent = brl(c.porSala[tr.dataset.salaId] || 0); });
+
+    // resumo por região / categoria
+    const cont = $('resumoRegioes'); const temItens = state.itens.length > 0;
+    $('avisoVazio').style.display = temItens ? 'none' : '';
+    let html = '';
+    REGIOES.forEach(r => {
+        const dados = c.porRegiaoCat[r.id]; if(!dados) return;
+        const cats = ORDEM_CATEGORIAS.filter(cat => dados[cat] > 0); if(!cats.length) return;
+        const subReg = cats.reduce((a, cat) => a + dados[cat], 0);
+        html += `<div class="resumo-regiao-card"><div class="regiao-titulo"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(r.nome)}</div>`
+            + cats.map(cat => `<div class="cat-linha"><span class="cat-nome"><span class="tag-cat ${cat}">${TAG_CATEGORIA[cat]}</span> ${LABEL_CATEGORIA[cat]}</span><span class="cat-valor">${brl(dados[cat])}</span></div>`).join('')
+            + `<div class="subtotal-regiao"><span class="lbl">Subtotal ${escapeHtml(r.curto)}</span><span class="val">${brl(subReg)}</span></div></div>`;
+    });
+    if(c.porRegiaoCat['?']){ const d = c.porRegiaoCat['?']; const t = Object.values(d).reduce((a, b) => a + b, 0); html += `<div class="resumo-regiao-card"><div class="regiao-titulo">Sem região</div><div class="subtotal-regiao"><span class="lbl">Subtotal</span><span class="val">${brl(t)}</span></div></div>`; }
+    cont.innerHTML = html;
+
+    // desconto
+    if(state.desconto.modo === 'vlr'){ state.desconto.pct = c.descPct; if(document.activeElement !== $('descontoPct')) $('descontoPct').value = fmtNum(c.descPct); }
+    else { state.desconto.vlr = c.descVlr; if(document.activeElement !== $('descontoVlr')) $('descontoVlr').value = fmtNum(c.descVlr); }
+
+    $('subtotalFinal').textContent = brl(c.subtotal);
+    $('descontoVal').textContent = '– ' + brl(c.descVlr);
+    $('descontoPctLabel').textContent = c.descVlr > 0 ? `${fmtPct(c.descPct)}% sobre o subtotal` : '';
+    $('totalGlobal').textContent = brl(c.total);
+
+    atualizarPagamento(c.total);
+    renderEventoPrint();
+    renderObsPrint();
+}
+function renderEventoPrint(){
+    const e = state.evento;
+    $('pcNum').textContent = e.numOrc ? 'Nº ' + e.numOrc : '';
+    $('pcData').textContent = hojeBR();
+    $('pcPor').textContent = state.meta.elaboradoPor ? ' · Elaborado por ' + state.meta.elaboradoPor : '';
+    const periodo = (e.dataInicio || e.dataTermino) ? `${formatarData(e.dataInicio) || '___/___/____'} a ${formatarData(e.dataTermino) || '___/___/____'}` : '';
+    const campos = [['Unidade', e.unidade], ['Evento', e.nome], ['Período', periodo], ['Local', e.local], ['Responsável', e.responsavel], ['Contato', e.contato]];
+    $('eventoPrint').innerHTML = campos.map(c => `<div class="pe-campo"><div class="pe-lbl">${c[0]}</div><div class="pe-val">${escapeHtml(c[1] || '—')}</div></div>`).join('');
+}
+function renderObsPrint(){
+    const marcadas = OBS_PADRAO.filter(o => state.obs.padrao.includes(o.id));
+    let html = marcadas.map(o => `<p><strong>${escapeHtml(o.titulo)}</strong> ${escapeHtml(o.texto)}</p>`).join('');
+    const livre = (state.obs.texto || '').trim();
+    if(livre) html += `<p class="obs-livre">${escapeHtml(livre)}</p>`;
+    const thOrc = $('thOrc'); if(thOrc) thOrc.textContent = state.evento.numOrc ? '· Orçamento nº ' + state.evento.numOrc : '';
+    $('obsPrint').innerHTML = html;
+    document.body.classList.toggle('obs-curtas', $('obsPrint').textContent.length < 700);
+    $('cardObs').classList.toggle('print-vazio', !html);
+    $('obsMarcadasResumo').innerHTML = marcadas.length ? `<i class="fas fa-check-double" style="color:var(--verde)"></i> Vão sair na impressão: ${marcadas.map(o => `<strong>${escapeHtml(o.titulo)}</strong>`).join(', ')}` : '';
+    $('obsToggle').classList.toggle('tem-marcadas', marcadas.length > 0);
+    $('obsContador').textContent = `${marcadas.length} marcada${marcadas.length > 1 ? 's' : ''}`;
+}
+
+// =====================================================================
+// SALAS
+// =====================================================================
+function criarSala(){
+    const input = $('novaSalaNome'); const nome = input.value.trim();
+    if(!nome){ alert('Digite o nome da sala.'); input.focus(); return; }
+    if(state.salas.some(s => s.nome.toLowerCase() === nome.toLowerCase())){ alert('Já existe uma sala com esse nome.'); return; }
+    const sala = { id: uid(), nome };
+    state.salas.push(sala); input.value = '';
+    renderSalasDropdowns(); $('salaDestino').value = sala.id; $('salaDestinoExtra').value = sala.id;
+    renderTabela(); atualizar();
+}
+function renomearSala(id){
+    const sala = salaPorId(id); if(!sala) return;
+    const novo = prompt('Novo nome da sala:', sala.nome); if(novo === null) return;
+    const nome = novo.trim(); if(!nome) return;
+    if(state.salas.some(s => s.id !== id && s.nome.toLowerCase() === nome.toLowerCase())){ alert('Já existe uma sala com esse nome.'); return; }
+    sala.nome = nome; renderSalasDropdowns(); renderTabela(); atualizar();
+}
+function excluirSala(id){
+    const sala = salaPorId(id); if(!sala) return;
+    const n = state.itens.filter(i => i.salaId === id).length;
+    let msg = `Excluir a sala "${sala.nome}"?`;
+    if(n > 0) msg += `\n\nExistem ${n} item(ns) nesta sala.\n\nOK = excluir a sala E os itens dela.\nCancelar = manter tudo.\n\n(Se quiser só tirar os itens da sala, arraste-os para "Itens sem sala" antes.)`;
+    if(!confirm(msg)) return;
+    state.itens = state.itens.filter(i => i.salaId !== id);
+    state.salas = state.salas.filter(s => s.id !== id);
+    renderSalasDropdowns(); renderTabela(); atualizar();
+}
+
+// =====================================================================
+// ITENS
+// =====================================================================
+function adicionarItem(){
+    const key = produtoSel; const def = CATALOGO[key];
+    if(!def){ alert('Escolha um produto na lista.'); $('comboBusca').focus(); return; }
+    const reg = state.regiaoPadrao;
+    if(def.precos[reg] === undefined){ alert('Este produto não tem preço na região padrão selecionada.'); return; }
+    const salaId = $('salaDestino').value || null;
+    const it = { id: uid(), salaId, key, nome: def.nome, categoria: def.categoria, unidade: def.unidade, regiao: reg, qtd: 1, dia: 1, preco: def.precos[reg], extra: false };
+    state.itens.push(it); renderTabela(); atualizar(); focarItem(it.id);
+}
+function adicionarExtra(){
+    const desc = $('extraDesc').value.trim();
+    if(!desc){ alert('Informe a descrição do item extra.'); $('extraDesc').focus(); return; }
+    const salaId = $('salaDestinoExtra').value || null;
+    const it = { id: uid(), salaId, key: '__extra__', nome: desc, categoria: 'EXTRA', unidade: 'unidade', regiao: $('extraRegiao').value || state.regiaoPadrao, qtd: 1, dia: 1, preco: parseNum($('extraValor').value), extra: true };
+    state.itens.push(it);
+    ['extraDesc','extraValor'].forEach(id => $(id).value = '');
+    renderTabela(); atualizar(); focarItem(it.id);
+}
+function focarItem(id){
+    const tr = $('corpoTabela').querySelector(`tr.item[data-id="${id}"]`); if(!tr) return;
+    tr.scrollIntoView({ block:'nearest' });
+    const inp = tr.querySelector('.inp-qtd'); if(inp){ inp.focus(); inp.select(); }
+}
+function removerItem(id){ state.itens = state.itens.filter(i => i.id !== id); renderTabela(); atualizar(); }
+function moverItemParaSala(id, salaId){
+    const it = itemPorId(id); if(!it) return;
+    state.itens = state.itens.filter(i => i.id !== id);
+    it.salaId = salaId || null; state.itens.push(it);
+    renderTabela(); atualizar();
+}
+function inserirItemAntesDe(it, alvoId, depois){
+    state.itens = state.itens.filter(i => i.id !== it.id);
+    const idx = state.itens.findIndex(i => i.id === alvoId);
+    if(idx < 0){ state.itens.push(it); return; }
+    it.salaId = state.itens[idx].salaId || null;
+    state.itens.splice(depois ? idx + 1 : idx, 0, it);
+}
+
+// ---------- eventos da tabela (delegação) ----------
+(function ligarTabela(){
+    const tbody = $('corpoTabela');
+    tbody.addEventListener('input', e => {
+        const inp = e.target.closest('input[data-campo]'); if(!inp) return;
+        const tr = inp.closest('tr.item'); const it = tr && itemPorId(tr.dataset.id); if(!it) return;
+        const campo = inp.dataset.campo; const v = parseNum(inp.value);
+        if(campo === 'qtd') it.qtd = Math.max(0, v);
+        else if(campo === 'dia') it.dia = Math.max(1, Math.floor(v) || 1);
+        else it[campo] = Math.max(0, v);
+        atualizar();   // nunca reescreve o campo enquanto digita
+    });
+    tbody.addEventListener('focusout', e => {
+        const inp = e.target.closest('input[data-campo]'); if(!inp) return;
+        const tr = inp.closest('tr.item'); const it = tr && itemPorId(tr.dataset.id); if(!it) return;
+        const campo = inp.dataset.campo;
+        inp.value = campo === 'qtd' ? fmtQtd(it.qtd) : campo === 'dia' ? String(Number(it.dia) || 1) : fmtNum(it[campo]);
+    });
+    tbody.addEventListener('focusin', e => { const inp = e.target.closest('input[data-campo]'); if(inp) inp.select(); });
+    tbody.addEventListener('keydown', e => {
+        if(e.key !== 'Enter') return;
+        const inp = e.target.closest('input[data-campo]'); if(!inp) return;
+        e.preventDefault();
+        const inputs = Array.from(tbody.querySelectorAll('input[data-campo]'));
+        const prox = inputs[inputs.indexOf(inp) + 1]; if(prox) prox.focus();
+    });
+    tbody.addEventListener('click', e => {
+        const del = e.target.closest('.btn-del'); if(!del) return;
+        const tr = del.closest('tr.item'); if(tr) removerItem(tr.dataset.id);
+    });
+    tbody.addEventListener('change', e => {
+        const mover = e.target.closest('select.mover');
+        if(mover){ if(!mover.value) return; const tr = mover.closest('tr.item'); moverItemParaSala(tr.dataset.id, mover.value === '__sem__' ? null : mover.value); return; }
+        const reg = e.target.closest('select.inp-regiao');
+        if(reg){ const tr = reg.closest('tr.item'); const it = tr && itemPorId(tr.dataset.id); if(!it) return; it.regiao = reg.value; atualizar(); }
+    });
+
+    // ----- arrastar e soltar (pointer events) -----
+    let drag = null, ultimoAlvo = null;
+    function alvoDeDrop(tr, y){
+        if(!drag || !tr) return null;
+        const rect = tr.getBoundingClientRect(); const depois = y > rect.top + rect.height / 2;
+        if(drag.tipo === 'item'){
+            if(tr.classList.contains('item')) return tr.dataset.id === drag.id ? null : { tipo:'item', id: tr.dataset.id, depois };
+            if(tr.classList.contains('sala-header-row')) return { tipo:'sala-inicio', salaId: tr.dataset.salaId };
+            if(tr.classList.contains('sala-footer-row') || tr.classList.contains('sala-vazia')) return { tipo:'sala-fim', salaId: tr.dataset.salaId };
+            if(tr.classList.contains('sem-sala-divisor')) return { tipo:'sem-sala' };
+            return null;
+        }
+        const salaId = tr.dataset.salaId; if(!salaId || salaId === drag.id) return null;
+        if(tr.classList.contains('sala-header-row')) return { tipo:'sala-ordem', salaId, depois:false };
+        return { tipo:'sala-ordem', salaId, depois:true };
+    }
+    function limparMarcas(){ tbody.querySelectorAll('.drop-antes, .drop-depois, .drop-dentro').forEach(el => el.classList.remove('drop-antes','drop-depois','drop-dentro')); }
+    function marcar(alvo){
+        limparMarcas(); if(!alvo) return;
+        if(alvo.tipo === 'item'){ const tr = tbody.querySelector(`tr.item[data-id="${alvo.id}"]`); if(tr) tr.classList.add(alvo.depois ? 'drop-depois' : 'drop-antes'); return; }
+        if(alvo.tipo === 'sem-sala'){ const tr = tbody.querySelector('tr.sem-sala-divisor'); if(tr) tr.classList.add('drop-dentro'); return; }
+        tbody.querySelectorAll(`tr[data-sala-id="${alvo.salaId}"]`).forEach(tr => tr.classList.add('drop-dentro'));
+    }
+    function linhaSobPonto(x, y){ const el = document.elementFromPoint(x, y); if(!el) return null; const tr = el.closest('tr'); return (tr && tbody.contains(tr)) ? tr : null; }
+    tbody.addEventListener('pointerdown', e => {
+        const alca = e.target.closest('.alca'); if(!alca || (e.pointerType === 'mouse' && e.button !== 0)) return;
+        const tr = alca.closest('tr'); if(!tr) return;
+        drag = tr.classList.contains('sala-header-row')
+            ? { tipo:'sala', id: tr.dataset.salaId, nome: (salaPorId(tr.dataset.salaId) || {}).nome }
+            : { tipo:'item', id: tr.dataset.id, nome: (itemPorId(tr.dataset.id) || {}).nome };
+        drag.x0 = e.clientX; drag.y0 = e.clientY; drag.x = e.clientX; drag.y = e.clientY; drag.ativo = false; drag.tr = tr; drag.pointerId = e.pointerId; drag.alca = alca;
+        try { alca.setPointerCapture(e.pointerId); } catch(err) {}
+        e.preventDefault();
+    });
+    function iniciarDrag(){
+        drag.ativo = true;
+        drag.tr.classList.add('dragging'); document.body.classList.add('arrastando');
+        const g = document.createElement('div'); g.className = 'drag-ghost';
+        g.innerHTML = `<i class="fas fa-${drag.tipo === 'sala' ? 'building' : 'box'}"></i> ${escapeHtml(drag.nome || '')}`;
+        document.body.appendChild(g); drag.ghost = g;
+        drag.timer = setInterval(() => {
+            if(!drag || !drag.ativo) return;
+            const margem = 80, h = window.innerHeight, y = drag.y, x = drag.x; let passo = 0;
+            if(y < margem) passo = -Math.ceil((margem - y) / margem * 22);
+            else if(y > h - margem) passo = Math.ceil((y - (h - margem)) / margem * 22);
+            if(passo){ window.scrollBy(0, passo); ultimoAlvo = alvoDeDrop(linhaSobPonto(x, y), y); marcar(ultimoAlvo); }
+        }, 30);
+    }
+    function moverGhost(x, y){ if(drag && drag.ghost){ drag.ghost.style.left = (x + 14) + 'px'; drag.ghost.style.top = (y + 10) + 'px'; } }
+    document.addEventListener('pointermove', e => {
+        if(!drag) return;
+        if(!drag.ativo){ if(Math.abs(e.clientX - drag.x0) + Math.abs(e.clientY - drag.y0) < 5) return; iniciarDrag(); }
+        e.preventDefault();
+        drag.x = e.clientX; drag.y = e.clientY;
+        moverGhost(e.clientX, e.clientY);
+        ultimoAlvo = alvoDeDrop(linhaSobPonto(e.clientX, e.clientY), e.clientY);
+        marcar(ultimoAlvo);
+    });
+    function finalizarDrag(soltar){
+        if(!drag) return;
+        const alvo = soltar ? ultimoAlvo : null;
+        try { if(drag.alca && drag.pointerId != null) drag.alca.releasePointerCapture(drag.pointerId); } catch(err) {}
+        if(drag.ghost) drag.ghost.remove();
+        if(drag.timer) clearInterval(drag.timer);
+        limparMarcas();
+        tbody.querySelectorAll('tr.dragging').forEach(tr => tr.classList.remove('dragging'));
+        document.body.classList.remove('arrastando');
+        const d = drag; drag = null; ultimoAlvo = null;
+        if(alvo && d.ativo) executarDrop(d, alvo);
+    }
+    document.addEventListener('pointerup', () => { if(drag) finalizarDrag(true); });
+    document.addEventListener('pointercancel', () => { if(drag) finalizarDrag(false); });
+    document.addEventListener('keydown', e => { if(e.key === 'Escape' && drag) finalizarDrag(false); });
+    function executarDrop(d, alvo){
+        if(d.tipo === 'item'){
+            const it = itemPorId(d.id); if(!it) return;
+            if(alvo.tipo === 'item'){ inserirItemAntesDe(it, alvo.id, alvo.depois); }
+            else if(alvo.tipo === 'sala-inicio'){
+                state.itens = state.itens.filter(i => i.id !== it.id); it.salaId = alvo.salaId;
+                const idx = state.itens.findIndex(i => i.salaId === alvo.salaId);
+                if(idx < 0) state.itens.push(it); else state.itens.splice(idx, 0, it);
+            }
+            else if(alvo.tipo === 'sala-fim'){ moverItemParaSala(it.id, alvo.salaId); return; }
+            else if(alvo.tipo === 'sem-sala'){ moverItemParaSala(it.id, null); return; }
+            else return;
+        } else if(alvo.tipo === 'sala-ordem'){
+            const sala = salaPorId(d.id); if(!sala) return;
+            state.salas = state.salas.filter(s => s.id !== d.id);
+            const idx = state.salas.findIndex(s => s.id === alvo.salaId);
+            state.salas.splice(alvo.depois ? idx + 1 : idx, 0, sala);
+        } else return;
+        renderTabela(); atualizar();
+    }
+    window._dnd = { executarDrop };
+})();
+
+// ---------- dados do evento, extras ----------
+document.querySelectorAll('[data-ev]').forEach(inp => inp.addEventListener('input', () => { state.evento[inp.dataset.ev] = inp.value; atualizar(); if(inp.dataset.ev === 'numOrc') conferirNumeroRepetido(); }));
+$('extraValor').addEventListener('blur', function(){ const v = parseNum(this.value); this.value = this.value.trim() ? fmtNum(v) : ''; });
+
+// ---------- desconto ----------
+$('descontoPct').addEventListener('input', function(){ state.desconto.modo = 'pct'; state.desconto.pct = Math.min(100, Math.max(0, parseNum(this.value))); atualizar(); });
+$('descontoPct').addEventListener('blur', function(){ this.value = fmtNum(state.desconto.pct); });
+$('descontoVlr').addEventListener('input', function(){ state.desconto.modo = 'vlr'; state.desconto.vlr = Math.max(0, parseNum(this.value)); atualizar(); });
+$('descontoVlr').addEventListener('blur', function(){ const c = calcular(); state.desconto.vlr = c.descVlr; this.value = fmtNum(c.descVlr); });
+
+// ---------- pagamento (a prazo, parcela única) ----------
+$('pagPrazo').addEventListener('input', function(){ const n = parseInt(this.value); state.pagamento.prazoDias = isNaN(n) || n < 0 ? null : n; atualizar(); });
+function numeroPorExtenso(n){
+    const u = ['zero','um','dois','três','quatro','cinco','seis','sete','oito','nove','dez','onze','doze','treze','quatorze','quinze','dezesseis','dezessete','dezoito','dezenove'];
+    const d = ['','','vinte','trinta','quarenta','cinquenta','sessenta','setenta','oitenta','noventa'];
+    if(n < 20) return u[n];
+    if(n < 100){ const dz = Math.floor(n / 10), r = n % 10; return d[dz] + (r ? ' e ' + u[r] : ''); }
+    if(n === 100) return 'cem';
+    if(n < 200) return 'cento' + (n % 100 ? ' e ' + numeroPorExtenso(n % 100) : '');
+    return String(n);
+}
+function atualizarPagamento(total){
+    const prazo = state.pagamento.prazoDias; const resumo = $('pagResumoPag');
+    if(prazo == null){ resumo.classList.remove('visivel'); $('cardPag').classList.add('print-vazio'); return; }
+    const diasTxt = prazo === 1 ? '1 (um) dia' : `${prazo} (${numeroPorExtenso(prazo)}) dias`;
+    let venc = '';
+    const dt = state.evento.dataTermino;
+    if(dt){
+        const p = dt.split('-'); const base = new Date(parseInt(p[0]), parseInt(p[1]) - 1, parseInt(p[2])); base.setDate(base.getDate() + prazo);
+        venc = ` <strong class="venc">→ Vencimento: ${String(base.getDate()).padStart(2,'0')}/${String(base.getMonth() + 1).padStart(2,'0')}/${base.getFullYear()}</strong>`;
+    } else {
+        venc = ` <em class="no-print" style="color:var(--cinza);font-size:0.85rem">(informe a Data de Término do evento para calcular o vencimento)</em>`;
+    }
+    $('pagFrase').innerHTML = `Pagamento em parcela única no valor de <strong>${brl(total)}</strong>, com prazo de <strong>${diasTxt} corridos</strong> após o término do evento.${venc}`;
+    resumo.classList.add('visivel'); $('cardPag').classList.remove('print-vazio');
+}
+
+// ---------- observações ----------
+function onChangeObsPadrao(id, marcado){
+    state.obs.padrao = state.obs.padrao.filter(x => x !== id);
+    if(marcado) state.obs.padrao = OBS_PADRAO.map(o => o.id).filter(x => x === id || state.obs.padrao.includes(x));
+    const item = document.querySelector(`.obs-padrao-item[data-obs-id="${id}"]`); if(item) item.classList.toggle('marcado', marcado);
+    atualizar();
+}
+$('observacoes').addEventListener('input', function(){ state.obs.texto = this.value; atualizar(); });
+function toggleObsPadrao(){ $('obsToggle').classList.toggle('open'); $('obsCollapse').classList.toggle('open'); }
+function avisarFuncionalidadeFutura(){ alert('Em breve: a criação de novas mensagens padrão vai funcionar quando o sistema estiver no banco de dados (Supabase).\n\nPor enquanto, para adicionar/editar mensagens padrão, é preciso editar o código HTML (lista OBS_PADRAO).'); }
+
+// ---------- impressão ----------
+function setPrintMode(modo, silencioso){
+    state.ui.printMode = modo;
+    document.body.classList.toggle('print-cliente', modo === 'cliente');
+    document.querySelectorAll('#segImpressao button').forEach(b => b.classList.toggle('ativo', b.dataset.modo === modo));
+    $('printPageStyle').textContent = modo === 'cliente' ? '@page { size: A4 portrait; margin: 10mm; }' : '@page { size: A4 landscape; margin: 9mm; }';
+    if(!silencioso) agendarSalvar();
+}
+function imprimir(){ recalc(); window.print(); }
+window.addEventListener('beforeprint', recalc);
+
+// ---------- backup / limpar ----------
+function exportarJSON(){
+    salvarOrcamento();
+    const nome = (state.evento.numOrc || state.evento.nome || 'orcamento-sesc').replace(/[^\w\-]+/g, '_');
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type:'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `orcamento-sesc-${nome}.json`;
+    document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+function importarJSON(input){
+    const f = input.files && input.files[0]; if(!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+        try {
+            const s = JSON.parse(r.result);
+            if(!s || !Array.isArray(s.itens)){ alert('Este arquivo não é um backup de orçamento.'); return; }
+            if(s.tipo && s.tipo !== TIPO_ORC && !confirm('Este backup é de outro tipo de orçamento (' + s.tipo + '). Abrir mesmo assim?')) return;
+            if(temConteudo(state) && !confirm('Substituir o orçamento atual pelo do arquivo?')) return;
+            state = mesclarEstado(s); renderTudo(); salvarOrcamento();
+        } catch(e){ alert('Não consegui ler o arquivo.'); }
+        input.value = '';
+    };
+    r.readAsText(f);
+}
+function limparOrcamento(){
+    if(!confirm('Limpar o orçamento inteiro (itens, salas, dados do evento, pagamento e observações)?\n\nEle sai também da lista do Hub.')) return;
+    const por = state.meta.elaboradoPor, criador = state.meta.criadoPor, reg = state.regiaoPadrao;
+    try { const m = mapaOrcamentos(); delete m[state.id]; gravarMapa(m); localStorage.removeItem(ULT_KEY); } catch(e) {}
+    state = novoEstado(); state.meta.elaboradoPor = por; state.meta.criadoPor = criador; state.regiaoPadrao = reg;
+    renderTudo(); $('rascunhoStatus').textContent = 'Orçamento em branco';
+}
+
+// =====================================================================
+// INICIALIZAÇÃO
+// =====================================================================
+(async function init(){
+    $('dataGer').textContent = hojeBR();
+
+    // 1. precisa estar logado
+    const perfil = await PlenartDB.retomar();
+    if(!perfil){ PlenartDB.exigirLogin('plenart-sistema.html'); return; }
+    usuarioAtual = { id: perfil.id, nome: perfil.nome, email: perfil.email, admin: perfil.admin };
+
+    // 2. qual orçamento abrir
+    const par = new URLSearchParams(location.search);
+    const novo = par.get('novo');
+    const novoId = (novo && /^[a-z0-9]{8,}$/i.test(novo)) ? novo : null;   // o Hub manda o id do orçamento novo
+    const id = par.get('id') || novoId;
+
+    if(id){
+        const r = await PlenartDB.carregar(id);
+        if(r.ok && r.state && (!r.state.tipo || r.state.tipo === TIPO_ORC)){
+            state = mesclarEstado(r.state); versaoBanco = r.versao;
+        } else if(r.naoExiste && novoId){
+            state = novoEstado(); state.id = novoId; versaoBanco = null;    // orçamento novo com o id do Hub
+        } else if(r.naoExiste){
+            alert('Não encontrei esse orçamento no banco. Vou abrir um novo.');
+        } else if(r.semRede){
+            const local = PlenartDB.lerLocal(id);
+            if(local){
+                state = mesclarEstado(local.state); versaoBanco = local.versao;
+                alert('Sem internet agora. Abri a cópia guardada neste computador — ela sobe sozinha quando a conexão voltar.');
+            } else if(!novoId){
+                alert('Sem internet e não tenho cópia deste orçamento neste computador.');
+            } else { state = novoEstado(); state.id = novoId; versaoBanco = null; }
+        } else if(!r.ok && !novoId){
+            alert('Não consegui abrir este orçamento: ' + (r.msg || 'erro'));
+        }
+    } else if(novo){
+        state = novoEstado(); versaoBanco = null;
+    } else {
+        location.href = 'plenart-sistema.html';    // sem orçamento indicado, a porta de entrada é a lista
+        return;
+    }
+
+    // 3. quem está mexendo
+    if(!state.meta.elaboradoPor) state.meta.elaboradoPor = usuarioAtual.nome;
+    if(!state.meta.criadoPor) state.meta.criadoPor = usuarioAtual.nome;
+    $('userChipNome').textContent = usuarioAtual.nome; $('userChip').classList.add('visivel');
+
+    renderTudo();
+    iniciarCombo();
+    if(!temConteudo(state)) statusSalvo('Salva sozinho no banco de dados', '');
+    else statusSalvo(versaoBanco ? 'Salvo no banco' : 'ainda não salvo', versaoBanco ? 'ok' : 'espera');
+
+    // avisa se o número do orçamento já existe em outro
+    conferirNumeroRepetido();
+
+    window.plenartPronto = true;      // a tela terminou de carregar o orçamento
+})();
+
+let ultimoNumConferido = null;
+async function conferirNumeroRepetido(){
+    const n = (state.evento && state.evento.numOrc || '').trim();
+    if(!n || n === ultimoNumConferido) return;
+    ultimoNumConferido = n;
+    const outro = await PlenartDB.numeroRepetido(TIPO_ORC, n, state.id);
+    const el = $('avisoNumRepetido');
+    if(el) el.textContent = outro ? ('Atenção: o nº ' + n + ' já existe em outro orçamento (' + (outro.cliente || 'sem nome') + ').') : '';
+}
+</script>
+</body>
+</html>
