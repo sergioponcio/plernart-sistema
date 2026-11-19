@@ -86,6 +86,33 @@ textarea { resize: vertical; min-height: 80px; width: 100%; }
 .add-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
 .add-row .form-group.prod { flex: 1; min-width: 280px; }
 .add-row select { width: 100%; }
+/* ---- incluir em várias salas ---- */
+.multi-sala { position: relative; }
+.ms-botao { width: 100%; display: flex; align-items: center; gap: 8px; padding: 9px 11px; border: 1.5px solid var(--borda); border-radius: 7px; background: #fafcff; font-family: 'Source Sans 3', sans-serif; font-size: 0.93rem; color: var(--texto); cursor: pointer; text-align: left; }
+.ms-botao:focus, .multi-sala.aberto .ms-botao { outline: none; border-color: var(--azul-med); box-shadow: 0 0 0 3px rgba(42,68,144,.12); background: #fff; }
+.ms-resumo { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ms-resumo.vazio { color: var(--cinza); }
+.ms-qtd { flex: none; background: var(--laranja); color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.66rem; border-radius: 10px; padding: 1px 7px; }
+.ms-seta { flex: none; color: var(--cinza); font-size: 0.78rem; transition: transform .2s; }
+.multi-sala.aberto .ms-seta { transform: rotate(180deg); }
+.ms-painel { position: absolute; z-index: 40; left: 0; top: calc(100% + 4px); width: max(100%, 310px); background: #fff; border: 1.5px solid var(--azul-med); border-radius: 8px; box-shadow: 0 12px 30px rgba(26,45,107,.20); display: none; }
+.multi-sala.aberto .ms-painel { display: block; }
+.ms-topo { display: flex; align-items: center; gap: 6px; padding: 7px 10px; background: #eef3fb; border-bottom: 1px solid var(--borda); border-radius: 7px 7px 0 0; }
+.ms-topo .tit { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.64rem; text-transform: uppercase; letter-spacing: .5px; color: var(--cinza); }
+.ms-topo button { border: 1px solid var(--borda); background: #fff; color: var(--azul); font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.68rem; padding: 4px 9px; border-radius: 5px; cursor: pointer; }
+.ms-topo button:hover { border-color: var(--azul-med); }
+.ms-lista { max-height: 280px; overflow-y: auto; padding: 4px 0; }
+.multi-sala .ms-op { display: flex; align-items: center; gap: 9px; padding: 7px 12px; cursor: pointer; font-size: 0.9rem; margin: 0; text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--texto); }
+.multi-sala .ms-op:hover { background: var(--azul-claro); }
+.multi-sala .ms-op input[type="checkbox"] { width: 16px; height: 16px; padding: 0; border: none; background: none; box-shadow: none; accent-color: var(--laranja); cursor: pointer; margin: 0; flex: none; }
+.multi-sala .ms-op input[type="checkbox"]:focus { box-shadow: none; }
+.multi-sala .ms-op input[type="checkbox"]:focus-visible { outline: 2px solid var(--azul-med); outline-offset: 2px; }
+.multi-sala .ms-op .nome { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.multi-sala .ms-op .ja-tem { flex: none; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.6rem; color: var(--laranja-med); background: var(--laranja-claro); border: 1px solid #ffd3b0; border-radius: 9px; padding: 1px 8px; white-space: nowrap; }
+.ms-rodape { padding: 6px 12px 8px; font-size: 0.74rem; color: var(--cinza); font-style: italic; border-top: 1px solid #f0f4f8; }
+.ms-vazio { padding: 14px 12px; font-size: 0.84rem; color: var(--cinza); font-style: italic; text-align: center; }
+tr.item.novo > td { animation: flashNovo 1.8s ease-out; }
+@keyframes flashNovo { 0%, 40% { background: #ffe3c9; } 100% { background: transparent; } }
 
 /* ===== TABELA DE ITENS ===== */
 .tabela-wrap { overflow-x: auto; margin-top: 16px; border-radius: 8px; border: 1px solid var(--borda); }
@@ -610,12 +637,27 @@ footer strong { color: var(--azul); }
                         <div class="combo-lista" id="comboLista"></div>
                     </div>
                 </div>
-                <div class="form-group" style="min-width:200px">
-                    <label>Adicionar em (Sala)</label>
-                    <select id="salaDestino"><option value="">— Sem sala (item solto) —</option></select>
+                <div class="form-group" style="flex:0 0 300px;min-width:0">
+                    <label>Adicionar em (salas) <span style="text-transform:none;font-weight:400;color:var(--cinza)">— pode marcar várias</span></label>
+                    <div class="multi-sala" id="msSala">
+                        <button type="button" class="ms-botao" id="msBotao" onclick="alternarMsSala()">
+                            <span class="ms-resumo vazio" id="msResumo">Sem sala (item solto)</span>
+                            <span class="ms-qtd" id="msQtd" style="display:none"></span>
+                            <i class="fas fa-chevron-down ms-seta"></i>
+                        </button>
+                        <div class="ms-painel" id="msPainel">
+                            <div class="ms-topo">
+                                <span class="tit" id="msContagem"></span>
+                                <button type="button" onclick="marcarTodasSalas(true)">Marcar todas</button>
+                                <button type="button" onclick="marcarTodasSalas(false)">Limpar</button>
+                            </div>
+                            <div class="ms-lista" id="msLista"></div>
+                            <div class="ms-rodape">Nenhuma marcada = o item entra solto, sem sala.</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="acoes">
-                    <button class="btn btn-primary" type="button" onclick="adicionarItem()"><i class="fas fa-plus"></i> Incluir Produto</button>
+                    <button class="btn btn-primary" type="button" id="btnIncluir" onclick="adicionarItem()"><i class="fas fa-plus"></i> <span id="btnIncluirTxt">Incluir Produto</span></button>
                 </div>
             </div>
 
@@ -1230,21 +1272,22 @@ async function salvarOrcamento(){
 /* duas pessoas mexendo no mesmo orçamento: quem decide é o usuário, nunca o sistema */
 async function tratarConflito(r){
     const quem = (r.linha && r.linha.atualizado_por_nome) || 'Outra pessoa';
+    const nome = String(quem).split(' ')[0];       // primeiro nome: cabe melhor na caixa e não tem gênero errado
     const quando = r.linha && r.linha.atualizado_em ? new Date(r.linha.atualizado_em).toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}) : '';
     if(confirm(`${quem} alterou este orçamento${quando ? ' às ' + quando : ''}, depois que você abriu.\n\n` +
-               `OK = abrir a versão dela (o que você mudou agora sai da tela)\n` +
+               `OK = abrir a versão de ${nome} (o que você mudou agora sai da tela)\n` +
                `Cancelar = continuar com a sua versão na tela`)){
         const atual = await PlenartDB.carregar(state.id);
         if(atual.ok){
             state = mesclarEstado(atual.state); versaoBanco = atual.versao; naoSalvo = false;
             if(typeof iniciarComboValor === 'function') iniciarComboValor();
             renderTudo();
-            statusSalvo('Aberta a versão de ' + quem, 'ok');
-        } else { alert('Não consegui buscar a versão dela: ' + (atual.msg || 'erro')); }
+            statusSalvo('Aberta a versão de ' + nome, 'ok');
+        } else { alert('Não consegui buscar a versão de ' + nome + ': ' + (atual.msg || 'erro')); }
         return;
     }
-    if(confirm(`Quer gravar a SUA versão por cima da de ${quem}?\n\n` +
-               `OK = gravar por cima (o que ${quem} fez se perde)\n` +
+    if(confirm(`Quer gravar a SUA versão por cima da versão de ${nome}?\n\n` +
+               `OK = gravar por cima (o que ${nome} fez se perde)\n` +
                `Cancelar = deixar como está, sem salvar`)){
         versaoBanco = r.versaoNova;
         salvarOrcamento();
@@ -1422,6 +1465,7 @@ function escolherProduto(key){
     if(!key) return;
     produtoSel = key;
     fecharCombo();
+    if(msAberto()) renderMsLista();
 }
 function iniciarCombo(){
     const inp = $('comboBusca');
@@ -1451,11 +1495,70 @@ function iniciarCombo(){
     fecharCombo();
 }
 function renderSalasDropdowns(){
-    ['salaDestino','salaDestinoExtra'].forEach(id => {
+    ['salaDestinoExtra'].forEach(id => {
         const sel = $(id); const atual = sel.value;
         sel.innerHTML = '<option value="">— Sem sala (item solto) —</option>' + state.salas.map(s => `<option value="${s.id}">${escapeHtml(s.nome)}</option>`).join('');
         if(state.salas.some(s => s.id === atual)) sel.value = atual;
     });
+    atualizarMsSala();
+}
+
+// ---------- incluir o mesmo produto em várias salas de uma vez ----------
+// A marcação é da tela, não do orçamento: não vai para o banco nem para o PDF.
+let salasMarcadas = new Set();
+function salasMarcadasEmOrdem(){ return state.salas.filter(s => salasMarcadas.has(s.id)).map(s => s.id); }
+function msAberto(){ return $('msSala').classList.contains('aberto'); }
+function alternarMsSala(forcar){
+    const abrir = forcar === undefined ? !msAberto() : !!forcar;
+    $('msSala').classList.toggle('aberto', abrir);
+    if(abrir) renderMsLista();
+}
+function marcarTodasSalas(sim){
+    salasMarcadas = sim ? new Set(state.salas.map(s => s.id)) : new Set();
+    renderMsLista(); atualizarMsSala(true);
+}
+function renderMsLista(){
+    const lista = $('msLista'); if(!lista) return;
+    if(!state.salas.length){
+        lista.innerHTML = '<div class="ms-vazio">Nenhuma sala criada ainda.<br>Crie em "Salas / Ambientes", logo acima.</div>';
+        return;
+    }
+    const temProduto = new Set(state.itens.filter(i => !i.extra && i.key === produtoSel).map(i => i.salaId));
+    lista.innerHTML = state.salas.map(s => `<label class="ms-op">
+            <input type="checkbox" data-sala="${s.id}"${salasMarcadas.has(s.id) ? ' checked' : ''}>
+            <span class="nome">${escapeHtml(s.nome)}</span>
+            ${temProduto.has(s.id) ? '<span class="ja-tem" title="Esta sala já tem o produto escolhido">já tem</span>' : ''}
+        </label>`).join('');
+}
+function atualizarMsSala(soResumo){
+    if(!$('msResumo')) return;
+    // esquece salas que não existem mais (excluídas, ou outro orçamento carregado)
+    salasMarcadas = new Set([...salasMarcadas].filter(id => state.salas.some(s => s.id === id)));
+    const nomes = salasMarcadasEmOrdem().map(id => salaPorId(id).nome);
+    const resumo = $('msResumo'), qtd = $('msQtd');
+    if(!nomes.length){
+        resumo.textContent = 'Sem sala (item solto)'; resumo.classList.add('vazio');
+        qtd.style.display = 'none';
+    } else {
+        resumo.textContent = nomes.join(', '); resumo.classList.remove('vazio');
+        qtd.textContent = nomes.length; qtd.style.display = nomes.length > 1 ? '' : 'none';
+    }
+    $('msBotao').title = nomes.length ? 'Vai entrar em: ' + nomes.join(', ') : 'O item entra solto, sem sala';
+    $('msContagem').textContent = state.salas.length ? `${nomes.length} de ${state.salas.length} marcada${nomes.length === 1 ? '' : 's'}` : 'Nenhuma sala';
+    $('btnIncluirTxt').textContent = nomes.length > 1 ? `Incluir em ${nomes.length} salas` : 'Incluir Produto';
+    if(msAberto() && !soResumo) renderMsLista();
+}
+function iniciarMsSala(){
+    $('msLista').addEventListener('change', e => {
+        const cb = e.target.closest('input[data-sala]'); if(!cb) return;
+        if(cb.checked) salasMarcadas.add(cb.dataset.sala); else salasMarcadas.delete(cb.dataset.sala);
+        atualizarMsSala(true);                     // não redesenha a lista: quem usa o teclado continua na mesma caixinha
+    });
+    // fecha ao clicar fora, ao sair com o Tab ou com Esc
+    document.addEventListener('mousedown', e => { if(msAberto() && !e.target.closest('#msSala')) alternarMsSala(false); });
+    document.addEventListener('focusin', e => { if(msAberto() && !e.target.closest('#msSala')) alternarMsSala(false); });
+    document.addEventListener('keydown', e => { if(e.key === 'Escape' && msAberto() && !e.defaultPrevented){ alternarMsSala(false); $('msBotao').focus(); } });
+    atualizarMsSala();
 }
 let NCOLS = 12;
 function renderCabecalho(){
@@ -1495,7 +1598,7 @@ function renderTabela(){
         const its = state.itens.filter(i => i.salaId === sala.id);
         if(!its.length){
             const tr = document.createElement('tr'); tr.className = 'sala-vazia'; tr.dataset.salaId = sala.id;
-            tr.innerHTML = `<td colspan="${NCOLS}">Nenhum item nesta sala ainda. Selecione "${escapeHtml(sala.nome)}" em "Adicionar em (Sala)" ou arraste itens para cá.</td>`;
+            tr.innerHTML = `<td colspan="${NCOLS}">Nenhum item nesta sala ainda. Marque "${escapeHtml(sala.nome)}" em "Adicionar em (salas)" ou arraste itens para cá.</td>`;
             tbody.appendChild(tr);
         } else {
             its.forEach(it => tbody.appendChild(linhaItem(it)));
@@ -1828,7 +1931,8 @@ function criarSala(){
     if(state.salas.some(s => s.nome.toLowerCase() === nome.toLowerCase())){ alert('Já existe uma sala com esse nome.'); return; }
     const sala = { id: uid(), nome };
     state.salas.push(sala); input.value = '';
-    renderSalasDropdowns(); $('salaDestino').value = sala.id; $('salaDestinoExtra').value = sala.id;
+    salasMarcadas = new Set([sala.id]);
+    renderSalasDropdowns(); $('salaDestinoExtra').value = sala.id;
     renderTabela(); atualizar();
 }
 function renomearSala(id){
@@ -1855,9 +1959,21 @@ function excluirSala(id){
 function adicionarItem(){
     const key = produtoSel; const def = ITENS[key];
     if(!def){ alert('Escolha um produto na lista.'); $('comboBusca').focus(); return; }
-    const salaId = $('salaDestino').value || null;
-    const it = { id: uid(), salaId, key, nome: def.nome, qtd: 1, dia: 1, mat: def.v, serv: def.s, frete: def.f, extra: false };
-    state.itens.push(it); renderTabela(); atualizar(); focarItem(it.id);
+    alternarMsSala(false);
+    const destinos = salasMarcadasEmOrdem();
+    if(!destinos.length) destinos.push(null);              // nenhuma marcada: item solto, como sempre foi
+    const novos = destinos.map(salaId => ({ id: uid(), salaId, key, nome: def.nome, qtd: 1, dia: 1, mat: def.v, serv: def.s, frete: def.f, extra: false }));
+    state.itens.push(...novos); renderTabela(); atualizar();
+    destacarItens(novos.map(i => i.id));
+    focarItem(novos[0].id);
+    atualizarMsSala();                                      // atualiza o "já tem" da lista
+}
+function destacarItens(ids){
+    ids.forEach(id => {
+        const tr = $('corpoTabela').querySelector(`tr.item[data-id="${id}"]`); if(!tr) return;
+        tr.classList.remove('novo'); void tr.offsetWidth; tr.classList.add('novo');
+        setTimeout(() => tr.classList.remove('novo'), 1900);
+    });
 }
 function adicionarExtra(){
     const desc = $('extraDesc').value.trim();
@@ -1871,7 +1987,13 @@ function adicionarExtra(){
 function focarItem(id){
     const tr = $('corpoTabela').querySelector(`tr.item[data-id="${id}"]`); if(!tr) return;
     tr.scrollIntoView({ block:'nearest' });
-    const inp = tr.querySelector('.inp-qtd'); if(inp){ inp.focus(); inp.select(); }
+    // a barra de ações fica grudada no pé da tela: a linha não pode ficar escondida atrás dela
+    const barra = document.querySelector('.acoes-bar');
+    if(barra){
+        const limite = barra.getBoundingClientRect().top - 12, fundo = tr.getBoundingClientRect().bottom;
+        if(fundo > limite) window.scrollBy(0, fundo - limite);
+    }
+    const inp = tr.querySelector('.inp-qtd'); if(inp){ inp.focus({ preventScroll: true }); inp.select(); }
 }
 function removerItem(id){ state.itens = state.itens.filter(i => i.id !== id); renderTabela(); atualizar(); }
 function moverItemParaSala(id, salaId){
@@ -2064,6 +2186,7 @@ function toggleAbertura(on){ state.ui.verAbertura = !!on; aplicarModoValores(); 
             state.salas = state.salas.filter(s => s.id !== d.id);
             const idx = state.salas.findIndex(s => s.id === alvo.salaId);
             state.salas.splice(alvo.depois ? idx + 1 : idx, 0, sala);
+            renderSalasDropdowns();                     // listas de salas seguem a nova ordem
         } else return;
         renderTabela(); atualizar();
     }
@@ -2261,6 +2384,7 @@ function iniciarComboValor(){ const p = produtoPorKey(produtoSel); $('comboBusca
     $('userChipNome').textContent = usuarioAtual.nome; $('userChip').classList.add('visivel');
 
     iniciarCombo();
+    iniciarMsSala();
     renderTudo();
     if(!temConteudo(state)) statusSalvo('Salva sozinho no banco de dados', '');
     else statusSalvo(versaoBanco ? 'Salvo no banco' : 'ainda não salvo', versaoBanco ? 'ok' : 'espera');
